@@ -1,0 +1,204 @@
+generated: '2026-07-26'
+method: derived
+source: >-
+  openapi/realtor-ca-ddf-web-api-docs-openapi.json — components.schemas $ref links and
+  id-reference fields across the 11 DDF.Core.Entities.* / DDF.Core.Models.* schemas
+note: >-
+  Derived from the published OpenAPI. The authoritative model is the OData $metadata document at
+  https://ddfapi.realtor.ca/odata/v1/$metadata, which returns 401 anonymously and could not be
+  read — every lookup enumeration lives there and is NOT reproduced here.
+entities:
+- name: Property
+  schema: DDF.Core.Entities.Property
+  primary_key: ListingKey
+  alternate_keys: [ListingId]
+  field_count: 144
+  resource: /odata/v1/Property
+  description: >-
+    A residential or commercial MLS System listing normalized to the RESO Data Dictionary. The
+    largest entity in the model and the reason the feed exists.
+  reso_aligned: true
+- name: Member
+  schema: DDF.Core.Entities.Member
+  primary_key: MemberKey
+  alternate_keys: [MemberMlsId, MemberNationalAssociationId]
+  field_count: 34
+  resource: /odata/v1/Member
+  description: >-
+    A REALTOR. Email addresses are deliberately excluded from the payload — MemberEmailYN signals
+    only whether one exists, and contact must be routed through the Lead API.
+  reso_aligned: true
+- name: Office
+  schema: DDF.Core.Entities.Office
+  primary_key: OfficeKey
+  alternate_keys: [OfficeMlsId, OfficeNationalAssociationId]
+  field_count: 23
+  resource: /odata/v1/Office
+  description: A brokerage office participating in the MLS System.
+  reso_aligned: true
+- name: OpenHouse
+  schema: DDF.Core.Entities.OpenHouse
+  primary_key: OpenHouseKey
+  field_count: 10
+  resource: /odata/v1/OpenHouse
+  description: A current or scheduled open house event, including LivestreamOpenHouseURL. Past events are purged.
+  reso_aligned: true
+- name: Destination
+  schema: DDF.Core.Entities.Destination
+  primary_key: DestinationId
+  field_count: 11
+  resource: /odata/v1/Destination
+  description: >-
+    A member-registered DDF data feed — the unit of entitlement in Canada, and the CREA-specific
+    entity with no RESO analogue. A Technology Provider enumerates the Destinations members have
+    linked to it, and every Replication endpoint can be narrowed to one.
+  reso_aligned: false
+- name: Media
+  schema: DDF.Core.Entities.Media
+  primary_key: MediaKey
+  field_count: 10
+  resource: inline collection only
+  description: >-
+    Photos and media attached to a Property, Member or Office. Not exposed as a standalone RESO
+    Media resource and not $expand-able — it is returned inline on the parent. MediaKey becomes a
+    string of the form <ObjectID>_<MediaCategoryId>_<MediaPosition> as of the 2026-05-07 release.
+  reso_aligned: partial
+- name: PropertyRoom
+  schema: DDF.Core.Entities.PropertyRoom
+  primary_key: RoomKey
+  field_count: 11
+  resource: inline collection only
+  description: A room within a listing, returned inline on Property as Rooms.
+  reso_aligned: true
+- name: SocialMedia
+  schema: DDF.Core.Entities.SocialMedia
+  primary_key: SocialMediaKey
+  field_count: 6
+  resource: inline collection only
+  description: Social media handles/URLs attached to a Member or an Office.
+  reso_aligned: true
+- name: PropertyIdentifier
+  schema: DDF.Core.Entities.PropertyIdentifier
+  primary_key: ListingKey
+  field_count: 2
+  resource: /odata/v1/Property/PropertyReplication()
+  description: Thin identifier + modification timestamp record returned by the Property replication endpoint.
+- name: MemberIdentifier
+  schema: DDF.Core.Entities.MemberIdentifier
+  primary_key: MemberKey
+  field_count: 2
+  resource: /odata/v1/Member/MemberReplication()
+- name: OfficeIdentifier
+  schema: DDF.Core.Entities.OfficeIdentifier
+  primary_key: OfficeKey
+  field_count: 2
+  resource: /odata/v1/Office/OfficeReplication()
+- name: Lead
+  schema: DDF.Core.Models.LeadModel
+  primary_key: null
+  field_count: 9
+  resource: POST /v1/Lead/CreateLead
+  description: >-
+    An inbound consumer enquiry for a REALTOR against a listing. Write-only — there is no read
+    endpoint for leads. Required: Culture, MemberKey, ListingKey, SenderName, SenderEmailAddress,
+    PreferredMethodContact, Message.
+relationships:
+- from: Property
+  to: Member
+  type: belongs_to
+  via: ListAgentKey
+  note: Plus CoListAgentKey, CoListAgentKey2, CoListAgentKey3 for additional co-listing agents.
+- from: Property
+  to: Office
+  type: belongs_to
+  via: ListOfficeKey
+  note: Plus CoListOfficeKey, CoListOfficeKey2, CoListOfficeKey3.
+- from: Property
+  to: Media
+  type: has_many
+  via: Media
+  binding: '$ref DDF.Core.Entities.Media (inline array)'
+- from: Property
+  to: PropertyRoom
+  type: has_many
+  via: Rooms
+  binding: '$ref DDF.Core.Entities.PropertyRoom (inline array)'
+- from: Property
+  to: Board/Association
+  type: belongs_to
+  via: ListAORKey
+  note: ListAOR/ListAORKey identify the board or association of REALTORS that owns the listing. No AOR resource is exposed.
+- from: OpenHouse
+  to: Property
+  type: belongs_to
+  via: ListingKey
+  note: Also carries ListingId.
+- from: PropertyRoom
+  to: Property
+  type: belongs_to
+  via: ListingKey
+- from: Member
+  to: Office
+  type: belongs_to
+  via: OfficeKey
+- from: Member
+  to: Media
+  type: has_many
+  via: Media
+  binding: '$ref DDF.Core.Entities.Media (inline array)'
+- from: Member
+  to: SocialMedia
+  type: has_many
+  via: MemberSocialMedia
+  binding: '$ref DDF.Core.Entities.SocialMedia (inline array)'
+- from: Member
+  to: Board/Association
+  type: belongs_to
+  via: MemberAORKey
+- from: Office
+  to: Media
+  type: has_many
+  via: Media
+  binding: '$ref DDF.Core.Entities.Media (inline array)'
+- from: Office
+  to: SocialMedia
+  type: has_many
+  via: OfficeSocialMedia
+  binding: '$ref DDF.Core.Entities.SocialMedia (inline array)'
+- from: Office
+  to: Board/Association
+  type: belongs_to
+  via: OfficeAORKey
+- from: Media
+  to: Property|Member|Office
+  type: belongs_to
+  via: ResourceRecordKey
+  note: Polymorphic — ResourceRecordKey/ResourceRecordId point back at whichever parent carried the Media collection.
+- from: SocialMedia
+  to: Member|Office
+  type: belongs_to
+  via: ResourceRecordKey
+  note: Polymorphic.
+- from: Destination
+  to: Member
+  type: belongs_to
+  via: MemberKey
+  note: A Destination is a feed registered by a member; MemberKey is its owner.
+- from: Lead
+  to: Member
+  type: belongs_to
+  via: MemberKey
+- from: Lead
+  to: Property
+  type: belongs_to
+  via: ListingKey
+key_conventions:
+  form: >-
+    Opaque numeric strings, no type prefixes. {Resource}Key is the DDF primary key;
+    {Resource}MlsId and {Resource}NationalAssociationId are the originating-system and national
+    identifiers respectively.
+  entitlement_key: DestinationId — carried as the `destinationid` claim on the access token.
+  cursors: [ModificationTimestamp, PhotoChangeTimestamp]
+  lookups: >-
+    Enumerated lookup values (MediaCategoryId, AreaUnits, LotSizeUnits, LinearUnits, StructureType,
+    SocialMediaType, ...) are defined in the $metadata document, which requires authentication.

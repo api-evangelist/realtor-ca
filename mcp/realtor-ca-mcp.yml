@@ -1,0 +1,112 @@
+generated: '2026-07-26'
+method: derived
+status: candidate
+source: openapi/realtor-ca-ddf-web-api-docs-openapi.json
+note: >-
+  CREA publishes NO official MCP server. No mcp.* / *.mcp host resolves in the crea.ca or
+  realtor.ca estate, the DDF Web API documentation never mentions MCP or agents, and there is no
+  CREA GitHub organization. The tool list below is a CANDIDATE derived one-per-operation from the
+  harvested OpenAPI 3.0.4 — it is what an MCP server over the DDF Web API would expose, not
+  something CREA ships. Every tool inherits its real input contract from the OData query
+  parameters ($select/$filter/$top/$skip/$orderby/$count) declared on the backing path.
+  Any such server is only useful with a CREA-issued data-feed credential: every DDF endpoint
+  returns HTTP 401 without a Bearer token from https://identity.crea.ca/connect/token.
+server:
+  name: realtor-ca-ddf
+  transport: http
+  url: null
+  published_by_provider: false
+auth:
+  type: oauth2
+  flow: client_credentials
+  token_url: https://identity.crea.ca/connect/token
+  scope: DDFApi_Read
+  note: client_id/client_secret are the username/password of a member-registered DDF Destination feed.
+community_implementations:
+- name: crea-ddf-mcp
+  registry: npm
+  url: https://www.npmjs.com/package/crea-ddf-mcp
+  repository: https://github.com/WaryaWayne/crea-ddf-mcp
+  version: 0.0.4
+  official: false
+  transport: stdio
+  description: >-
+    Read-only MCP server that queries a Postgres database synced from the DDF Web API through the
+    crea-ddf package. It reads a local replica, not ddfapi.realtor.ca live.
+tools:
+- name: list_properties
+  description: List MLS System property listings available to the caller's Destination feed(s).
+  source_operation: openapi/realtor-ca-ddf-web-api-docs-openapi.json#get /odata/v1/Property
+  read_only: true
+- name: get_property
+  description: Get a single property listing by PropertyKey (ListingKey).
+  source_operation: openapi/realtor-ca-ddf-web-api-docs-openapi.json#get /odata/v1/Property/{PropertyKey}
+  read_only: true
+- name: replicate_properties
+  description: Get the master replication list of properties across all destinations, sorted by modification timestamp.
+  source_operation: openapi/realtor-ca-ddf-web-api-docs-openapi.json#get /odata/v1/Property/PropertyReplication()
+  read_only: true
+- name: replicate_properties_for_destination
+  description: Get the property replication list for a single DestinationId.
+  source_operation: openapi/realtor-ca-ddf-web-api-docs-openapi.json#get /odata/v1/Property/PropertyReplication(DestinationId={DestinationId})
+  read_only: true
+- name: list_members
+  description: List REALTOR members visible to the caller's Destination feed(s).
+  source_operation: openapi/realtor-ca-ddf-web-api-docs-openapi.json#get /odata/v1/Member
+  read_only: true
+- name: get_member
+  description: Get a single member by MemberKey.
+  source_operation: openapi/realtor-ca-ddf-web-api-docs-openapi.json#get /odata/v1/Member/{MemberKey}
+  read_only: true
+- name: replicate_members
+  description: Get the master replication list of members across all destinations.
+  source_operation: openapi/realtor-ca-ddf-web-api-docs-openapi.json#get /odata/v1/Member/MemberReplication()
+  read_only: true
+- name: replicate_members_for_destination
+  description: Get the member replication list for a single DestinationId.
+  source_operation: openapi/realtor-ca-ddf-web-api-docs-openapi.json#get /odata/v1/Member/MemberReplication(DestinationId={DestinationId})
+  read_only: true
+- name: list_offices
+  description: List brokerage offices participating in the MLS System.
+  source_operation: openapi/realtor-ca-ddf-web-api-docs-openapi.json#get /odata/v1/Office
+  read_only: true
+- name: get_office
+  description: Get a single office by OfficeKey.
+  source_operation: openapi/realtor-ca-ddf-web-api-docs-openapi.json#get /odata/v1/Office/{OfficeKey}
+  read_only: true
+- name: replicate_offices
+  description: Get the master replication list of offices across all destinations.
+  source_operation: openapi/realtor-ca-ddf-web-api-docs-openapi.json#get /odata/v1/Office/OfficeReplication()
+  read_only: true
+- name: replicate_offices_for_destination
+  description: Get the office replication list for a single DestinationId.
+  source_operation: openapi/realtor-ca-ddf-web-api-docs-openapi.json#get /odata/v1/Office/OfficeReplication(DestinationId={DestinationId})
+  read_only: true
+- name: list_open_houses
+  description: List current and scheduled open house events for listings in the feed.
+  source_operation: openapi/realtor-ca-ddf-web-api-docs-openapi.json#get /odata/v1/OpenHouse
+  read_only: true
+- name: get_open_house
+  description: Get a single open house event by OpenHouseKey.
+  source_operation: openapi/realtor-ca-ddf-web-api-docs-openapi.json#get /odata/v1/OpenHouse/{OpenHouseKey}
+  read_only: true
+- name: list_destinations
+  description: List the DDF Destinations (member-registered data feeds) the credential is entitled to.
+  source_operation: openapi/realtor-ca-ddf-web-api-docs-openapi.json#get /odata/v1/Destination
+  read_only: true
+- name: get_destination
+  description: Get a single Destination by DestinationKey.
+  source_operation: openapi/realtor-ca-ddf-web-api-docs-openapi.json#get /odata/v1/Destination/{DestinationKey}
+  read_only: true
+- name: create_lead
+  description: >-
+    Submit an email lead for a REALTOR against a listing. The ONLY write operation in the DDF
+    surface. Requires human intent — set SuppressEmail=true when testing so no email reaches a
+    real REALTOR.
+  source_operation: openapi/realtor-ca-ddf-web-api-docs-openapi.json#post /v1/Lead/CreateLead
+  read_only: false
+  human_in_the_loop: recommended
+coverage:
+  rest_operations: 17
+  tools_derived: 17
+  provider_published_tools: 0

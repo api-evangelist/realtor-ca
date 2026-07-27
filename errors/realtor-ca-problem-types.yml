@@ -1,0 +1,108 @@
+generated: '2026-07-26'
+method: searched
+source: >-
+  The "Error Codes" table in the DDF Web API documentation
+  (https://ddfapi-docs.realtor.ca/#section/DDF(r)-Web-API/Error-Codes), enriched with the 4xx/5xx
+  responses declared on all 17 operations in openapi/realtor-ca-ddf-web-api-docs-openapi.json
+format: vendor-json
+rfc9457: false
+note: >-
+  Not RFC 9457. There is no application/problem+json media type anywhere in either harvested
+  OpenAPI, no `type` URI, and no per-error identifier — errors are identified only by HTTP status
+  plus a free-text `message` string. Two different envelopes are in play on the same host: the
+  OData resources wrap the error, the Lead API returns it flat with a `success` boolean.
+envelopes:
+- name: OData error
+  applies_to: https://ddfapi.realtor.ca/odata/v1
+  schema: DDF.Core.Models.CustomOdataError
+  shape:
+    error:
+      message: string
+      code: string
+      details: string
+  example: '{"error":{"message":"You are not authorized to perform this request. The format of the bearer token used is not valid.","code":"401"}}'
+- name: Lead API response
+  applies_to: https://ddfapi.realtor.ca/v1
+  schema: DDF.Core.Models.LeadResponse
+  shape:
+    success: boolean
+    message: string
+    code: string
+    details: string
+  note: Returned for 200, 400, 404 and 500 alike — callers must read `success`, not only the status.
+problems:
+- status: 400
+  title: Bad request
+  messages:
+  - Invalid Primary Key. The parameter value you have entered as a primary key is invalid.
+  - Empty or null values are not supported by the Select clause. Please specify a valid value and try again.
+  remediation: >-
+    Check the key format for the resource and that every $select field name is non-empty and exists
+    in the $metadata document.
+  spec_declared: true
+  source_operations: all 17 operations
+- status: 401
+  title: Unauthorized access
+  messages:
+  - Invalid format or expired token or Invalid DestinationId.
+  - You are not authorized to perform this request.
+  remediation: >-
+    Request a fresh token from https://identity.crea.ca/connect/token with grant_type=client_credentials
+    and scope=DDFApi_Read. Tokens live 3,600 seconds and are not sliding — re-mint hourly rather than
+    on failure. A 401 can also mean the DestinationId you asked for is not linked to your feed.
+  spec_declared: true
+  header: 'WWW-Authenticate: Bearer'
+  note: >-
+    This is also the status an anonymous caller gets for the OData $metadata document, i.e. the
+    machine-readable contract itself.
+  source_operations: all 17 operations
+- status: 403
+  title: Forbidden
+  messages: []
+  remediation: Documented in CREA's error table with no message body; not declared in the OpenAPI.
+  spec_declared: false
+- status: 404
+  title: Not found
+  messages:
+  - Invalid URL. The resource you are looking for is invalid.
+  - The {ResourceType} resource you are looking for does not exist.
+  remediation: Verify the resource path and that the key exists inside the Destinations your feed is entitled to.
+  spec_declared: true
+  source_operations: all single-record GETs and POST /v1/Lead/CreateLead
+- status: 408
+  title: Request timeout
+  messages: []
+  remediation: >-
+    Documented by CREA with no message body; not declared in the OpenAPI. Most likely on wide
+    $filter/$count queries — request $count once rather than per page.
+  spec_declared: false
+- status: 415
+  title: Unsupported MIME type
+  messages: []
+  remediation: >-
+    Send application/json bodies to the Lead API and x-www-form-urlencoded to the token endpoint.
+    Documented by CREA; not declared in the OpenAPI.
+  spec_declared: false
+- status: 500
+  title: Unexpected internal server error
+  messages:
+  - An unexpected error was encountered. Please try again.
+  remediation: Retry with backoff; contact support@realtor.ca if it persists.
+  spec_declared: true
+  source_operations: all 17 operations
+- status: 503
+  title: Service unavailable
+  messages: []
+  remediation: >-
+    Retry with backoff. Documented by CREA; not declared in the OpenAPI, and CREA publishes no
+    status page to correlate against.
+  spec_declared: false
+coverage:
+  documented_statuses: 8
+  statuses_declared_in_openapi: [200, 400, 401, 404, 500]
+  documented_but_not_in_spec: [403, 408, 415, 503]
+  error_code_registry: false
+  note: >-
+    CREA publishes no symbolic error-code registry — `code` mirrors the HTTP status as a string
+    rather than naming a machine-actionable condition, so an agent cannot branch on anything finer
+    than the status line plus English prose.

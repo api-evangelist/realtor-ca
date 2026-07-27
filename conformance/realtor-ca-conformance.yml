@@ -1,0 +1,124 @@
+generated: '2026-07-26'
+method: derived
+source: >-
+  openapi/realtor-ca-ddf-web-api-docs-openapi.json, the DDF Web API documentation at
+  https://ddfapi-docs.realtor.ca/, https://identity.crea.ca/.well-known/openid-configuration, and
+  the RESO certification evidence recorded in review.yml
+note: >-
+  Asserted from artifacts and CREA's own published claims only. Where CREA claims alignment with a
+  standard but no certification could be confirmed, `conforms` records the observable behaviour and
+  `certified` records the certification status separately — the two are not the same thing, and for
+  RESO they diverge.
+standards:
+- id: odata-v4
+  conforms: true
+  evidence: >-
+    Resource paths under /odata/v1 with $select/$filter/$top/$skip/$orderby/$count query options,
+    OData logical operators (eq/ne/gt/lt/ge/le/and/or/not/in/has), the `any` lambda, and responses
+    carrying @odata.context / @odata.nextLink / value. Server is ASP.NET Core OData (schema names
+    Microsoft.AspNetCore.OData.* appear in the published spec).
+- id: reso-data-dictionary
+  conforms: true
+  certified: false
+  evidence: >-
+    CREA states "MLS System data is normalized based on the RESO Data Dictionary standards" and the
+    payloads use RESO field names (ListingKey, ListPrice, LivingArea, AboveGradeFinishedArea,
+    CommonInterest, MemberDesignation, OriginatingSystemName). No Data Dictionary version number
+    is published anywhere in the 35,698-character documentation.
+  note: >-
+    Aligned, not confirmed certified. CREA appears in RESO's Canadian MEMBER list; no CREA /
+    REALTOR.ca / DDF entry could be confirmed in the RESO certification directory (which renders
+    client-side and could not be read anonymously).
+- id: reso-web-api-core
+  conforms: partial
+  certified: false
+  evidence: >-
+    OData transport with RESO resource names (Property, Member, Office, OpenHouse) but two
+    CREA-specific resources with no RESO analogue (Destination, Lead), no standalone Media
+    resource, no $expand, and no published Web API Core certification level.
+- id: reso-upi
+  conforms: false
+  evidence: >-
+    No Universal Property Identifier anywhere in the documentation or the harvested OpenAPI.
+    Records are keyed on ListingKey / MemberKey / OfficeKey / OpenHouseKey / DestinationKey.
+- id: rets
+  conforms: false
+  evidence: >-
+    Superseded. Release notes reference aligning DDF Web API behaviour "in line with our RETS
+    clients", so a RETS feed existed alongside; RETS is not documented as a current DDF product.
+- id: oauth2
+  conforms: true
+  evidence: >-
+    client_credentials grant against https://identity.crea.ca/connect/token returning a Bearer
+    token with expires_in 3600 and scope DDFApi_Read. NOT declared in the OpenAPI securitySchemes —
+    documented in prose only.
+- id: oauth2-rfc8414
+  conforms: false
+  evidence: >-
+    https://identity.crea.ca/.well-known/oauth-authorization-server returns 404; only the OIDC
+    discovery document is served.
+- id: oidc-discovery
+  conforms: true
+  evidence: >-
+    https://identity.crea.ca/.well-known/openid-configuration returns 200 anonymously with issuer,
+    jwks_uri, endpoints, scopes_supported and grant_types_supported.
+- id: oauth2-dpop
+  conforms: true
+  evidence: >-
+    dpop_signing_alg_values_supported advertised by identity.crea.ca (RS/PS/ES families). Not used
+    by, or documented for, the DDF client_credentials flow.
+- id: oauth2-par
+  conforms: true
+  evidence: >-
+    pushed_authorization_request_endpoint https://identity.crea.ca/connect/par advertised;
+    require_pushed_authorization_requests is false.
+- id: fapi
+  conforms: false
+  evidence: No FAPI profile claim; no mTLS or private_key_jwt client authentication (client_secret_basic/post only).
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: >-
+    Errors are a vendor JSON envelope ({"error":{"message","code","details"}} for OData, a flat
+    success/message/code/details body for the Lead API). No application/problem+json anywhere.
+- id: rfc9116-security-txt
+  conforms: partial
+  evidence: >-
+    https://www.crea.ca/.well-known/security.txt returns 200 with Contact/Policy/Encryption/
+    Acknowledgements fields, but the Expiration date had lapsed at fetch time and all three
+    referenced URLs return 404.
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No Sunset or Deprecation headers documented or declared; deprecations announced as release-note prose.
+- id: rfc9727-api-catalog
+  conforms: false
+  evidence: /.well-known/api-catalog returns 404 on every host in the estate.
+- id: json-api
+  conforms: false
+  evidence: OData conventions, not JSON:API.
+- id: graphql
+  conforms: false
+  evidence: No GraphQL surface published or discoverable.
+- id: asyncapi
+  conforms: false
+  evidence: >-
+    No event surface at all — no webhooks, no streaming, no SSE. Change propagation is client
+    polling against the Replication endpoints.
+- id: openapi-3
+  conforms: true
+  evidence: >-
+    OpenAPI 3.0.4 published at https://ddfapi.realtor.ca/swagger/v1/swagger.json and embedded in the
+    documentation site. Caveats: no components.securitySchemes, no security requirements, no
+    operationIds on 14 of 17 operations, and servers[] is left at https://localhost:7051.
+- id: tls-1-2-minimum
+  conforms: true
+  evidence: >-
+    Release notes 2023-01-31 — "minimum TLS version 1.2 enforcing all incoming requests to be
+    HTTPS". Live probe of the estate's public hosts negotiated TLS 1.3.
+- id: pipeda
+  conforms: unverified
+  evidence: >-
+    CREA publishes a privacy policy at https://www.crea.ca/privacy/ (Canadian federal private-sector
+    privacy law applies to CREA as a Canadian organization), but no compliance attestation,
+    certification or trust page is published.
+certifications_published: []
+compliance_program_published: false

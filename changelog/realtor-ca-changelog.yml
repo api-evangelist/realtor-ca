@@ -1,0 +1,163 @@
+generated: '2026-07-26'
+method: searched
+source: https://ddfapi-docs.realtor.ca/releasenotes
+docs: https://ddfapi-docs.realtor.ca/releasenotes
+note: >-
+  The release notes page is a second Redoc document whose entire content is the 13,116-character
+  info.description of an OpenAPI 3.0.1 shell — it renders client-side, so the dated entries below
+  were extracted from the embedded `var model` payload, not scraped from rendered HTML. 24 dated
+  entries span 2022-06-08 to 2026-05-07. Recent window captured; the live page remains the source
+  of truth.
+api: REALTOR.ca DDF Web API
+versioning_scheme: date-based release notes against an unversioned v1 path
+current_version: v1
+entry_count_published: 24
+first_entry: '2022-06-08'
+latest_entry: '2026-05-07'
+feed: null
+entries:
+- date: '2026-05-07'
+  breaking: true
+  highlights:
+  - >-
+    MediaKey on the Media object of Property, Member and Office payloads changes from a
+    numeric/bigint to a string formatted <ObjectID>_<MediaCategoryId>_<MediaPosition>.
+  - >-
+    MediaKey stops changing when unrelated payload data changes; clients must monitor the Media
+    object's own ModificationTimestamp to detect photo changes.
+  - One-time reseeding event reissues MediaKey for all Member objects.
+  - Deleting and re-uploading a photo shifts MediaPosition, so all Media objects should be refreshed.
+- date: '2026-02-05'
+  breaking: false
+  additions:
+  - ListAgentNationalAssociationId
+  - CoListAgentNationalAssociationId
+  - CoListAgentNationalAssociationId2
+  - CoListAgentNationalAssociationId3
+  - ListOfficeNationalAssociationId
+  - CoListOfficeNationalAssociationId
+  - CoListOfficeNationalAssociationId2
+  - CoListOfficeNationalAssociationId3
+  highlights:
+  - National Association identifier fields added to the Property payload, filterable and orderable.
+  - Lead API matching logic expanded to route leads sent with CoListAgentKey2/CoListAgentKey3.
+  - SocialMediaType and ResourceName documented as string-based enums with correct types and examples.
+- date: '2025-11-26'
+  breaking: false
+  deprecations: [MapCoordinateVerifiedYN]
+  additions: [GeoCodeManualYN]
+  highlights:
+  - GeoCodeManualYN indicates whether geocoordinates were manually supplied by boards or members.
+  - MapCoordinateVerifiedYN deprecated; clients must migrate to GeoCodeManualYN.
+- date: '2025-08-01'
+  breaking: false
+  highlights:
+  - Substring filtering with the OData `contains` function on string fields of Property, Office and Member.
+  - Lookup fields excluded — they must be filtered using the lookup values defined in $metadata.
+- date: '2025-06-26'
+  breaking: false
+  additions: [CoListAgentKey2, CoListAgentKey3, CoListOfficeKey2, CoListOfficeKey3]
+  highlights:
+  - Third and fourth co-listing agents and offices now carried on the Property payload.
+- date: '2025-03-13'
+  breaking: false
+  additions: [ListAORKey, Fencing, LeasePerUnit, PricePerUnit, FrontageLengthNumeric, FrontageLengthNumericUnits, OfficeCountry]
+  highlights:
+  - Board/association key added to Property; OfficeCountry added to Office.
+- date: '2025-01-30'
+  breaking: false
+  highlights:
+  - nextLink URLs now correctly URL-encode special characters in queries.
+- date: '2024-09-10'
+  breaking: false
+  additions: [AccessibilityFeatures, BedroomsAboveGrade, BedroomsBelowGrade]
+- date: '2024-06-18'
+  breaking: false
+  additions:
+  - LivingAreaMin
+  - LivingAreaMax
+  - LivingAreaSource
+  - AboveGradeFinishedAreaMin
+  - AboveGradeFinishedAreaMax
+  - AboveGradeFinishedAreaSource
+  - BelowGradeFinishedArea
+  - BelowGradeFinishedAreaMin
+  - BelowGradeFinishedAreaMax
+  - BelowGradeFinishedAreaUnits
+  - BelowGradeFinishedAreaSource
+  highlights:
+  - Property measurements gain min/max ranges alongside the standard RESO fields.
+  - Measurement unit lookups realigned to RESO (AreaUnits, LotSizeUnits, LinearUnits) — re-pull $metadata.
+- date: '2024-05-22'
+  breaking: false
+  additions: [MapCoordinateVerifiedYN]
+  highlights:
+  - Past open house data purged; OpenHouse now returns only current or future events.
+- date: '2024-04-24'
+  breaking: false
+  additions: [ListAOR, LivestreamOpenHouseURL]
+  highlights:
+  - Obsolete and deprecated lookup values removed from the lookup data.
+- date: '2024-03-26'
+  breaking: false
+  additions: [MemberEmailYN]
+  highlights:
+  - >-
+    MemberEmailYN signals whether a REALTOR has an email address; Lead API clients must disable the
+    "Email REALTOR" function when it is false.
+  - Guidance published for French and special characters in Web API request strings.
+- date: '2024-02-20'
+  breaking: false
+  highlights:
+  - Performance improvements to total-count queries on Property, Member and Office.
+  - Recommended DDF client retrieval steps published.
+  - '"Powered by REALTOR.ca" badge requirement documented for all external display of DDF content.'
+  - Analytics web service documented for capturing listing statistics.
+- date: '2023-11-23'
+  breaking: false
+  highlights:
+  - Inactive listings removed sooner, in line with RETS clients.
+  - Count mismatch between the replication and property endpoints resolved.
+- date: '2023-09-22'
+  breaking: false
+  highlights:
+  - Property, Member and Office Replication endpoints return all timestamp fields in UTC.
+- date: '2023-08-17'
+  breaking: false
+  highlights:
+  - Property, Member, Office and Destination endpoints return all timestamps in UTC; UTC expected when filtering.
+- date: '2023-07-27'
+  breaking: false
+  additions: [FullNSP]
+  highlights:
+  - FullNSP flag on the Destination payload indicates a full National Shared Pool destination.
+- date: '2023-06-08'
+  breaking: false
+  additions: [ParcelNumber]
+  highlights:
+  - ListPrice, LeaseAmount, TotalActualRent, TaxAnnualAmount and AssociationFee rounded to two decimals.
+  - ModificationTimestamp precision changed to 2.
+- date: '2023-05-04'
+  breaking: false
+  highlights:
+  - $count fixed for NSP feeds; multiple lookup filters fixed.
+  - Stories on the Property payload now supports decimal values.
+- date: '2023-01-31'
+  breaking: false
+  highlights:
+  - Minimum TLS 1.2 enforced; all incoming requests must be HTTPS.
+- date: '2022-11-16'
+  breaking: false
+  highlights:
+  - Hotfix for queries combining $count and $filter on ListingKey and OfficeKey.
+- date: '2022-10-26'
+  breaking: false
+  additions: [PhotoChangeTimestamp, PropertyAttachedYN, StructureType, PhotosCount]
+- date: '2022-08-18'
+  breaking: false
+  additions: [CityRegion, ListingURL, OriginatingSystemName]
+  highlights:
+  - ListingURL links to the listing on realtor.ca; UTM codes should be stripped before OData operations.
+- date: '2022-06-08'
+  breaking: false
+  additions: [CommonInterest]

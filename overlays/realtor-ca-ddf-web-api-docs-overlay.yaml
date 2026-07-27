@@ -1,0 +1,92 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the REALTOR.ca DDF Web API (documentation copy)
+  version: 1.0.0
+extends: openapi/realtor-ca-ddf-web-api-docs-openapi.json
+x-apievangelist:
+  generated: '2026-07-26'
+  method: generated
+  source: >-
+    The documentation copy of the spec, extracted from the `var model` payload on
+    https://ddfapi-docs.realtor.ca/. It carries CREA's full 35,698-character narrative
+    info.description but the same structural gaps as the swagger.json copy. These actions restate
+    what that narrative already documents; nothing is invented and the original is not mutated.
+  fixes:
+  - servers[] is https://localhost:7051 rather than the production hosts.
+  - No components.securitySchemes and no security requirement, despite a hard Bearer gate.
+  - 14 of 17 operations carry no operationId; the 3 that do use a raw path string as the id.
+actions:
+- target: $.servers
+  update:
+  - url: https://ddfapi.realtor.ca/odata/v1
+    description: DDF Web API (OData v4) — production.
+  - url: https://ddfapi.realtor.ca/v1
+    description: DDF Lead API — production.
+- target: $.components.securitySchemes
+  update:
+    DDFApiOAuth2:
+      type: oauth2
+      description: >-
+        OAuth 2.0 client_credentials against CREA's IdentityServer, exactly as documented in the
+        "Authorization" section of this document. Tokens live 3,600 seconds and are not sliding.
+      flows:
+        clientCredentials:
+          tokenUrl: https://identity.crea.ca/connect/token
+          scopes:
+            DDFApi_Read: Read access to the DDF Web API resources entitled to the calling data feed.
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: 'Authorization: Bearer {access_token}.'
+- target: $
+  update:
+    security:
+    - DDFApiOAuth2: [DDFApi_Read]
+- target: $.info
+  update:
+    x-apievangelist-access: membership-required
+    x-apievangelist-signup: none — a licensed REALTOR or broker owner must register and link a DDF Destination
+    x-apievangelist-sandbox: none — the only test affordance is SuppressEmail=true on the Lead API
+    x-apievangelist-reso: data-dictionary-aligned-not-certified
+- target: $.externalDocs
+  update:
+    description: REALTOR.ca DDF Web API release notes
+    url: https://ddfapi-docs.realtor.ca/releasenotes
+- target: $.paths['/v1/Lead/CreateLead'].post
+  update:
+    operationId: createLead
+    x-apievangelist-note: >-
+      The only write operation in the DDF surface. Real estate advertising websites displaying DDF
+      listings are required to route "Email REALTOR" submissions here because member email
+      addresses are withheld from the feed payloads. No idempotency key is accepted — a retried
+      submission sends a second email. Use SuppressEmail=true while testing.
+- target: $.paths['/odata/v1/Property'].get
+  update:
+    operationId: listProperties
+- target: $.paths['/odata/v1/Property/{PropertyKey}'].get
+  update:
+    operationId: getProperty
+- target: $.paths['/odata/v1/Member'].get
+  update:
+    operationId: listMembers
+- target: $.paths['/odata/v1/Member/{MemberKey}'].get
+  update:
+    operationId: getMember
+- target: $.paths['/odata/v1/Office'].get
+  update:
+    operationId: listOffices
+- target: $.paths['/odata/v1/Office/{OfficeKey}'].get
+  update:
+    operationId: getOffice
+- target: $.paths['/odata/v1/OpenHouse'].get
+  update:
+    operationId: listOpenHouses
+- target: $.paths['/odata/v1/OpenHouse/{OpenHouseKey}'].get
+  update:
+    operationId: getOpenHouse
+- target: $.paths['/odata/v1/Destination'].get
+  update:
+    operationId: listDestinations
+- target: $.paths['/odata/v1/Destination/{DestinationKey}'].get
+  update:
+    operationId: getDestination

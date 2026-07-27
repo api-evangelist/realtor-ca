@@ -1,0 +1,58 @@
+generated: '2026-07-26'
+method: searched
+source: >-
+  npm registry search (registry.npmjs.org), PyPI, and the DDF Web API documentation at
+  https://ddfapi-docs.realtor.ca/ — probed 2026-07-26
+official_sdks: 0
+note: >-
+  CREA publishes NO first-party client libraries in any language. The DDF Web API documentation
+  ships no SDK section; its recommended client is Postman ("Postman is the preferred option to
+  quickly test out any request in the API"), and no collection is published either. There is no
+  CREA or REALTOR.ca GitHub organization (api.github.com/orgs/{crea,crea-ca,realtorca} all 404).
+  Everything below is third-party and is recorded as such — `official: false` — because it is the
+  only client tooling that exists for this API.
+packages: []
+community_packages:
+- language: typescript
+  registry: npm
+  name: crea-ddf
+  version: 0.0.6
+  url: https://www.npmjs.com/package/crea-ddf
+  install: npm install crea-ddf
+  repository: https://github.com/WaryaWayne/creaDDF
+  license: MIT
+  author: Warya Wayne
+  official: false
+  last_published: '2026-05-27'
+  description: >-
+    An Effect-native TypeScript SDK for the CREA DDF API with Postgres sync and frontend-ready
+    database queries. Wraps the OData resources and the replication endpoints rather than calling
+    them per-request.
+- language: typescript
+  registry: npm
+  name: crea-ddf-mcp
+  version: 0.0.4
+  url: https://www.npmjs.com/package/crea-ddf-mcp
+  install: npm install -g crea-ddf-mcp
+  bin: crea-ddf-mcp
+  repository: https://github.com/WaryaWayne/crea-ddf-mcp
+  license: MIT
+  author: Warya Wayne
+  official: false
+  last_published: '2026-05-27'
+  description: >-
+    Read-only Model Context Protocol server that queries a Postgres database already synced from
+    the DDF Web API via the crea-ddf package. It does not proxy ddfapi.realtor.ca directly.
+registries_probed:
+- registry: npm
+  query: 'realtor.ca ddf / crea ddf api'
+  first_party_hits: 0
+  third_party_hits: 2
+- registry: pypi
+  query: ddf-api, realtor-ca
+  status: 404
+  hits: 0
+- registry: github-orgs
+  query: crea, crea-ca, CREA-CA, realtorca, REALTORdotca
+  status: 404
+  hits: 0

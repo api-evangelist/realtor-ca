@@ -1,0 +1,15 @@
+# security.txt file for https://www.crea.ca/ - more info: https://securitytxt.org/
+# (required) Contact email address for security issues
+Contact: tech@alphabetcreative.com
+
+# (required) Expiration date for the security information herein
+Expiration: 2026-07-26T18:56:22-04:00
+
+# (optional) OpenPGP key:
+Encryption: https://www.crea.ca/pgp-key.txt
+
+# (optional) Security policy page:
+Policy: https://www.crea.ca/security-policy
+
+# (optional) Security acknowledgements page:
+Acknowledgements: https://www.crea.ca/hall-of-fame

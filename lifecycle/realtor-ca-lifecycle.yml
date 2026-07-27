@@ -1,0 +1,81 @@
+generated: '2026-07-26'
+method: searched
+source: >-
+  https://ddfapi-docs.realtor.ca/releasenotes (HTTP 200, 24 dated entries Aug 2022 - May 2026) and
+  the DDF Web API documentation at https://ddfapi-docs.realtor.ca/
+versioning:
+  scheme: uri-path
+  current: v1
+  paths:
+  - https://ddfapi.realtor.ca/odata/v1
+  - https://ddfapi.realtor.ca/v1
+  policy_url: null
+  note: >-
+    v1 is the only version ever published. CREA has no documented version-negotiation header, no
+    date-pinned versions and no published policy describing what constitutes a breaking change.
+    In practice the API evolves additively in place — 20 of the 24 release-note entries are new
+    fields added to a response payload, shipped without a version bump.
+deprecation:
+  policy_url: null
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  note: >-
+    No published deprecation policy, no Sunset/Deprecation headers, and no `deprecated: true` flag
+    on any operation or schema property in either harvested OpenAPI. Deprecation is announced only
+    as prose in the release notes, with no stated removal date.
+  announced_deprecations:
+  - item: MapCoordinateVerifiedYN
+    scope: Property response payload field
+    announced: '2025-11-26'
+    replacement: GeoCodeManualYN
+    removal_date: null
+    source: https://ddfapi-docs.realtor.ca/releasenotes
+    note: >-
+      "This field is now deprecated and should not be referenced by clients. Clients currently
+      using MapCoordinateVerifiedYN must update their integrations to use GeoCodeManualYN."
+  breaking_changes_announced:
+  - item: MediaKey
+    scope: Media object on Property, Member and Office payloads
+    announced: '2026-05-07'
+    change: >-
+      MediaKey changes from a numeric/bigint to a string of the form
+      <ObjectID>_<MediaCategoryId>_<MediaPosition>, and stops churning on unrelated payload edits;
+      clients must switch to watching the Media object's own ModificationTimestamp. A one-time
+      reseeding event reissues MediaKey for all Member objects.
+      A type change on a primary key, announced in release notes with no version bump and no
+      deprecation window.
+    source: https://ddfapi-docs.realtor.ca/releasenotes
+deprecated_operations: []
+sla:
+  url: null
+  uptime_target: null
+  published: false
+status_page:
+  url: null
+  published: false
+  note: >-
+    None. status.realtor.ca and status.crea.ca do not resolve (DNS), and no status or incident page
+    is linked from the documentation, the member portal or the developer forum. A 503 is documented
+    as a possible response with nothing to correlate it against.
+support:
+  email: support@realtor.ca
+  language: English only ("At this time support is only offered in English")
+  help_center: https://support.crea.ca/
+  developer_forum: https://crea.vanillacommunity.com/
+change_communication:
+  changelog: https://ddfapi-docs.realtor.ca/releasenotes
+  cadence: irregular — 24 entries between Aug 2022 and May 2026, roughly quarterly
+  detail: changelog/realtor-ca-changelog.yml
+  advance_notice: >-
+    Entries are dated to the release, and several describe changes in the future tense ("will be
+    changing"), so some notice is given — but no fixed notice period is published.
+  subscription: null
+  note: No RSS/Atom feed, email list or webhook for API change notification.
+maturity:
+  stage: production
+  first_public_release_note: '2022-06-08'
+  predecessor: >-
+    RETS. Release notes reference aligning DDF Web API data timing "in line with our RETS clients",
+    confirming the OData Web API succeeded a RETS feed.

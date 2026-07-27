@@ -1,0 +1,115 @@
+generated: '2026-07-26'
+method: searched
+source: >-
+  https://identity.crea.ca/.well-known/openid-configuration (HTTP 200, harvested verbatim) and the
+  "Authorization" / "API Access Tokens" sections of the DDF Web API documentation at
+  https://ddfapi-docs.realtor.ca/
+docs: https://ddfapi-docs.realtor.ca/#section/Authorization
+note: >-
+  DERIVATION FAILED BY DESIGN: neither harvested OpenAPI declares a `components.securitySchemes`
+  block and neither declares `security` on any operation, even though every endpoint returns HTTP
+  401 without a Bearer token. The auth model below is SEARCHED from CREA's own documentation and
+  from the anonymously-readable OpenID Connect discovery document, not derived from the spec. This
+  gap is captured as an enhancement in overlays/.
+summary:
+  types: [oauth2, http]
+  api_key_in: []
+  oauth2_flows: [clientCredentials]
+  http_schemes: [bearer]
+  spec_declares_security: false
+schemes:
+- name: DDFApiOAuth2
+  type: oauth2
+  source: https://ddfapi-docs.realtor.ca/#section/Authorization
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://identity.crea.ca/connect/token
+    scopes:
+      DDFApi_Read: Read access to the DDF Web API resources entitled to the Destination feed.
+  request:
+    method: POST
+    content_type: application/x-www-form-urlencoded
+    fields:
+      client_id: The username of your DDF Destination (data feed).
+      client_secret: The password of your DDF Destination (data feed).
+      grant_type: client_credentials
+      scope: DDFApi_Read
+  response:
+    access_token: The bearer token value.
+    expires_in: 3600
+    token_type: Bearer
+    scope: DDFApi_Read
+  token_lifetime_seconds: 3600
+  sliding: false
+  note: >-
+    CREA states the token is not sliding — a new token must be requested every hour regardless of
+    activity. CREA also recommends server-to-server token use only: "Client-to-server API token
+    requests create a security risk and could allow unauthorized access to your data feeds."
+- name: BearerAuth
+  type: http
+  scheme: bearer
+  source: https://ddfapi-docs.realtor.ca/#section/Authorization
+  applies_to:
+  - https://ddfapi.realtor.ca/odata/v1
+  - https://ddfapi.realtor.ca/v1
+  note: >-
+    Every DDF Web API and Lead API request carries `Authorization: Bearer {access_token}`.
+    Anonymous requests — including to the OData $metadata document — return HTTP 401 with
+    `WWW-Authenticate: Bearer`.
+authorization_servers:
+- issuer: https://identity.crea.ca
+  role: The developer/API gate. Issues every DDF Web API access token.
+  vendor: Duende/IdentityServer
+  discovery: https://identity.crea.ca/.well-known/openid-configuration
+  harvested: authentication/realtor-ca-crea-identity-openid-configuration.json
+  authorization_endpoint: https://identity.crea.ca/connect/authorize
+  token_endpoint: https://identity.crea.ca/connect/token
+  introspection_endpoint: https://identity.crea.ca/connect/introspect
+  revocation_endpoint: https://identity.crea.ca/connect/revocation
+  userinfo_endpoint: https://identity.crea.ca/connect/userinfo
+  jwks_uri: https://identity.crea.ca/.well-known/openid-configuration/jwks
+  pushed_authorization_request_endpoint: https://identity.crea.ca/connect/par
+  require_pushed_authorization_requests: false
+  grant_types:
+  - authorization_code
+  - client_credentials
+  - refresh_token
+  - implicit
+  - 'urn:ietf:params:oauth:grant-type:device_code'
+  - 'urn:openid:params:grant-type:ciba'
+  token_endpoint_auth_methods: [client_secret_basic, client_secret_post]
+  id_token_signing_alg: [RS256]
+  code_challenge_methods: [plain, S256]
+  dpop_supported: true
+  dpop_signing_algs: [RS256, RS384, RS512, PS256, PS384, PS512, ES256, ES384, ES512]
+  claims_supported: [sub, destinationid]
+  note: >-
+    The `destinationid` claim is the entitlement carrier — a token is scoped to the member-
+    registered Destination feed whose credentials minted it, not to a developer account.
+- issuer: https://auth.realtor.ca/
+  role: >-
+    Human sign-in for REALTOR.ca / ddf.realtor.ca members and consumers. NOT a developer API gate —
+    no DDF Web API token can be obtained here.
+  vendor: Auth0
+  discovery: https://auth.realtor.ca/.well-known/openid-configuration
+  harvested: authentication/realtor-ca-auth0-openid-configuration.json
+  token_endpoint: https://auth.realtor.ca/oauth/token
+  jwks_uri: https://auth.realtor.ca/.well-known/jwks.json
+  rfc8414_metadata: https://auth.realtor.ca/.well-known/oauth-authorization-server
+  mfa_challenge_endpoint: https://auth.realtor.ca/mfa/challenge
+  dpop_supported: true
+  dpop_signing_algs: [ES256]
+credential_issuance:
+  self_serve: false
+  sandbox: false
+  gate: >-
+    A licensed REALTOR or broker owner must create a DDF Destination (data feed) in the member
+    portal at https://member.realtor.ca/Distribution/Default.aspx and link it to the integrator.
+    The credential you receive is the FEED's username/password, not a developer key. A Technology
+    Provider enumerates the feeds linked to it by querying GET /odata/v1/Destination.
+transport_security:
+  min_tls: '1.2'
+  https_only: true
+  source: >-
+    DDF Web API release notes, January 31st 2023 — "Update to support minimum TLS version 1.2
+    enforcing all incoming requests to be HTTPS."

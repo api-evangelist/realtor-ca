@@ -76,6 +76,20 @@ apis:
     url: https://www.crea.ca/ddf/
   - type: Support
     url: https://crea.vanillacommunity.com/
+  - type: Overlay
+    url: overlays/realtor-ca-ddf-web-api-overlay.yaml
+  - type: Overlay
+    url: overlays/realtor-ca-ddf-web-api-docs-overlay.yaml
+  - type: Conventions
+    url: conventions/realtor-ca-conventions.yml
+  - type: ErrorCatalog
+    url: errors/realtor-ca-problem-types.yml
+  - type: DataModel
+    url: data-model/realtor-ca-data-model.yml
+  - type: MCPServer
+    url: mcp/realtor-ca-mcp.yml
+  - type: AgentSkill
+    url: skills/_index.yml
 - aid: realtor-ca:realtor-ca-ddf-lead-api
   name: REALTOR.ca DDF Lead API
   description: >-
@@ -98,7 +112,13 @@ apis:
   - type: Documentation
     url: https://ddfapi-docs.realtor.ca/
   - type: Authentication
+    url: authentication/realtor-ca-authentication.yml
+  - type: Authentication
     url: authentication/realtor-ca-crea-identity-openid-configuration.json
+  - type: ErrorCatalog
+    url: errors/realtor-ca-problem-types.yml
+  - type: AgentSkill
+    url: skills/realtor-ca-submit-realtor-lead.md
 - aid: realtor-ca:crea-analytics-web-service
   name: CREA Analytics Web Service
   description: >-
@@ -136,10 +156,20 @@ apis:
   - Identity
   properties:
   - type: Authentication
+    url: authentication/realtor-ca-authentication.yml
+  - type: Authentication
     url: authentication/realtor-ca-crea-identity-openid-configuration.json
+  - type: OAuthScopes
+    url: scopes/realtor-ca-scopes.yml
+  - type: OpenIDConnect
+    url: https://identity.crea.ca/.well-known/openid-configuration
   - type: Documentation
     url: https://ddfapi-docs.realtor.ca/
 common:
+- type: AgenticAccess
+  url: agentic-access/realtor-ca-agentic-access.yml
+- type: DomainSecurity
+  url: security/realtor-ca-domain-security.yml
 - type: Website
   url: https://www.realtor.ca/
 - type: Website
@@ -148,20 +178,64 @@ common:
   url: https://ddfapi-docs.realtor.ca/
 - type: Documentation
   url: https://www.crea.ca/ddf/
+- type: APIReference
+  url: https://ddfapi-docs.realtor.ca/
+- type: GettingStarted
+  url: https://ddfapi-docs.realtor.ca/#section/Quickstart-Overview
 - type: GettingStarted
   url: https://www.crea.ca/ddf/get-started/
 - type: TermsOfService
   url: https://www.crea.ca/ddf/member-policy-and-rules/
+- type: PrivacyPolicy
+  url: https://www.crea.ca/privacy/
+- type: Legal
+  url: https://www.crea.ca/legal/
 - type: Support
   url: https://support.crea.ca/
 - type: Forum
   url: https://crea.vanillacommunity.com/
+- type: Blog
+  url: https://www.crea.ca/news/
+- type: BlogRSS
+  url: https://www.crea.ca/feed/
 - type: ChangeLog
   url: https://ddfapi-docs.realtor.ca/releasenotes
+- type: ChangeLog
+  url: changelog/realtor-ca-changelog.yml
+- type: Authentication
+  url: authentication/realtor-ca-authentication.yml
 - type: Authentication
   url: authentication/realtor-ca-crea-identity-openid-configuration.json
 - type: Authentication
   url: authentication/realtor-ca-auth0-openid-configuration.json
+- type: OAuthScopes
+  url: scopes/realtor-ca-scopes.yml
+- type: Conventions
+  url: conventions/realtor-ca-conventions.yml
+- type: ErrorCatalog
+  url: errors/realtor-ca-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/realtor-ca-lifecycle.yml
+- type: Conformance
+  url: conformance/realtor-ca-conformance.yml
+- type: DataModel
+  url: data-model/realtor-ca-data-model.yml
+- type: Packages
+  url: packages/realtor-ca-packages.yml
+- type: WellKnown
+  url: well-known/realtor-ca-well-known.yml
+- type: SecurityTxt
+  url: well-known/realtor-ca-security.txt
+- type: Security
+  url: https://www.crea.ca/.well-known/security.txt
+- type: VulnerabilityDisclosure
+  url: security/realtor-ca-vulnerability-disclosure.yml
+- type: MCPServer
+  url: mcp/realtor-ca-mcp.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: LLMsTxt
+  url: llms/realtor-ca-llms.txt
 - type: LinkedIn
   url: https://www.linkedin.com/company/realtor-ca/
 - type: LinkedIn

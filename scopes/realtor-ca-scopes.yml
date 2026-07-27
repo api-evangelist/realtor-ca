@@ -1,0 +1,66 @@
+generated: '2026-07-26'
+method: searched
+source: >-
+  https://identity.crea.ca/.well-known/openid-configuration (HTTP 200, anonymous) — the
+  `scopes_supported` array — cross-read against the "API Access Tokens" table in the DDF Web API
+  documentation
+docs: https://ddfapi-docs.realtor.ca/#section/Authorization
+note: >-
+  derive-oauth-scopes.py returned zero because neither harvested OpenAPI declares an oauth2
+  securityScheme. The scopes below are SEARCHED: CREA's authorization server publishes them
+  anonymously in its discovery document, and the documentation names exactly one — DDFApi_Read —
+  as the scope a DDF data feed requests. The other three are advertised by the same authorization
+  server for CREA products that have no public documentation and no resolvable host; they are
+  recorded as observed-but-undocumented, and no endpoint was invented for them.
+schemes:
+- name: DDFApiOAuth2
+  source: https://identity.crea.ca/.well-known/openid-configuration
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://identity.crea.ca/connect/token
+    authorizationUrl: https://identity.crea.ca/connect/authorize
+scopes:
+- scope: DDFApi_Read
+  description: >-
+    Read access to the REALTOR.ca DDF Web API — the Property, Member, Office, OpenHouse and
+    Destination OData resources and their Replication endpoints, restricted to the Destinations
+    entitled to the calling data feed. This is the only scope CREA documents, and the only one a
+    DDF integrator requests.
+  flows: [clientCredentials]
+  documented: true
+  sources: [https://ddfapi-docs.realtor.ca/#section/Authorization]
+- scope: openid
+  description: Standard OpenID Connect scope; returns an ID token for interactive flows.
+  flows: [authorizationCode, implicit]
+  documented: false
+  sources: [https://identity.crea.ca/.well-known/openid-configuration]
+- scope: offline_access
+  description: Standard OAuth 2.0 scope requesting a refresh token. Not applicable to the documented client_credentials DDF flow.
+  flows: [authorizationCode]
+  documented: false
+  sources: [https://identity.crea.ca/.well-known/openid-configuration]
+- scope: OfferManagementApi.read.write
+  description: >-
+    Read/write access to a CREA offer-management API. Advertised by identity.crea.ca but CREA
+    publishes no documentation, no host and no key-issuance path for it — offerapi.crea.ca and
+    offermanagement-docs.realtor.ca do not resolve.
+  flows: [clientCredentials]
+  documented: false
+  undocumented_product: true
+  sources: [https://identity.crea.ca/.well-known/openid-configuration]
+- scope: BoardDataApi.read
+  description: >-
+    Read access to a CREA board-data API. Advertised by identity.crea.ca but undocumented —
+    boarddataapi.crea.ca and boarddata-docs.realtor.ca do not resolve.
+  flows: [clientCredentials]
+  documented: false
+  undocumented_product: true
+  sources: [https://identity.crea.ca/.well-known/openid-configuration]
+summary:
+  total: 5
+  documented: 1
+  granularity: >-
+    Coarse. One read scope covers the entire national listing pool; entitlement is enforced not by
+    scope but by the `destinationid` claim bound to the credential — a feed sees only the
+    Destinations a member or broker owner linked to it. There is no per-resource, per-board or
+    per-field scope.

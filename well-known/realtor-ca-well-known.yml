@@ -1,0 +1,118 @@
+generated: '2026-07-26'
+method: searched
+source: live probes of every apis.yml baseURL host, the docs host and the identity hosts
+note: >-
+  Probed 2026-07-26. Two caveats recorded rather than trusted: (1) www.realtor.ca sits behind
+  Imperva/Incapsula and returns HTTP 200 with a ~1,040-byte challenge/SPA shell for ANY path, so
+  its "200" on /security.txt and /llms.txt is NOT a real document and was discarded — a control
+  fetch of /zzz-nonexistent-kin-test-2 returned a byte-identical body. (2) www.crea.ca serves a
+  real RFC 9116 security.txt at the canonical /.well-known/ location, but every URL that file
+  references (Policy, Encryption, Acknowledgements) returns 404, and its Expiration date had
+  already lapsed at fetch time — recorded as published-but-unmaintained.
+hosts:
+- host: https://www.crea.ca
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: realtor-ca-security.txt
+    format: RFC 9116
+  - path: /security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /llms.txt
+    status: 404
+- host: https://ddfapi.realtor.ca
+  note: DDF Web API + Lead API host. No /.well-known surface at all.
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /llms.txt
+    status: 404
+- host: https://ddfapi-docs.realtor.ca
+  note: Public developer documentation host (Redoc).
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /llms.txt
+    status: 404
+- host: https://identity.crea.ca
+  note: CREA IdentityServer — the authorization server every DDF call depends on.
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 200
+    file: ../authentication/realtor-ca-crea-identity-openid-configuration.json
+    format: OpenID Connect Discovery 1.0
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    note: >-
+      RFC 8414 metadata is not served; only the OIDC discovery document is. Clients must read
+      /.well-known/openid-configuration.
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+- host: https://auth.realtor.ca
+  note: Auth0 tenant behind REALTOR.ca member/consumer sign-in — a human login surface, not the developer gate.
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 200
+    file: ../authentication/realtor-ca-auth0-openid-configuration.json
+    format: OpenID Connect Discovery 1.0
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    note: Auth0 serves RFC 8414 metadata identical to its OIDC discovery document.
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+- host: https://www.realtor.ca
+  note: >-
+    Consumer portal behind Imperva/Incapsula. Status codes from this host are not evidence — any
+    path returns 200 with the same challenge shell. All results below are discarded as unusable.
+  documents:
+  - path: /security.txt
+    status: 200
+    trusted: false
+    reason: WAF/SPA shell, byte-identical to a control request for a nonexistent path.
+  - path: /llms.txt
+    status: 200
+    trusted: false
+    reason: WAF/SPA shell, byte-identical to a control request for a nonexistent path.
+  - path: /.well-known/security.txt
+    status: 404
+security_txt:
+  file: realtor-ca-security.txt
+  url: https://www.crea.ca/.well-known/security.txt
+  contact: tech@alphabetcreative.com
+  policy: https://www.crea.ca/security-policy
+  policy_status: 404
+  encryption: https://www.crea.ca/pgp-key.txt
+  encryption_status: 404
+  acknowledgements: https://www.crea.ca/hall-of-fame
+  acknowledgements_status: 404
+  expiration: '2026-07-26T18:56:22-04:00'
+  expired_at_fetch: true
+api_catalog:
+  present: false
+  note: >-
+    No RFC 9727 /.well-known/api-catalog anywhere in the estate. CREA's own catalog of what it
+    publishes is the human documentation site at https://ddfapi-docs.realtor.ca/.

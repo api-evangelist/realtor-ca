@@ -1,0 +1,85 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the REALTOR.ca DDF Web API
+  version: 1.0.0
+extends: openapi/realtor-ca-ddf-web-api-openapi.json
+x-apievangelist:
+  generated: '2026-07-26'
+  method: generated
+  source: >-
+    Enhancements derived from CREA's own published documentation at https://ddfapi-docs.realtor.ca/
+    and from https://identity.crea.ca/.well-known/openid-configuration. Nothing here is invented —
+    each action restates something CREA documents in prose but omitted from the machine-readable
+    contract. The original spec, harvested verbatim from
+    https://ddfapi.realtor.ca/swagger/v1/swagger.json, is never mutated.
+  fixes:
+  - servers[] is published as https://localhost:7051, a development artifact; the real hosts are
+    https://ddfapi.realtor.ca/odata/v1 (Web API) and https://ddfapi.realtor.ca/v1 (Lead API).
+  - No components.securitySchemes and no security requirement is declared, even though every
+    operation returns 401 without a Bearer token.
+  - info.description is empty in this copy; the narrative lives only in the documentation copy.
+actions:
+- target: $.info
+  update:
+    description: >-
+      The REALTOR.ca Data Distribution Facility (DDF) Web API is CREA's national MLS System listing
+      distribution surface — OData v4 read endpoints over Property, Member, Office, OpenHouse and
+      Destination, plus per-resource Replication endpoints for incremental sync, and a single
+      Lead write endpoint. Data is normalized to the RESO Data Dictionary. Every endpoint,
+      including the OData $metadata document, requires an OAuth 2.0 Bearer token obtained with
+      DDF data-feed credentials.
+    x-apievangelist-source: https://ddfapi-docs.realtor.ca/
+    x-apievangelist-access: membership-required
+    x-apievangelist-reso: data-dictionary-aligned-not-certified
+- target: $.servers
+  update:
+  - url: https://ddfapi.realtor.ca/odata/v1
+    description: DDF Web API (OData v4) — production. Replaces the published https://localhost:7051 placeholder.
+  - url: https://ddfapi.realtor.ca/v1
+    description: DDF Lead API — production.
+- target: $.components.securitySchemes
+  update:
+    DDFApiOAuth2:
+      type: oauth2
+      description: >-
+        OAuth 2.0 client_credentials against CREA's IdentityServer. client_id and client_secret are
+        the username and password of a member-registered DDF Destination (data feed). Tokens live
+        3,600 seconds and are not sliding.
+      flows:
+        clientCredentials:
+          tokenUrl: https://identity.crea.ca/connect/token
+          scopes:
+            DDFApi_Read: Read access to the DDF Web API resources entitled to the calling data feed.
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: 'Authorization: Bearer {access_token} obtained from https://identity.crea.ca/connect/token.'
+- target: $
+  update:
+    security:
+    - DDFApiOAuth2: [DDFApi_Read]
+- target: $.externalDocs
+  update:
+    description: REALTOR.ca DDF Web API documentation
+    url: https://ddfapi-docs.realtor.ca/
+- target: $.info.x-apievangelist-conventions
+  update:
+    pagination:
+      default_page_size: 20
+      max_page_size: 100
+      next_field: '@odata.nextLink'
+      replication_threshold: 10000
+    incremental_sync_cursor: ModificationTimestamp
+    timestamps: UTC
+    idempotency: none
+    rate_limits: undocumented
+    error_envelope: '{"error":{"message","code","details"}}'
+- target: $.info.x-apievangelist-artifacts
+  update:
+    authentication: authentication/realtor-ca-authentication.yml
+    scopes: scopes/realtor-ca-scopes.yml
+    conventions: conventions/realtor-ca-conventions.yml
+    errors: errors/realtor-ca-problem-types.yml
+    lifecycle: lifecycle/realtor-ca-lifecycle.yml
+    data_model: data-model/realtor-ca-data-model.yml
+    changelog: changelog/realtor-ca-changelog.yml

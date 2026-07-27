@@ -1,0 +1,37 @@
+generated: '2026-07-26'
+method: generated
+source: >-
+  openapi/realtor-ca-ddf-web-api-docs-openapi.json plus the DDF Web API documentation at
+  https://ddfapi-docs.realtor.ca/. CREA publishes no AGENTS.md, skills or agent guidance of its own.
+note: >-
+  Steps are grounded in the real method+path of each operation. The harvested OpenAPI declares no
+  operationId on 14 of its 17 operations (and a raw path string on the other 3), so paths are the
+  only stable identifier the spec offers; recommended operationIds are proposed in
+  overlays/realtor-ca-ddf-web-api-docs-overlay.yaml rather than invented here.
+skills:
+- file: realtor-ca-authenticate-and-query-listings.md
+  name: Authenticate and query REALTOR.ca DDF listings
+  api: openapi/realtor-ca-ddf-web-api-docs-openapi.json
+  operations:
+  - POST https://identity.crea.ca/connect/token
+  - GET /odata/v1/Destination
+  - GET /odata/v1/Property
+  - GET /odata/v1/Property/{PropertyKey}
+  - GET /odata/v1/OpenHouse
+  - GET /odata/v1/Member
+  - GET /odata/v1/Office
+- file: realtor-ca-replicate-listing-data.md
+  name: Replicate REALTOR.ca DDF listing data into your own database
+  api: openapi/realtor-ca-ddf-web-api-docs-openapi.json
+  operations:
+  - GET /odata/v1/Property/PropertyReplication()
+  - GET /odata/v1/Property/PropertyReplication(DestinationId={DestinationId})
+  - GET /odata/v1/Member/MemberReplication()
+  - GET /odata/v1/Office/OfficeReplication()
+  - GET /odata/v1/Property/{PropertyKey}
+- file: realtor-ca-submit-realtor-lead.md
+  name: Submit an Email REALTOR lead through the DDF Lead API
+  api: openapi/realtor-ca-ddf-web-api-docs-openapi.json
+  operations:
+  - POST /v1/Lead/CreateLead
+  - GET /odata/v1/Member/{MemberKey}
