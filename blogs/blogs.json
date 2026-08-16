@@ -6,16 +6,18 @@
       "feed_url": "https://crea.vanillacommunity.com/",
       "title": "",
       "saved": 0,
-      "method": "none"
+      "method": "none",
+      "error": "parse_failed"
     },
     {
       "source": "https://www.crea.ca/news/",
       "feed_url": "https://www.crea.ca/news/",
       "title": "",
       "saved": 0,
-      "method": "none"
+      "method": "none",
+      "error": "parse_failed"
     }
   ],
   "post_count": 0,
-  "fetched": "2026-08-06T14:08:46Z"
+  "fetched": "2026-08-15T12:11:08Z"
 }
