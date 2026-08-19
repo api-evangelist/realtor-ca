@@ -36,7 +36,7 @@ tags:
 - Rentals
 created: '2026-07-26'
 modified: '2026-07-26'
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 apis:
 - aid: realtor-ca:realtor-ca-ddf-web-api
   name: REALTOR.ca DDF Web API
