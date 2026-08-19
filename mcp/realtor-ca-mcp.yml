@@ -2,15 +2,13 @@ generated: '2026-07-26'
 method: derived
 status: candidate
 source: openapi/realtor-ca-ddf-web-api-docs-openapi.json
-note: >-
-  CREA publishes NO official MCP server. No mcp.* / *.mcp host resolves in the crea.ca or
-  realtor.ca estate, the DDF Web API documentation never mentions MCP or agents, and there is no
-  CREA GitHub organization. The tool list below is a CANDIDATE derived one-per-operation from the
-  harvested OpenAPI 3.0.4 — it is what an MCP server over the DDF Web API would expose, not
-  something CREA ships. Every tool inherits its real input contract from the OData query
-  parameters ($select/$filter/$top/$skip/$orderby/$count) declared on the backing path.
-  Any such server is only useful with a CREA-issued data-feed credential: every DDF endpoint
-  returns HTTP 401 without a Bearer token from https://identity.crea.ca/connect/token.
+note: 'CREA publishes NO official MCP server. No mcp.* / *.mcp host resolves in the crea.ca or realtor.ca
+  estate, the DDF Web API documentation never mentions MCP or agents, and there is no CREA GitHub organization.
+  The tool list below is a CANDIDATE derived one-per-operation from the harvested OpenAPI 3.0.4 — it is
+  what an MCP server over the DDF Web API would expose, not something CREA ships. Every tool inherits
+  its real input contract from the OData query parameters ($select/$filter/$top/$skip/$orderby/$count)
+  declared on the backing path. Any such server is only useful with a CREA-issued data-feed credential:
+  every DDF endpoint returns HTTP 401 without a Bearer token from https://identity.crea.ca/connect/token.'
 server:
   name: realtor-ca-ddf
   transport: http
@@ -30,9 +28,8 @@ community_implementations:
   version: 0.0.4
   official: false
   transport: stdio
-  description: >-
-    Read-only MCP server that queries a Postgres database synced from the DDF Web API through the
-    crea-ddf package. It reads a local replica, not ddfapi.realtor.ca live.
+  description: Read-only MCP server that queries a Postgres database synced from the DDF Web API through
+    the crea-ddf package. It reads a local replica, not ddfapi.realtor.ca live.
 tools:
 - name: list_properties
   description: List MLS System property listings available to the caller's Destination feed(s).
@@ -43,7 +40,8 @@ tools:
   source_operation: openapi/realtor-ca-ddf-web-api-docs-openapi.json#get /odata/v1/Property/{PropertyKey}
   read_only: true
 - name: replicate_properties
-  description: Get the master replication list of properties across all destinations, sorted by modification timestamp.
+  description: Get the master replication list of properties across all destinations, sorted by modification
+    timestamp.
   source_operation: openapi/realtor-ca-ddf-web-api-docs-openapi.json#get /odata/v1/Property/PropertyReplication()
   read_only: true
 - name: replicate_properties_for_destination
@@ -99,10 +97,8 @@ tools:
   source_operation: openapi/realtor-ca-ddf-web-api-docs-openapi.json#get /odata/v1/Destination/{DestinationKey}
   read_only: true
 - name: create_lead
-  description: >-
-    Submit an email lead for a REALTOR against a listing. The ONLY write operation in the DDF
-    surface. Requires human intent — set SuppressEmail=true when testing so no email reaches a
-    real REALTOR.
+  description: Submit an email lead for a REALTOR against a listing. The ONLY write operation in the DDF
+    surface. Requires human intent — set SuppressEmail=true when testing so no email reaches a real REALTOR.
   source_operation: openapi/realtor-ca-ddf-web-api-docs-openapi.json#post /v1/Lead/CreateLead
   read_only: false
   human_in_the_loop: recommended
@@ -110,3 +106,9 @@ coverage:
   rest_operations: 17
   tools_derived: 17
   provider_published_tools: 0
+deployment:
+  mode: none
+  verified: derived
+  tools: 17
+  checked: '2026-08-12'
+  source: catalog MCP census

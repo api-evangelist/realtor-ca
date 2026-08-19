@@ -1,0 +1,690 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "REALTOR.ca DDF® Web API Documentation",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Destination",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a list of Client Destinations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://localhost:7051/odata/v1/Destination",
+            "params": [
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Selects which properties to include in the response."
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Return, along with the results, the total number of records in the dataset. NOTE: There is a performance cost with this query option."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "Filters the results, based on a Boolean condition."
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Returns only the first n results."
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Skips the first n results."
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "Sorts the results."
+              }
+            ]
+          },
+          "docs": "Get a list of Client Destinations"
+        },
+        {
+          "info": {
+            "name": "Get a single Client Destination by DestinationId",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://localhost:7051/odata/v1/Destination/:DestinationKey",
+            "params": [
+              {
+                "name": "DestinationKey",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Selects which properties to include in the response."
+              }
+            ]
+          },
+          "docs": "Both methods are valid and return the same result: a single Destination entity identified by its unique DestinationId.\nThe path-style is more intuitive and commonly used in RESTful APIs.\nThe function-style follows OData conventions and may be required in certain query contexts (e.g., when the key contains special characters or is not a simple numeric ID).\n\n<b>Path-style access: </b>```/odata/v1/Destination/{DestinationKey}```\n\n<b>Example: </b>```/odata/v1/Destination/1301```\n\n<b>Function-style a"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Lead",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create an email lead for a Member",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://localhost:7051/v1/Lead/CreateLead",
+            "params": [
+              {
+                "name": "SuppressEmail",
+                "value": "true",
+                "type": "query",
+                "description": "Suppresses an email from being sent to the Realtor when set to true."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an email lead for a Member"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Member",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a list of members",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://localhost:7051/odata/v1/Member",
+            "params": [
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Selects which properties to include in the response."
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Return, along with the results, the total number of records in the dataset. NOTE: There is a performance cost with this query option."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "Filters the results, based on a Boolean condition."
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Returns only the first n results."
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Skips the first n results."
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "Sorts the results."
+              }
+            ]
+          },
+          "docs": "Get a list of members"
+        },
+        {
+          "info": {
+            "name": "Get a single member by MemberKey",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://localhost:7051/odata/v1/Member/:MemberKey",
+            "params": [
+              {
+                "name": "MemberKey",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier for this record from the immediate source"
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Selects which properties to include in the response."
+              }
+            ]
+          },
+          "docs": "Both methods are valid and return the same result: a single Member entity identified by its unique MemberKey.\nThe path-style is more intuitive and commonly used in RESTful APIs.\nThe function-style follows OData conventions and may be required in certain query contexts (e.g., when the key contains special characters or is not a simple numeric ID).\n\n<b>Path-style access: </b>```/odata/v1/Member/{MemberKey}```\n\n<b>Example: </b>```/odata/v1/Member/14090```\n\n<b>Function-style access: </b>```/odata/v1"
+        },
+        {
+          "info": {
+            "name": "Get a list of members for all destinations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://localhost:7051/odata/v1/Member/MemberReplication()",
+            "params": [
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Selects which properties to include in the response."
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Return, along with the results, the total number of records in the dataset. NOTE: There is a performance cost with this query option."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "Filters the results, based on a Boolean condition."
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "Sorts the results."
+              }
+            ]
+          },
+          "docs": "Both methods are valid and return the same result:\nThe path-style is more intuitive and commonly used in RESTful APIs.\nThe function-style follows OData conventions.\n\n<b>Path-style access: </b>```/odata/v1/Member/MemberReplication```\n\n<b>Function-style access: </b>```/odata/v1/Member/MemberReplication()```\n\n"
+        },
+        {
+          "info": {
+            "name": "Get a list of members for a single destination",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://localhost:7051/odata/v1/Member/MemberReplication(DestinationId=:DestinationId)",
+            "params": [
+              {
+                "name": "DestinationId",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier for the desired destination"
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Selects which properties to include in the response."
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Return, along with the results, the total number of records in the dataset. NOTE: There is a performance cost with this query option."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "Filters the results, based on a Boolean condition."
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "Sorts the results."
+              }
+            ]
+          },
+          "docs": "Get a list of members for a single destination"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Office",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a list of offices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://localhost:7051/odata/v1/Office",
+            "params": [
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Selects which properties to include in the response."
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Return, along with the results, the total number of records in the dataset. NOTE: There is a performance cost with this query option."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "Filters the results, based on a Boolean condition."
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Returns only the first n results."
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Skips the first n results."
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "Sorts the results."
+              }
+            ]
+          },
+          "docs": "Get a list of offices"
+        },
+        {
+          "info": {
+            "name": "Gets a single office by OfficeKey",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://localhost:7051/odata/v1/Office/:OfficeKey",
+            "params": [
+              {
+                "name": "OfficeKey",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier for this record from the immediate source"
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Selects which properties to include in the response."
+              }
+            ]
+          },
+          "docs": "Both methods are valid and return the same result: a single Office entity identified by its unique OfficeKey.\nThe path-style is more intuitive and commonly used in RESTful APIs.\nThe function-style follows OData conventions and may be required in certain query contexts (e.g., when the key contains special characters or is not a simple numeric ID).\n\n<b>Path-style access: </b>```/odata/v1/Office/{OfficeKey}```\n\n<b>Example: </b>```/odata/v1/Office/49```\n\n<b> Function-style access: </b>```/odata/v1/O"
+        },
+        {
+          "info": {
+            "name": "Get a list of offices for all destinations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://localhost:7051/odata/v1/Office/OfficeReplication()",
+            "params": [
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Selects which properties to include in the response."
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Return, along with the results, the total number of records in the dataset. NOTE: There is a performance cost with this query option."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "Filters the results, based on a Boolean condition."
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "Sorts the results."
+              }
+            ]
+          },
+          "docs": "Both methods are valid and return the same result:\nThe path-style is more intuitive and commonly used in RESTful APIs.\nThe function-style follows OData conventions.\n\n<b>Path-style access: </b>```/odata/v1/Office/OfficeReplication```\n\n<b>Function-style access: </b>```/odata/v1/Office/OfficeReplication()```\n\n"
+        },
+        {
+          "info": {
+            "name": "Get a list of offices for a single destination",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://localhost:7051/odata/v1/Office/OfficeReplication(DestinationId=:DestinationId)",
+            "params": [
+              {
+                "name": "DestinationId",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier for the desired destination"
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Selects which properties to include in the response."
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Return, along with the results, the total number of records in the dataset. NOTE: There is a performance cost with this query option."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "Filters the results, based on a Boolean condition."
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "Sorts the results."
+              }
+            ]
+          },
+          "docs": "Get a list of offices for a single destination"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "OpenHouse",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a list of open houses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://localhost:7051/odata/v1/OpenHouse",
+            "params": [
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Selects which properties to include in the response."
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Return, along with the results, the total number of records in the dataset. NOTE: There is a performance cost with this query option."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "Filters the results, based on a Boolean condition."
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Returns only the first n results."
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Skips the first n results."
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "Sorts the results."
+              }
+            ]
+          },
+          "docs": "Get a list of open houses"
+        },
+        {
+          "info": {
+            "name": "Gets a single open house by OpenHouseKey",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://localhost:7051/odata/v1/OpenHouse/:OpenHouseKey",
+            "params": [
+              {
+                "name": "OpenHouseKey",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier for this record from the immediate source"
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Selects which properties to include in the response."
+              }
+            ]
+          },
+          "docs": "Both methods are valid and return the same result: a single OpenHouse entity identified by its unique OpenHouseKey.\nThe path-style is more intuitive and commonly used in RESTful APIs.\nThe function-style follows OData conventions and may be required in certain query contexts (e.g., when the key contains special characters or is not a simple numeric ID).\n\n<b>Path-style access: </b>```/odata/v1/OpenHouse/{OpenHouseKey}```\n\n<b>Example: </b>```/odata/v1/OpenHouse/1000```\n\n<b>Function-style access: </"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Property",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a list of Properties",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://localhost:7051/odata/v1/Property",
+            "params": [
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Selects which properties to include in the response."
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Return, along with the results, the total number of records in the dataset. NOTE: There is a performance cost with this query option."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "Filters the results, based on a Boolean condition."
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Returns only the first n results."
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Skips the first n results."
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "Sorts the results."
+              }
+            ]
+          },
+          "docs": "Get a list of Properties"
+        },
+        {
+          "info": {
+            "name": "Get a single Property by PropertyKey",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://localhost:7051/odata/v1/Property/:PropertyKey",
+            "params": [
+              {
+                "name": "PropertyKey",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier for this record from the immediate source"
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Selects which properties to include in the response."
+              }
+            ]
+          },
+          "docs": "Both methods are valid and return the same result: a single Property entity identified by its unique PropertyKey.\nThe path-style is more intuitive and commonly used in RESTful APIs.\nThe function-style follows OData conventions and may be required in certain query contexts (e.g., when the key contains special characters or is not a simple numeric ID).\n\n<b>Path-style access: </b>```/odata/v1/Property/{PropertyKey}```\n\n<b>Example: </b>```/odata/v1/Property/123456789```\n\n<b>Function-style access: </"
+        },
+        {
+          "info": {
+            "name": "Get a list of properties for all destinations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://localhost:7051/odata/v1/Property/PropertyReplication()",
+            "params": [
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Selects which properties to include in the response."
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Return, along with the results, the total number of records in the dataset. NOTE: There is a performance cost with this query option."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "Filters the results, based on a Boolean condition."
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "Sorts the results."
+              }
+            ]
+          },
+          "docs": "Both methods are valid and return the same result:\nThe path-style is more intuitive and commonly used in RESTful APIs.\nThe function-style follows OData conventions.\n\n<b>Path-style access: </b>```/odata/v1/Property/PropertyReplication```\n\n<b>Function-style access: </b>```/odata/v1/Property/PropertyReplication()```\n\n"
+        },
+        {
+          "info": {
+            "name": "Get a list of properties for a single destination",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://localhost:7051/odata/v1/Property/PropertyReplication(DestinationId=:DestinationId)",
+            "params": [
+              {
+                "name": "DestinationId",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier for the desired destination"
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Selects which properties to include in the response."
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Return, along with the results, the total number of records in the dataset. NOTE: There is a performance cost with this query option."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "Filters the results, based on a Boolean condition."
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "Sorts the results."
+              }
+            ]
+          },
+          "docs": "Get a list of properties for a single destination"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
