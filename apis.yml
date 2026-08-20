@@ -24,6 +24,17 @@ description: >-
   for realtor.ca itself.
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/realtor-ca.png
 tags:
+- Real-Estate
+- Canada
+- Property Listings
+- MLS
+- RESO
+- IDX
+- Listing Syndication
+- PropTech
+- OData
+- Rentals
+tags_raw:
 - Real Estate
 - Canada
 - Property Listings
@@ -51,6 +62,15 @@ apis:
   humanURL: https://ddfapi-docs.realtor.ca/
   baseURL: https://ddfapi.realtor.ca/odata/v1
   tags:
+  - Property Listings
+  - MLS
+  - RESO
+  - OData
+  - Syndication
+  - OpenHouse
+  - Agents
+  - Offices
+  tags_raw:
   - Property Listings
   - MLS
   - RESO
@@ -103,6 +123,10 @@ apis:
   tags:
   - Leads
   - Email
+  - Real-Estate
+  tags_raw:
+  - Leads
+  - Email
   - Real Estate
   properties:
   - type: OpenAPI
@@ -132,6 +156,10 @@ apis:
   baseURL: https://analytics.crea.ca/LogEvents.svc
   tags:
   - Analytics
+  - Event
+  - Listings
+  tags_raw:
+  - Analytics
   - Events
   - Listings
   properties:
@@ -150,6 +178,10 @@ apis:
   humanURL: https://ddfapi-docs.realtor.ca/
   baseURL: https://identity.crea.ca
   tags:
+  - Authentication
+  - OpenID Connect
+  - Identity
+  tags_raw:
   - Authentication
   - OAuth
   - OpenID Connect
