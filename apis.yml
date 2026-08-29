@@ -22,6 +22,18 @@ description: >-
   so this profile records the DDF® Web API as RESO-aligned rather than RESO-certified. There is no
   self-serve developer signup, no sandbox, no open data product, and no public consumer search API
   for realtor.ca itself.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/realtor-ca.png
 tags:
 - Real-Estate
