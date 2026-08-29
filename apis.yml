@@ -294,6 +294,9 @@ apis:
   - type: Authentication
     url: authentication/realtor-ca-authentication.yml
 common:
+- type: CapabilityMap
+  url: capabilities/realtor-ca-capability-edges.yml
+  name: REALTOR.ca Business Capability Map
 - type: Overlay
   url: overlays/realtor-ca-ddf-web-api-overlay.yaml
 - type: Overlay

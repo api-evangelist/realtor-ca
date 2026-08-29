@@ -1,0 +1,26 @@
+slug: realtor-ca
+provider: REALTOR.ca
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Real Estate
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 1
+edges:
+- tag: Property
+  spec_file: realtor-ca-property-api-openapi.yml
+  capability_id: BC-4960.30
+  capability_id_l1: BC-4960
+  capability_name: Listing Data & MLS Management
+  confidence: 0.75
+  evidence: GET /odata/v1/Property — "Get a list of Properties"; GET /odata/v1/Property/PropertyReplication()
+    — "Get a list of properties for all destinations"; schemas DDF.Core.Entities.Property, PropertyRoom,
+    Media
+  reason: 'This is CREA''s DDF listing distribution: RESO-modelled Property/Media records replicated to
+    configured feed destinations, which is squarely MLS and portal listing data management.'
