@@ -1,0 +1,952 @@
+openapi: 3.2.0
+info:
+  title: Realtor Ca Member API
+  version: '1.0'
+  contact:
+    name: Realtor Support
+    email: support@realtor.ca
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  description: 'Operations tagged Member across 2 of this provider''s published API definitions: realtor-ca-ddf-web-api-docs-openapi.json, realtor-ca-ddf-web-api-openapi.json. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://localhost:7051
+tags:
+- name: Member
+  description: Get Members
+  x-displayName: Member
+paths:
+  /odata/v1/Member:
+    get:
+      tags:
+      - Member
+      summary: Get a list of members
+      parameters:
+      - name: $select
+        in: query
+        description: Selects which properties to include in the response.
+        schema:
+          type: string
+      - name: $count
+        in: query
+        description: 'Return, along with the results, the total number of records in the dataset. NOTE: There is a performance cost with this query option.'
+        schema:
+          type: boolean
+      - name: $filter
+        in: query
+        description: Filters the results, based on a Boolean condition.
+        schema:
+          type: string
+      - name: $top
+        in: query
+        description: Returns only the first n results.
+        schema:
+          type: string
+      - name: $skip
+        in: query
+        description: Skips the first n results.
+        schema:
+          type: string
+      - name: $orderby
+        in: query
+        description: Sorts the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DDF.Infrastructure.Swagger.ExampleModels.ODataListResponse_1__DDF.Core.Entities.Member__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DDF.Core.Models.CustomOdataError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DDF.Core.Models.CustomOdataError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DDF.Core.Models.CustomOdataError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DDF.Core.Models.CustomOdataError'
+    servers:
+    - url: https://localhost:7051
+  /odata/v1/Member/{MemberKey}:
+    get:
+      tags:
+      - Member
+      summary: Get a single member by MemberKey
+      description: 'Both methods are valid and return the same result: a single Member entity identified by its unique MemberKey.
+
+        The path-style is more intuitive and commonly used in RESTful APIs.
+
+        The function-style follows OData conventions and may be required in certain query contexts (e.g., when the key contains special characters or is not a simple numeric ID).
+
+
+        <b>Path-style access: </b>```/odata/v1/Member/{MemberKey}```
+
+
+        <b>Example: </b>```/odata/v1/Member/14090```
+
+
+        <b>Function-style access: </b>```/odata/v1/Member(''{MemberKey}'')```
+
+
+        <b>Example: </b>```/odata/v1/Member(''14090'')```'
+      parameters:
+      - name: MemberKey
+        in: path
+        description: A unique identifier for this record from the immediate source
+        required: true
+        schema:
+          type: string
+      - name: $select
+        in: query
+        description: Selects which properties to include in the response.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK (DDF.Core.Entities.Member object)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DDF.Infrastructure.Swagger.ExampleModels.ODataSingleResponse_1__DDF.Core.Entities.Member__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DDF.Core.Models.CustomOdataError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DDF.Core.Models.CustomOdataError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DDF.Core.Models.CustomOdataError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DDF.Core.Models.CustomOdataError'
+    servers:
+    - url: https://localhost:7051
+  /odata/v1/Member/MemberReplication():
+    get:
+      tags:
+      - Member
+      summary: Get a list of members for all destinations
+      description: 'Both methods are valid and return the same result:
+
+        The path-style is more intuitive and commonly used in RESTful APIs.
+
+        The function-style follows OData conventions.
+
+
+        <b>Path-style access: </b>```/odata/v1/Member/MemberReplication```
+
+
+        <b>Function-style access: </b>```/odata/v1/Member/MemberReplication()```
+
+
+        '
+      parameters:
+      - name: $select
+        in: query
+        description: Selects which properties to include in the response.
+        schema:
+          type: string
+      - name: $count
+        in: query
+        description: 'Return, along with the results, the total number of records in the dataset. NOTE: There is a performance cost with this query option.'
+        schema:
+          type: boolean
+      - name: $filter
+        in: query
+        description: Filters the results, based on a Boolean condition.
+        schema:
+          type: string
+      - name: $orderby
+        in: query
+        description: Sorts the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DDF.Infrastructure.Swagger.ExampleModels.ODataReplicationListResponse_2__DDF.Core.Entities.MemberIdentifier__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null___DDF.Core.Entities.Member__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DDF.Core.Models.CustomOdataError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DDF.Core.Models.CustomOdataError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DDF.Core.Models.CustomOdataError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DDF.Core.Models.CustomOdataError'
+    servers:
+    - url: https://localhost:7051
+  /odata/v1/Member/MemberReplication(DestinationId={DestinationId}):
+    get:
+      tags:
+      - Member
+      summary: Get a list of members for a single destination
+      operationId: odata/v1/Member/MemberReplication(DestinationId={DestinationId})
+      parameters:
+      - name: DestinationId
+        in: path
+        description: A unique identifier for the desired destination
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: $select
+        in: query
+        description: Selects which properties to include in the response.
+        schema:
+          type: string
+      - name: $count
+        in: query
+        description: 'Return, along with the results, the total number of records in the dataset. NOTE: There is a performance cost with this query option.'
+        schema:
+          type: boolean
+      - name: $filter
+        in: query
+        description: Filters the results, based on a Boolean condition.
+        schema:
+          type: string
+      - name: $orderby
+        in: query
+        description: Sorts the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DDF.Infrastructure.Swagger.ExampleModels.ODataReplicationListResponse_2__DDF.Core.Entities.MemberIdentifier__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null___DDF.Core.Entities.Member__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DDF.Core.Models.CustomOdataError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DDF.Core.Models.CustomOdataError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DDF.Core.Models.CustomOdataError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DDF.Core.Models.CustomOdataError'
+    servers:
+    - url: https://localhost:7051
+components:
+  schemas:
+    ? DDF.Infrastructure.Swagger.ExampleModels.ODataReplicationListResponse_2__DDF.Core.Entities.MemberIdentifier__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null___DDF.Core.Entities.Member__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null
+    : type: object
+      properties:
+        '@odata.context':
+          type:
+          - string
+          - 'null'
+          example: https://localhost:7051/odata/v1/$metadata#DDF.Core.Entities.Member
+        value:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DDF.Core.Entities.MemberIdentifier'
+      additionalProperties: false
+    DDF.Core.Models.Error:
+      type: object
+      properties:
+        details:
+          type:
+          - string
+          - 'null'
+        message:
+          type:
+          - string
+          - 'null'
+        code:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    DDF.Core.Entities.SocialMedia:
+      type: object
+      properties:
+        SocialMediaKey:
+          type:
+          - string
+          - 'null'
+          description: The local, well-known identifier. This value may not be unique, specifically in the case of aggregation systems, this value should be the identifier from the original system.
+          example: SocialMediaKey
+        ResourceRecordKey:
+          type:
+          - string
+          - 'null'
+          description: The primary key of the related record from the source resource. For example the ListingKey, MemberKey, OfficeKey, etc. This is a foreign key from the resource selected in the ResourceName field.
+          example: '12345'
+        SocialMediaType:
+          type:
+          - String
+          - 'null'
+          description: The type of sites, blog, social media, the Member URL or ID is referring to. i.e. Website, FaceBook, LinkedIn, Twitter, Instagram, etc.
+          format: 'Enum: SocialMediaType'
+          example: FaceBook
+        ModificationTimestamp:
+          type: String
+          description: The transactional timestamp automatically recorded by the MLS system representing the date/time the media record was last modified (in Zulu time (UTC)).
+          format: date-time
+          example: '"2021-01-01T00:00:00.000Z"'
+        ResourceName:
+          type:
+          - String
+          - 'null'
+          description: The resource or table of the listing or other record the media relates to. i.e. Property, Member, Office, etc.
+          format: 'Enum: ResourceName'
+        SocialMediaUrlOrId:
+          type:
+          - string
+          - 'null'
+          description: The website URL or ID of social media site or account of the member.
+          example: '"SocialMediaUrlOrId"'
+      additionalProperties: false
+    ? DDF.Infrastructure.Swagger.ExampleModels.ODataSingleResponse_1__DDF.Core.Entities.Member__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null
+    : type: object
+      properties:
+        '@odata.context':
+          type:
+          - string
+          - 'null'
+          example: https://localhost:7051/odata/v1/$metadata#DDF.Core.Entities.Member
+        MemberKey:
+          type:
+          - string
+          - 'null'
+          description: A unique identifier for this record.
+          example: MemberKey
+        MemberMlsId:
+          type:
+          - string
+          - 'null'
+          description: The local, well-known identifier. This value may not be unique, specifically in the case of aggregation systems, this value should be the identifier from the original system.
+          example: MemberMlsId
+        OfficeKey:
+          type:
+          - string
+          - 'null'
+          description: The unique identifier of the member's office.
+          example: OfficeKey
+        OfficeNationalAssociationId:
+          type:
+          - string
+          - 'null'
+          description: The national association ID of the office. i.e. In Canada, this is the Organization ID of the Office.
+          example: '111111'
+        JobTitle:
+          type:
+          - string
+          - 'null'
+          description: The title or position of the member within their organization.
+          example: JobTitle
+        MemberAORKey:
+          type:
+          - string
+          - 'null'
+          description: A system unique identifier. This is the Board ID of the Member's Primary Board or Association of REALTORS.
+          example: MemberAORKey
+        MemberAddress1:
+          type:
+          - string
+          - 'null'
+          description: The street number, direction, name and suffix of the member.
+          example: MemberAddress1
+        MemberAddress2:
+          type:
+          - string
+          - 'null'
+          description: The unit/suite number of the member.
+          example: MemberAddress2
+        MemberFax:
+          type:
+          - string
+          - 'null'
+          description: 'North American 10 digit phone numbers should be in the format of ###-###-#### (separated by hyphens). Other conventions should use the common local standard. International numbers should be preceded by a plus symbol.'
+          example: MemberFax
+        MemberFirstName:
+          type:
+          - string
+          - 'null'
+          description: The first name of the Member.
+          example: MemberFirstName
+        MemberLastName:
+          type:
+          - string
+          - 'null'
+          description: The last name of the Member.
+          example: MemberLastName
+        MemberMiddleName:
+          type:
+          - string
+          - 'null'
+          description: The middle name of the Member.
+          example: MemberMiddleName
+        MemberNamePrefix:
+          type:
+          - string
+          - 'null'
+          description: Prefix to the name (e.g. Dr. Mr. Ms. etc.)
+          example: MemberNamePrefix
+        MemberNameSuffix:
+          type:
+          - string
+          - 'null'
+          description: Suffix to the surname (e.g. Esq., Jr., III etc.)
+          example: MemberNameSuffix
+        MemberNationalAssociationId:
+          type:
+          - string
+          - 'null'
+          description: The national association ID of the member. i.e. In Canada this is the CREA ID of the member.
+          example: MemberNationalAssociationId
+        MemberNickname:
+          type:
+          - string
+          - 'null'
+          description: An alternate name used by the Member, usually as a substitute for the first name.
+          example: MemberNickname
+        MemberOfficePhone:
+          type:
+          - string
+          - 'null'
+          description: 'North American 10 digit phone numbers should be in the format of ###-###-#### (separated by hyphens). Other conventions should use the common local standard. International numbers should be preceded by a plus symbol.'
+          example: MemberOfficePhone
+        MemberOfficePhoneExt:
+          type:
+          - string
+          - 'null'
+          description: The extension of the given phone number (if applicable).
+          example: MemberOfficePhoneExt
+        MemberPostalCode:
+          type:
+          - string
+          - 'null'
+          description: The postal code of the member.
+          example: MemberPostalCode
+        MemberPager:
+          type:
+          - string
+          - 'null'
+          description: 'North American 10 digit phone numbers should be in the format of ###-###-#### (separated by hyphens). Other conventions should use the common local standard. International numbers should be preceded by a plus symbol.'
+          example: MemberPager
+        MemberTollFreePhone:
+          type:
+          - string
+          - 'null'
+          description: 'North American 10 digit phone numbers should be in the format of ###-###-#### (separated by hyphens). Other conventions should use the common local standard. International numbers should be preceded by a plus symbol.'
+          example: MemberTollFreePhone
+        ModificationTimestamp:
+          type:
+          - String
+          - 'null'
+          description: Date/time the roster (member or office) record was last modified (in Zulu time (UTC)).
+          format: 'Enum: DateTime'
+          example: '"2021-01-01T12:00:00.000Z"'
+        OriginalEntryTimestamp:
+          type:
+          - String
+          - 'null'
+          description: Date/time the roster (member or office) record was originally input into the source system (in Zulu time (UTC)).
+          format: 'Enum: DateTime'
+          example: '"2021-01-01T12:00:00.000Z"'
+        MemberCity:
+          type:
+          - string
+          - 'null'
+          description: The city of the member.
+          example: MemberCity
+        MemberAOR:
+          type:
+          - String
+          - 'null'
+          description: The Member's Primary Board Name or Association's Name of REALTORS.
+          format: 'Enum: AOR'
+          example: Affiliate
+        MemberCountry:
+          type:
+          - String
+          - 'null'
+          description: The country in a postal address.
+          format: 'Enum: Country'
+          example: Canada
+        MemberDesignation:
+          type:
+          - Array of Strings
+          - 'null'
+          items:
+            type: integer
+            format: int32
+          description: Designations and certifications acknowledging experience and expertise in various real estate sectors are awarded by CREA and each affiliated group upon completion of required courses
+          format: 'Enum: MemberDesignation'
+          example: AccreditedBuyerRepresentative
+        MemberLanguages:
+          type:
+          - Array of Strings
+          - 'null'
+          items:
+            type: integer
+            format: int32
+          description: The languages the member speaks.
+          format: 'Enum: MemberLanguages'
+          example: Chaldean
+        MemberSocialMedia:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DDF.Core.Entities.SocialMedia'
+          description: A collection of the types of social media fields available for this member. The collection includes the type of system and other details pertinent about social media.
+        Media:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DDF.Core.Entities.Media'
+          description: A collection of the types of media fields available for this Member.
+        MemberStateOrProvince:
+          type:
+          - String
+          - 'null'
+          description: The state or province in which the member is addressed.
+          format: 'Enum: StateOrProvince'
+          example: Ontario
+        MemberStatus:
+          type:
+          - String
+          - 'null'
+          description: The current status of the member.
+          format: 'Enum: MemberStatus'
+          example: Active
+        MemberType:
+          type:
+          - String
+          - 'null'
+          description: The type of member. i.e. Agent, Broker, Office Manager, Appraiser, Assistants, MLO, Realtor, Association Staff, MLS Staff, etc.
+          format: 'Enum: MemberType'
+          example: GlobalAffiliate
+        MemberEmailYN:
+          type:
+          - boolean
+          - 'null'
+          description: This flag signifies the availability of a REALTOR®’s email address. It is intended for clients who use the Lead API endpoint to communicate with Realtors. If the flag is false, these clients should turn off the email REALTOR® function for the respective REALTOR®. Clients not using Lead API endpoint can disregard this field.
+      additionalProperties: false
+    ? DDF.Infrastructure.Swagger.ExampleModels.ODataListResponse_1__DDF.Core.Entities.Member__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null
+    : type: object
+      properties:
+        '@odata.context':
+          type:
+          - string
+          - 'null'
+          example: https://localhost:7051/odata/v1/$metadata#DDF.Core.Entities.Member
+        value:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DDF.Core.Entities.Member'
+        '@odata.nextLink':
+          type:
+          - string
+          - 'null'
+          example: https://localhost:7051/odata/v1/DDF.Core.Entities.Member?skip=1
+      additionalProperties: false
+    DDF.Core.Entities.Member:
+      type: object
+      properties:
+        MemberKey:
+          type:
+          - string
+          - 'null'
+          description: A unique identifier for this record.
+          example: MemberKey
+        MemberMlsId:
+          type:
+          - string
+          - 'null'
+          description: The local, well-known identifier. This value may not be unique, specifically in the case of aggregation systems, this value should be the identifier from the original system.
+          example: MemberMlsId
+        OfficeKey:
+          type:
+          - string
+          - 'null'
+          description: The unique identifier of the member's office.
+          example: OfficeKey
+        OfficeNationalAssociationId:
+          type:
+          - string
+          - 'null'
+          description: The national association ID of the office. i.e. In Canada, this is the Organization ID of the Office.
+          example: '111111'
+        JobTitle:
+          type:
+          - string
+          - 'null'
+          description: The title or position of the member within their organization.
+          example: JobTitle
+        MemberAORKey:
+          type:
+          - string
+          - 'null'
+          description: A system unique identifier. This is the Board ID of the Member's Primary Board or Association of REALTORS.
+          example: MemberAORKey
+        MemberAddress1:
+          type:
+          - string
+          - 'null'
+          description: The street number, direction, name and suffix of the member.
+          example: MemberAddress1
+        MemberAddress2:
+          type:
+          - string
+          - 'null'
+          description: The unit/suite number of the member.
+          example: MemberAddress2
+        MemberFax:
+          type:
+          - string
+          - 'null'
+          description: 'North American 10 digit phone numbers should be in the format of ###-###-#### (separated by hyphens). Other conventions should use the common local standard. International numbers should be preceded by a plus symbol.'
+          example: MemberFax
+        MemberFirstName:
+          type:
+          - string
+          - 'null'
+          description: The first name of the Member.
+          example: MemberFirstName
+        MemberLastName:
+          type:
+          - string
+          - 'null'
+          description: The last name of the Member.
+          example: MemberLastName
+        MemberMiddleName:
+          type:
+          - string
+          - 'null'
+          description: The middle name of the Member.
+          example: MemberMiddleName
+        MemberNamePrefix:
+          type:
+          - string
+          - 'null'
+          description: Prefix to the name (e.g. Dr. Mr. Ms. etc.)
+          example: MemberNamePrefix
+        MemberNameSuffix:
+          type:
+          - string
+          - 'null'
+          description: Suffix to the surname (e.g. Esq., Jr., III etc.)
+          example: MemberNameSuffix
+        MemberNationalAssociationId:
+          type:
+          - string
+          - 'null'
+          description: The national association ID of the member. i.e. In Canada this is the CREA ID of the member.
+          example: MemberNationalAssociationId
+        MemberNickname:
+          type:
+          - string
+          - 'null'
+          description: An alternate name used by the Member, usually as a substitute for the first name.
+          example: MemberNickname
+        MemberOfficePhone:
+          type:
+          - string
+          - 'null'
+          description: 'North American 10 digit phone numbers should be in the format of ###-###-#### (separated by hyphens). Other conventions should use the common local standard. International numbers should be preceded by a plus symbol.'
+          example: MemberOfficePhone
+        MemberOfficePhoneExt:
+          type:
+          - string
+          - 'null'
+          description: The extension of the given phone number (if applicable).
+          example: MemberOfficePhoneExt
+        MemberPostalCode:
+          type:
+          - string
+          - 'null'
+          description: The postal code of the member.
+          example: MemberPostalCode
+        MemberPager:
+          type:
+          - string
+          - 'null'
+          description: 'North American 10 digit phone numbers should be in the format of ###-###-#### (separated by hyphens). Other conventions should use the common local standard. International numbers should be preceded by a plus symbol.'
+          example: MemberPager
+        MemberTollFreePhone:
+          type:
+          - string
+          - 'null'
+          description: 'North American 10 digit phone numbers should be in the format of ###-###-#### (separated by hyphens). Other conventions should use the common local standard. International numbers should be preceded by a plus symbol.'
+          example: MemberTollFreePhone
+        ModificationTimestamp:
+          type:
+          - String
+          - 'null'
+          description: Date/time the roster (member or office) record was last modified (in Zulu time (UTC)).
+          format: 'Enum: DateTime'
+          example: '"2021-01-01T12:00:00.000Z"'
+        OriginalEntryTimestamp:
+          type:
+          - String
+          - 'null'
+          description: Date/time the roster (member or office) record was originally input into the source system (in Zulu time (UTC)).
+          format: 'Enum: DateTime'
+          example: '"2021-01-01T12:00:00.000Z"'
+        MemberCity:
+          type:
+          - string
+          - 'null'
+          description: The city of the member.
+          example: MemberCity
+        MemberAOR:
+          type:
+          - String
+          - 'null'
+          description: The Member's Primary Board Name or Association's Name of REALTORS.
+          format: 'Enum: AOR'
+          example: Affiliate
+        MemberCountry:
+          type:
+          - String
+          - 'null'
+          description: The country in a postal address.
+          format: 'Enum: Country'
+          example: Canada
+        MemberDesignation:
+          type:
+          - Array of Strings
+          - 'null'
+          items:
+            type: integer
+            format: int32
+          description: Designations and certifications acknowledging experience and expertise in various real estate sectors are awarded by CREA and each affiliated group upon completion of required courses
+          format: 'Enum: MemberDesignation'
+          example: AccreditedBuyerRepresentative
+        MemberLanguages:
+          type:
+          - Array of Strings
+          - 'null'
+          items:
+            type: integer
+            format: int32
+          description: The languages the member speaks.
+          format: 'Enum: MemberLanguages'
+          example: Chaldean
+        MemberSocialMedia:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DDF.Core.Entities.SocialMedia'
+          description: A collection of the types of social media fields available for this member. The collection includes the type of system and other details pertinent about social media.
+        Media:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DDF.Core.Entities.Media'
+          description: A collection of the types of media fields available for this Member.
+        MemberStateOrProvince:
+          type:
+          - String
+          - 'null'
+          description: The state or province in which the member is addressed.
+          format: 'Enum: StateOrProvince'
+          example: Ontario
+        MemberStatus:
+          type:
+          - String
+          - 'null'
+          description: The current status of the member.
+          format: 'Enum: MemberStatus'
+          example: Active
+        MemberType:
+          type:
+          - String
+          - 'null'
+          description: The type of member. i.e. Agent, Broker, Office Manager, Appraiser, Assistants, MLO, Realtor, Association Staff, MLS Staff, etc.
+          format: 'Enum: MemberType'
+          example: GlobalAffiliate
+        MemberEmailYN:
+          type:
+          - boolean
+          - 'null'
+          description: This flag signifies the availability of a REALTOR®’s email address. It is intended for clients who use the Lead API endpoint to communicate with Realtors. If the flag is false, these clients should turn off the email REALTOR® function for the respective REALTOR®. Clients not using Lead API endpoint can disregard this field.
+      additionalProperties: false
+    DDF.Core.Entities.Media:
+      type: object
+      properties:
+        MediaKey:
+          type:
+          - string
+          - 'null'
+          description: A unique identifier for this record from the immediate source. This may be a number, or string that can include URI or other forms. This is the system you are connecting to and not necessarily the original source of the record.
+          example: MediaKey
+        LongDescription:
+          type:
+          - string
+          - 'null'
+          description: The full description of the object.
+          example: REALTOR.ca Logo
+        MediaURL:
+          type:
+          - string
+          - 'null'
+          description: The URI to the media file referenced by this record.
+          example: https:///ddfcdn.realtor.ca/realtorlogo.png
+        ModificationTimestamp:
+          type:
+          - String
+          - 'null'
+          description: Date/time the record was last modified (in Zulu time (UTC)).
+          format: 'Enum: DateTime'
+          example: '2019-08-24T14:15:22Z'
+        Order:
+          type:
+          - integer
+          - 'null'
+          description: The order in which the media object is displayed.  Zero is the primary photo per RETS convention.
+          format: int32
+          example: 1
+        PreferredPhotoYN:
+          type:
+          - boolean
+          - 'null'
+          description: When set to true, the media record in question is the preferred photo. This will typically mean the photo to be shown when only one of the photos is to be displayed.
+          example: true
+        ResourceRecordId:
+          type:
+          - string
+          - 'null'
+          description: The well known identifier of the related record from the source resource.
+          example: RealtorLogo.png
+        ResourceRecordKey:
+          type:
+          - string
+          - 'null'
+          description: The primary key of the related record from the source resource.
+          example: '1234'
+        ResourceName:
+          type:
+          - String
+          - 'null'
+          description: The resource or table of the listing or other record the media relates to. i.e. Property, Member, Office, etc.
+          format: 'Enum: ResourceName'
+          example: Member
+        MediaCategory:
+          type:
+          - String
+          - 'null'
+          description: Category describing the , Photos, Documents, Video, Unbranded Virtual Tour, Branded Virtual Tour, Floor Plan, Logo
+          format: 'Enum: MediaCategory'
+          example: Photo
+      additionalProperties: false
+    DDF.Core.Models.CustomOdataError:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/DDF.Core.Models.Error'
+      additionalProperties: false
+    DDF.Core.Entities.MemberIdentifier:
+      type: object
+      properties:
+        MemberKey:
+          type:
+          - string
+          - 'null'
+          description: A unique identifier for this record.
+          example: '12345'
+        ModificationTimestamp:
+          type:
+          - string
+          - 'null'
+          description: Date/time the roster (member or office) record was last modified (in Zulu time (UTC)).
+          format: date-time
+          example: '"2021-01-01T12:00:00.000Z"'
+      additionalProperties: false
+x-refined-from:
+- realtor-ca-ddf-web-api-docs-openapi.json
+- realtor-ca-ddf-web-api-openapi.json
+x-tagGroups:
+- name: API Endpoints
+  tags:
+  - Media
+  - Member
+  - Office
+  - OpenHouse
+  - Property
+  - Destination
+  - Lead
+- name: Models
+  tags:
+  - media_model
+  - member_model
+  - office_model
+  - openhouse_model
+  - property_model
+  - destination_model

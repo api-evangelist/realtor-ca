@@ -1,0 +1,356 @@
+openapi: 3.2.0
+info:
+  title: Realtor Ca Open House API
+  version: '1.0'
+  contact:
+    name: Realtor Support
+    email: support@realtor.ca
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  description: 'Operations tagged OpenHouse across 2 of this provider''s published API definitions: realtor-ca-ddf-web-api-docs-openapi.json, realtor-ca-ddf-web-api-openapi.json. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://localhost:7051
+tags:
+- name: OpenHouse
+paths:
+  /odata/v1/OpenHouse:
+    get:
+      tags:
+      - OpenHouse
+      summary: Get a list of open houses
+      parameters:
+      - name: $select
+        in: query
+        description: Selects which properties to include in the response.
+        schema:
+          type: string
+      - name: $count
+        in: query
+        description: 'Return, along with the results, the total number of records in the dataset. NOTE: There is a performance cost with this query option.'
+        schema:
+          type: boolean
+      - name: $filter
+        in: query
+        description: Filters the results, based on a Boolean condition.
+        schema:
+          type: string
+      - name: $top
+        in: query
+        description: Returns only the first n results.
+        schema:
+          type: string
+      - name: $skip
+        in: query
+        description: Skips the first n results.
+        schema:
+          type: string
+      - name: $orderby
+        in: query
+        description: Sorts the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DDF.Infrastructure.Swagger.ExampleModels.ODataListResponse_1__DDF.Core.Entities.OpenHouse__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DDF.Core.Models.CustomOdataError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DDF.Core.Models.CustomOdataError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DDF.Core.Models.CustomOdataError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DDF.Core.Models.CustomOdataError'
+    servers:
+    - url: https://localhost:7051
+  /odata/v1/OpenHouse/{OpenHouseKey}:
+    get:
+      tags:
+      - OpenHouse
+      summary: Gets a single open house by OpenHouseKey
+      description: 'Both methods are valid and return the same result: a single OpenHouse entity identified by its unique OpenHouseKey.
+
+        The path-style is more intuitive and commonly used in RESTful APIs.
+
+        The function-style follows OData conventions and may be required in certain query contexts (e.g., when the key contains special characters or is not a simple numeric ID).
+
+
+        <b>Path-style access: </b>```/odata/v1/OpenHouse/{OpenHouseKey}```
+
+
+        <b>Example: </b>```/odata/v1/OpenHouse/1000```
+
+
+        <b>Function-style access: </b>```/odata/v1/OpenHouse(''{OpenHouseKey}'')```
+
+
+        <b>Example: </b>```/odata/v1/OpenHouse(''1000'')```'
+      parameters:
+      - name: OpenHouseKey
+        in: path
+        description: A unique identifier for this record from the immediate source
+        required: true
+        schema:
+          type: string
+      - name: $select
+        in: query
+        description: Selects which properties to include in the response.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK (DDF.Core.Entities.OpenHouse object)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DDF.Infrastructure.Swagger.ExampleModels.ODataSingleResponse_1__DDF.Core.Entities.OpenHouse__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DDF.Core.Models.CustomOdataError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DDF.Core.Models.CustomOdataError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DDF.Core.Models.CustomOdataError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DDF.Core.Models.CustomOdataError'
+    servers:
+    - url: https://localhost:7051
+components:
+  schemas:
+    DDF.Core.Entities.OpenHouse:
+      type: object
+      properties:
+        OpenHouseKey:
+          type:
+          - string
+          - 'null'
+          description: A unique identifier for this record from the immediate source.
+          example: '12345'
+        ListingKey:
+          type:
+          - string
+          - 'null'
+          description: A unique identifier for the listing record related to this Open House.
+          example: '12345'
+        ListingId:
+          type:
+          - string
+          - 'null'
+          description: The well known identifier for the listing related to this Open House.
+          example: '1'
+        OpenHouseDate:
+          type:
+          - string
+          - 'null'
+          description: The date on which the open house will occur.
+          format: date-time
+          example: '2021-01-01'
+        OpenHouseStartTime:
+          type:
+          - string
+          - 'null'
+          description: The time the open house begins (in local time).
+          example: '12:00:00.00'
+        OpenHouseEndTime:
+          type:
+          - string
+          - 'null'
+          description: The time the open house ends (in local time).
+          example: '12:00:00.00'
+        OpenHouseRemarks:
+          type:
+          - string
+          - 'null'
+          description: Comments, instructions or information about the open house.
+          example: OpenHouseRemarks
+        OpenHouseType:
+          type:
+          - String
+          - 'null'
+          description: The type of open house. i.e. Public, Broker, Office, Association, Private (invitation or targeted publication).
+          format: 'Enum: OpenHouseType'
+          example: Public
+        OpenHouseStatus:
+          type:
+          - String
+          - 'null'
+          description: Status of the open house, i.e. Active, Cancelled, Ended.
+          format: 'Enum: OpenHouseStatus'
+          example: Active
+        LivestreamOpenHouseURL:
+          type:
+          - String
+          - 'null'
+          description: A link to an open house livestream event
+          example: '"https://www.youtube.com/watch?v=i-09UtAH10A"'
+      additionalProperties: false
+    DDF.Core.Models.Error:
+      type: object
+      properties:
+        details:
+          type:
+          - string
+          - 'null'
+        message:
+          type:
+          - string
+          - 'null'
+        code:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    ? DDF.Infrastructure.Swagger.ExampleModels.ODataListResponse_1__DDF.Core.Entities.OpenHouse__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null
+    : type: object
+      properties:
+        '@odata.context':
+          type:
+          - string
+          - 'null'
+          example: https://localhost:7051/odata/v1/$metadata#DDF.Core.Entities.OpenHouse
+        value:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DDF.Core.Entities.OpenHouse'
+        '@odata.nextLink':
+          type:
+          - string
+          - 'null'
+          example: https://localhost:7051/odata/v1/DDF.Core.Entities.OpenHouse?skip=1
+      additionalProperties: false
+    ? DDF.Infrastructure.Swagger.ExampleModels.ODataSingleResponse_1__DDF.Core.Entities.OpenHouse__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null
+    : type: object
+      properties:
+        '@odata.context':
+          type:
+          - string
+          - 'null'
+          example: https://localhost:7051/odata/v1/$metadata#DDF.Core.Entities.OpenHouse
+        OpenHouseKey:
+          type:
+          - string
+          - 'null'
+          description: A unique identifier for this record from the immediate source.
+          example: '12345'
+        ListingKey:
+          type:
+          - string
+          - 'null'
+          description: A unique identifier for the listing record related to this Open House.
+          example: '12345'
+        ListingId:
+          type:
+          - string
+          - 'null'
+          description: The well known identifier for the listing related to this Open House.
+          example: '1'
+        OpenHouseDate:
+          type:
+          - string
+          - 'null'
+          description: The date on which the open house will occur.
+          format: date-time
+          example: '2021-01-01'
+        OpenHouseStartTime:
+          type:
+          - string
+          - 'null'
+          description: The time the open house begins (in local time).
+          example: '12:00:00.00'
+        OpenHouseEndTime:
+          type:
+          - string
+          - 'null'
+          description: The time the open house ends (in local time).
+          example: '12:00:00.00'
+        OpenHouseRemarks:
+          type:
+          - string
+          - 'null'
+          description: Comments, instructions or information about the open house.
+          example: OpenHouseRemarks
+        OpenHouseType:
+          type:
+          - String
+          - 'null'
+          description: The type of open house. i.e. Public, Broker, Office, Association, Private (invitation or targeted publication).
+          format: 'Enum: OpenHouseType'
+          example: Public
+        OpenHouseStatus:
+          type:
+          - String
+          - 'null'
+          description: Status of the open house, i.e. Active, Cancelled, Ended.
+          format: 'Enum: OpenHouseStatus'
+          example: Active
+        LivestreamOpenHouseURL:
+          type:
+          - String
+          - 'null'
+          description: A link to an open house livestream event
+          example: '"https://www.youtube.com/watch?v=i-09UtAH10A"'
+      additionalProperties: false
+    DDF.Core.Models.CustomOdataError:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/DDF.Core.Models.Error'
+      additionalProperties: false
+x-refined-from:
+- realtor-ca-ddf-web-api-docs-openapi.json
+- realtor-ca-ddf-web-api-openapi.json
+x-tagGroups:
+- name: API Endpoints
+  tags:
+  - Media
+  - Member
+  - Office
+  - OpenHouse
+  - Property
+  - Destination
+  - Lead
+- name: Models
+  tags:
+  - media_model
+  - member_model
+  - office_model
+  - openhouse_model
+  - property_model
+  - destination_model

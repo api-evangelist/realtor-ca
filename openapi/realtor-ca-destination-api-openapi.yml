@@ -1,0 +1,379 @@
+openapi: 3.2.0
+info:
+  title: Realtor Ca Destination API
+  version: '1.0'
+  contact:
+    name: Realtor Support
+    email: support@realtor.ca
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  description: 'Operations tagged Destination across 2 of this provider''s published API definitions: realtor-ca-ddf-web-api-docs-openapi.json, realtor-ca-ddf-web-api-openapi.json. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://localhost:7051
+tags:
+- name: Destination
+  description: Get details about each destination linked to the Technology Provider
+  x-displayName: Destination
+paths:
+  /odata/v1/Destination:
+    get:
+      tags:
+      - Destination
+      summary: Get a list of Client Destinations
+      parameters:
+      - name: $select
+        in: query
+        description: Selects which properties to include in the response.
+        schema:
+          type: string
+      - name: $count
+        in: query
+        description: 'Return, along with the results, the total number of records in the dataset. NOTE: There is a performance cost with this query option.'
+        schema:
+          type: boolean
+      - name: $filter
+        in: query
+        description: Filters the results, based on a Boolean condition.
+        schema:
+          type: string
+      - name: $top
+        in: query
+        description: Returns only the first n results.
+        schema:
+          type: string
+      - name: $skip
+        in: query
+        description: Skips the first n results.
+        schema:
+          type: string
+      - name: $orderby
+        in: query
+        description: Sorts the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DDF.Infrastructure.Swagger.ExampleModels.ODataListResponse_1__DDF.Core.Entities.Destination__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DDF.Core.Models.CustomOdataError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DDF.Core.Models.CustomOdataError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DDF.Core.Models.CustomOdataError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DDF.Core.Models.CustomOdataError'
+    servers:
+    - url: https://localhost:7051
+  /odata/v1/Destination/{DestinationKey}:
+    get:
+      tags:
+      - Destination
+      summary: Get a single Client Destination by DestinationId
+      description: 'Both methods are valid and return the same result: a single Destination entity identified by its unique DestinationId.
+
+        The path-style is more intuitive and commonly used in RESTful APIs.
+
+        The function-style follows OData conventions and may be required in certain query contexts (e.g., when the key contains special characters or is not a simple numeric ID).
+
+
+        <b>Path-style access: </b>```/odata/v1/Destination/{DestinationKey}```
+
+
+        <b>Example: </b>```/odata/v1/Destination/1301```
+
+
+        <b>Function-style access: </b>```/odata/v1/Destination({DestinationKey})```
+
+
+        <b>Example: </b>```/odata/v1/Destination(1301)```'
+      parameters:
+      - name: DestinationKey
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: $select
+        in: query
+        description: Selects which properties to include in the response.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK (DDF.Core.Entities.Destination object)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DDF.Infrastructure.Swagger.ExampleModels.ODataSingleResponse_1__DDF.Core.Entities.Destination__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DDF.Core.Models.CustomOdataError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DDF.Core.Models.CustomOdataError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DDF.Core.Models.CustomOdataError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DDF.Core.Models.CustomOdataError'
+    servers:
+    - url: https://localhost:7051
+components:
+  schemas:
+    DDF.Core.Models.Error:
+      type: object
+      properties:
+        details:
+          type:
+          - string
+          - 'null'
+        message:
+          type:
+          - string
+          - 'null'
+        code:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    ? DDF.Infrastructure.Swagger.ExampleModels.ODataListResponse_1__DDF.Core.Entities.Destination__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null
+    : type: object
+      properties:
+        '@odata.context':
+          type:
+          - string
+          - 'null'
+          example: https://localhost:7051/odata/v1/$metadata#DDF.Core.Entities.Destination
+        value:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DDF.Core.Entities.Destination'
+        '@odata.nextLink':
+          type:
+          - string
+          - 'null'
+          example: https://localhost:7051/odata/v1/DDF.Core.Entities.Destination?skip=1
+      additionalProperties: false
+    ? DDF.Infrastructure.Swagger.ExampleModels.ODataSingleResponse_1__DDF.Core.Entities.Destination__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null
+    : type: object
+      properties:
+        '@odata.context':
+          type:
+          - string
+          - 'null'
+          example: https://localhost:7051/odata/v1/$metadata#DDF.Core.Entities.Destination
+        DestinationId:
+          type: integer
+          description: A unique identifier for this record.
+          format: int32
+        DestinationName:
+          type:
+          - string
+          - 'null'
+          description: The name of the destination.
+        DestinationUrl:
+          type:
+          - string
+          - 'null'
+          description: The URL to the destination referenced by this record.
+        DestinationType:
+          enum:
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          - 6
+          - 7
+          - 8
+          - 9
+          - 10
+          - 11
+          - 12
+          - 13
+          type:
+          - integer
+          - 'null'
+          description: The type of destination. i.e. Technology Provider, Partner, etc.
+          format: int32
+        DestinationStatus:
+          enum:
+          - 1
+          - 2
+          - 3
+          type:
+          - integer
+          - 'null'
+          description: The status of the destination. i.e. Active, Inactive, Suspended
+          format: int32
+        MemberFirstName:
+          type:
+          - string
+          - 'null'
+          description: The first name of the member.
+        MemberLastName:
+          type:
+          - string
+          - 'null'
+          description: The last name of the member.
+        MemberKey:
+          type:
+          - string
+          - 'null'
+          description: The unique identifier (MemberKey) of the member who owns the destination.
+        OriginalEntryTimestamp:
+          type:
+          - string
+          - 'null'
+          description: Date/time the destination record was originally input into the source system (in Zulu time (UTC)).
+          format: date-time
+        ModificationTimestamp:
+          type:
+          - string
+          - 'null'
+          description: Date/time the destination record was last modified (in Zulu time (UTC)).
+          format: date-time
+        FullNSP:
+          type: boolean
+          description: A flag indicating that if the destination is Full NSP.
+      additionalProperties: false
+    DDF.Core.Models.CustomOdataError:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/DDF.Core.Models.Error'
+      additionalProperties: false
+    DDF.Core.Entities.Destination:
+      type: object
+      properties:
+        DestinationId:
+          type: integer
+          description: A unique identifier for this record.
+          format: int32
+        DestinationName:
+          type:
+          - string
+          - 'null'
+          description: The name of the destination.
+        DestinationUrl:
+          type:
+          - string
+          - 'null'
+          description: The URL to the destination referenced by this record.
+        DestinationType:
+          enum:
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          - 6
+          - 7
+          - 8
+          - 9
+          - 10
+          - 11
+          - 12
+          - 13
+          type:
+          - integer
+          - 'null'
+          description: The type of destination. i.e. Technology Provider, Partner, etc.
+          format: int32
+        DestinationStatus:
+          enum:
+          - 1
+          - 2
+          - 3
+          type:
+          - integer
+          - 'null'
+          description: The status of the destination. i.e. Active, Inactive, Suspended
+          format: int32
+        MemberFirstName:
+          type:
+          - string
+          - 'null'
+          description: The first name of the member.
+        MemberLastName:
+          type:
+          - string
+          - 'null'
+          description: The last name of the member.
+        MemberKey:
+          type:
+          - string
+          - 'null'
+          description: The unique identifier (MemberKey) of the member who owns the destination.
+        OriginalEntryTimestamp:
+          type:
+          - string
+          - 'null'
+          description: Date/time the destination record was originally input into the source system (in Zulu time (UTC)).
+          format: date-time
+        ModificationTimestamp:
+          type:
+          - string
+          - 'null'
+          description: Date/time the destination record was last modified (in Zulu time (UTC)).
+          format: date-time
+        FullNSP:
+          type: boolean
+          description: A flag indicating that if the destination is Full NSP.
+      additionalProperties: false
+x-refined-from:
+- realtor-ca-ddf-web-api-docs-openapi.json
+- realtor-ca-ddf-web-api-openapi.json
+x-tagGroups:
+- name: API Endpoints
+  tags:
+  - Media
+  - Member
+  - Office
+  - OpenHouse
+  - Property
+  - Destination
+  - Lead
+- name: Models
+  tags:
+  - media_model
+  - member_model
+  - office_model
+  - openhouse_model
+  - property_model
+  - destination_model

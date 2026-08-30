@@ -1,0 +1,164 @@
+openapi: 3.2.0
+info:
+  title: Realtor Ca Lead API
+  version: '1.0'
+  contact:
+    name: Realtor Support
+    email: support@realtor.ca
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  description: 'Operations tagged Lead across 2 of this provider''s published API definitions: realtor-ca-ddf-web-api-docs-openapi.json, realtor-ca-ddf-web-api-openapi.json. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://localhost:7051
+tags:
+- name: Lead
+  description: Create Lead
+  x-displayName: Lead
+paths:
+  /v1/Lead/CreateLead:
+    post:
+      tags:
+      - Lead
+      summary: Create an email lead for a Member
+      parameters:
+      - name: SuppressEmail
+        in: query
+        description: Suppresses an email from being sent to the Realtor when set to true.
+        schema:
+          type: boolean
+          default: false
+        example: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DDF.Core.Models.LeadModel'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DDF.Core.Models.LeadResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DDF.Core.Models.LeadResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DDF.Core.Models.LeadResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DDF.Core.Models.LeadResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DDF.Core.Models.LeadResponse'
+    servers:
+    - url: https://localhost:7051
+components:
+  schemas:
+    DDF.Core.Models.LeadResponse:
+      type: object
+      properties:
+        details:
+          type:
+          - string
+          - 'null'
+        message:
+          type:
+          - string
+          - 'null'
+        code:
+          type:
+          - string
+          - 'null'
+        success:
+          type: boolean
+      additionalProperties: false
+    DDF.Core.Models.LeadModel:
+      required:
+      - Culture
+      - MemberKey
+      - ListingKey
+      - SenderName
+      - SenderEmailAddress
+      - PreferredMethodContact
+      - Message
+      type: object
+      properties:
+        Culture:
+          type: string
+          description: The culture of the lead. Either en-CA or fr-CA. Default value is en-CA
+          example: en-CA
+        MemberKey:
+          type: string
+          description: The key of the related member for this lead.
+          example: '1234567'
+        ListingKey:
+          type: string
+          description: The key of the related listing for this lead.
+          example: '12345678'
+        SenderName:
+          type: string
+          description: The name of the lead.
+          example: SenderName
+        SenderEmailAddress:
+          type: string
+          description: The email address of the lead.
+          example: SenderEmailAddress@email.com
+        SenderPhoneNumber:
+          type:
+          - integer
+          - 'null'
+          description: The phone number of the lead. Required if PrefferedMethodContact is phone or text or if SenderPhoneExtension has a value.
+          format: int64
+          example: 1112223333
+        PreferredMethodContact:
+          type: string
+          description: The preffered method of contact for the lead. Either email, phone or text
+          example: email
+        SenderPhoneExtension:
+          type:
+          - integer
+          - 'null'
+          description: The extension of the leads phone number.
+          format: int32
+          example: 4444
+        Message:
+          type: string
+          description: The leads message to the member. This field has a 500 character limit.
+          example: Message
+      additionalProperties: false
+x-refined-from:
+- realtor-ca-ddf-web-api-docs-openapi.json
+- realtor-ca-ddf-web-api-openapi.json
+x-tagGroups:
+- name: API Endpoints
+  tags:
+  - Media
+  - Member
+  - Office
+  - OpenHouse
+  - Property
+  - Destination
+  - Lead
+- name: Models
+  tags:
+  - media_model
+  - member_model
+  - office_model
+  - openhouse_model
+  - property_model
+  - destination_model
