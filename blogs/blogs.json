@@ -2,20 +2,20 @@
   "repo": "realtor-ca",
   "feeds": [
     {
-      "source": "https://crea.vanillacommunity.com/",
-      "feed_url": "https://crea.vanillacommunity.com/",
+      "source": "https://www.crea.ca/news/",
+      "feed_url": "https://www.crea.ca/news/",
       "title": "",
       "saved": 0,
       "method": "none"
     },
     {
-      "source": "https://www.crea.ca/news/",
-      "feed_url": "https://www.crea.ca/news/",
+      "source": "https://crea.vanillacommunity.com/",
+      "feed_url": "https://crea.vanillacommunity.com/",
       "title": "",
       "saved": 0,
       "method": "none"
     }
   ],
   "post_count": 0,
-  "fetched": "2026-08-30T22:33:40Z"
+  "fetched": "2026-09-06T19:17:18Z"
 }
