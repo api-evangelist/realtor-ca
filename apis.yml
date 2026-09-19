@@ -163,6 +163,8 @@ apis:
   humanURL: https://ddfapi-docs.realtor.ca/
   baseURL: https://ddfapi.realtor.ca/odata/v1
   tags:
+  - Leads
+  tags_raw:
   - Lead
   properties:
   - type: OpenAPI
