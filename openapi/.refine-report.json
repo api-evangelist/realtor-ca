@@ -1,0 +1,33 @@
+{
+  "provider": "realtor-ca",
+  "sources": [
+    "_original/realtor-ca-ddf-web-api-docs-openapi.json"
+  ],
+  "outputs": [
+    "realtor-ca-destination-api-openapi.yml",
+    "realtor-ca-lead-api-openapi.yml",
+    "realtor-ca-member-api-openapi.yml",
+    "realtor-ca-office-api-openapi.yml",
+    "realtor-ca-openhouse-api-openapi.yml",
+    "realtor-ca-property-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "1 archived document(s) dropped as subsets of other archived documents",
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "realtor-ca-ddf-web-api-docs-openapi.json: upgraded openapi 3.0.4 -> OpenAPI 3.2.0; renamed 34 component key(s) illegal in 3.x (e.g. DDF.Infrastructure.Swagger.ExampleModels.ODataListResponse`1[[DDF.Core.Entities.Destination, DDF.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]])",
+    "realtor-ca-ddf-web-api-docs-openapi.json: declared missing tag: OpenHouse",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "_original/realtor-ca-ddf-web-api-openapi.json: archived document superseded by a larger archived document",
+    "realtor-ca-destination-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "realtor-ca-lead-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "realtor-ca-member-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "realtor-ca-office-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "realtor-ca-openhouse-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "realtor-ca-property-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
+}

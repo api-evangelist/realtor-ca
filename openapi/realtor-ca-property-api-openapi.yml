@@ -1,14 +1,18 @@
 openapi: 3.2.0
 info:
-  title: Realtor Ca Property API
-  version: '1.0'
+  title: REALTOR.ca DDF® Web API Documentation Property API
+  description: 'The REALTOR.ca Data Distribution Facility (DDF®) allows REALTORS® across Canada to access listing content
+
+    on personal websites, franchisor websites, real estate advertising websites and partner sites based on
+
+    permissions set by their brokerage owner.'
   contact:
     name: Realtor Support
     email: support@realtor.ca
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
-  description: 'Operations tagged Property across 2 of this provider''s published API definitions: realtor-ca-ddf-web-api-docs-openapi.json, realtor-ca-ddf-web-api-openapi.json. Each path carries the servers of the definition it was published in.'
+  version: '1.0'
 servers:
 - url: https://localhost:7051
 tags:
@@ -83,8 +87,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DDF.Core.Models.CustomOdataError'
-    servers:
-    - url: https://localhost:7051
+      operationId: getOdataV1Property
+      x-operation-id-source: derived
   /odata/v1/Property/{PropertyKey}:
     get:
       tags:
@@ -97,16 +101,16 @@ paths:
         The function-style follows OData conventions and may be required in certain query contexts (e.g., when the key contains special characters or is not a simple numeric ID).
 
 
-        <b>Path-style access: </b>```/odata/v1/Property/{PropertyKey}```
+        Path-style access: ```/odata/v1/Property/{PropertyKey}```
 
 
-        <b>Example: </b>```/odata/v1/Property/123456789```
+        Example: ```/odata/v1/Property/123456789```
 
 
-        <b>Function-style access: </b>```/odata/v1/Property(''{PropertyKey}'')```
+        Function-style access: ```/odata/v1/Property(''{PropertyKey}'')```
 
 
-        <b>Example: </b>```/odata/v1/Property(''123456789'')```'
+        Example: ```/odata/v1/Property(''123456789'')```'
       parameters:
       - name: PropertyKey
         in: path
@@ -150,8 +154,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DDF.Core.Models.CustomOdataError'
-    servers:
-    - url: https://localhost:7051
+      operationId: getOdataV1PropertyByPropertyKey
+      x-operation-id-source: derived
   /odata/v1/Property/PropertyReplication():
     get:
       tags:
@@ -164,13 +168,10 @@ paths:
         The function-style follows OData conventions.
 
 
-        <b>Path-style access: </b>```/odata/v1/Property/PropertyReplication```
+        Path-style access: ```/odata/v1/Property/PropertyReplication```
 
 
-        <b>Function-style access: </b>```/odata/v1/Property/PropertyReplication()```
-
-
-        '
+        Function-style access: ```/odata/v1/Property/PropertyReplication()```'
       parameters:
       - name: $select
         in: query
@@ -223,8 +224,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DDF.Core.Models.CustomOdataError'
-    servers:
-    - url: https://localhost:7051
+      operationId: getOdataV1PropertyPropertyReplication()
+      x-operation-id-source: derived
   /odata/v1/Property/PropertyReplication(DestinationId={DestinationId}):
     get:
       tags:
@@ -290,15 +291,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DDF.Core.Models.CustomOdataError'
-    servers:
-    - url: https://localhost:7051
 components:
   schemas:
-    DDF.Core.Models.CustomOdataError:
+    DDF.Core.Models.Error:
       type: object
       properties:
-        error:
-          $ref: '#/components/schemas/DDF.Core.Models.Error'
+        details:
+          type:
+          - string
+          - 'null'
+        message:
+          type:
+          - string
+          - 'null'
+        code:
+          type:
+          - string
+          - 'null'
       additionalProperties: false
     DDF.Core.Entities.PropertyIdentifier:
       type: object
@@ -317,21 +326,20 @@ components:
           format: date-time
           example: '"2021-01-01T12:00:00.000Z"'
       additionalProperties: false
-    DDF.Core.Models.Error:
-      type: object
+    ? DDF.Infrastructure.Swagger.ExampleModels.ODataReplicationListResponse_2__DDF.Core.Entities.PropertyIdentifier__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null___DDF.Core.Entities.Property__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null
+    : type: object
       properties:
-        details:
+        '@odata.context':
           type:
           - string
           - 'null'
-        message:
+          example: https://localhost:7051/odata/v1/$metadata#DDF.Core.Entities.Property
+        value:
           type:
-          - string
+          - array
           - 'null'
-        code:
-          type:
-          - string
-          - 'null'
+          items:
+            $ref: '#/components/schemas/DDF.Core.Entities.PropertyIdentifier'
       additionalProperties: false
     ? DDF.Infrastructure.Swagger.ExampleModels.ODataSingleResponse_1__DDF.Core.Entities.Property__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null
     : type: object
@@ -1429,6 +1437,74 @@ components:
             $ref: '#/components/schemas/DDF.Core.Entities.Media'
           description: A collection of the types of media fields available for this Property.
       additionalProperties: false
+    DDF.Core.Entities.Media:
+      type: object
+      properties:
+        MediaKey:
+          type:
+          - string
+          - 'null'
+          description: A unique identifier for this record from the immediate source. This may be a number, or string that can include URI or other forms. This is the system you are connecting to and not necessarily the original source of the record.
+          example: MediaKey
+        LongDescription:
+          type:
+          - string
+          - 'null'
+          description: The full description of the object.
+          example: REALTOR.ca Logo
+        MediaURL:
+          type:
+          - string
+          - 'null'
+          description: The URI to the media file referenced by this record.
+          example: https:///ddfcdn.realtor.ca/realtorlogo.png
+        ModificationTimestamp:
+          type:
+          - String
+          - 'null'
+          description: Date/time the record was last modified (in Zulu time (UTC)).
+          format: 'Enum: DateTime'
+          example: '2019-08-24T14:15:22Z'
+        Order:
+          type:
+          - integer
+          - 'null'
+          description: The order in which the media object is displayed.  Zero is the primary photo per RETS convention.
+          format: int32
+          example: 1
+        PreferredPhotoYN:
+          type:
+          - boolean
+          - 'null'
+          description: When set to true, the media record in question is the preferred photo. This will typically mean the photo to be shown when only one of the photos is to be displayed.
+          example: true
+        ResourceRecordId:
+          type:
+          - string
+          - 'null'
+          description: The well known identifier of the related record from the source resource.
+          example: RealtorLogo.png
+        ResourceRecordKey:
+          type:
+          - string
+          - 'null'
+          description: The primary key of the related record from the source resource.
+          example: '1234'
+        ResourceName:
+          type:
+          - String
+          - 'null'
+          description: The resource or table of the listing or other record the media relates to. i.e. Property, Member, Office, etc.
+          format: 'Enum: ResourceName'
+          example: Member
+        MediaCategory:
+          type:
+          - String
+          - 'null'
+          description: Category describing the , Photos, Documents, Video, Unbranded Virtual Tour, Branded Virtual Tour, Floor Plan, Logo
+          format: 'Enum: MediaCategory'
+          example: Photo
+      additionalProperties: false
     DDF.Core.Entities.PropertyRoom:
       type: object
       properties:
@@ -1502,6 +1578,32 @@ components:
           description: The type of room being described by the other fields in the PropertyRooms resource.
           format: 'Enum: RoomType'
           example: Living room
+      additionalProperties: false
+    ? DDF.Infrastructure.Swagger.ExampleModels.ODataListResponse_1__DDF.Core.Entities.Property__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null
+    : type: object
+      properties:
+        '@odata.context':
+          type:
+          - string
+          - 'null'
+          example: https://localhost:7051/odata/v1/$metadata#DDF.Core.Entities.Property
+        value:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DDF.Core.Entities.Property'
+        '@odata.nextLink':
+          type:
+          - string
+          - 'null'
+          example: https://localhost:7051/odata/v1/DDF.Core.Entities.Property?skip=1
+      additionalProperties: false
+    DDF.Core.Models.CustomOdataError:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/DDF.Core.Models.Error'
       additionalProperties: false
     DDF.Core.Entities.Property:
       type: object
@@ -2594,112 +2696,6 @@ components:
             $ref: '#/components/schemas/DDF.Core.Entities.Media'
           description: A collection of the types of media fields available for this Property.
       additionalProperties: false
-    ? DDF.Infrastructure.Swagger.ExampleModels.ODataReplicationListResponse_2__DDF.Core.Entities.PropertyIdentifier__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null___DDF.Core.Entities.Property__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null
-    : type: object
-      properties:
-        '@odata.context':
-          type:
-          - string
-          - 'null'
-          example: https://localhost:7051/odata/v1/$metadata#DDF.Core.Entities.Property
-        value:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/DDF.Core.Entities.PropertyIdentifier'
-      additionalProperties: false
-    DDF.Core.Entities.Media:
-      type: object
-      properties:
-        MediaKey:
-          type:
-          - string
-          - 'null'
-          description: A unique identifier for this record from the immediate source. This may be a number, or string that can include URI or other forms. This is the system you are connecting to and not necessarily the original source of the record.
-          example: MediaKey
-        LongDescription:
-          type:
-          - string
-          - 'null'
-          description: The full description of the object.
-          example: REALTOR.ca Logo
-        MediaURL:
-          type:
-          - string
-          - 'null'
-          description: The URI to the media file referenced by this record.
-          example: https:///ddfcdn.realtor.ca/realtorlogo.png
-        ModificationTimestamp:
-          type:
-          - String
-          - 'null'
-          description: Date/time the record was last modified (in Zulu time (UTC)).
-          format: 'Enum: DateTime'
-          example: '2019-08-24T14:15:22Z'
-        Order:
-          type:
-          - integer
-          - 'null'
-          description: The order in which the media object is displayed.  Zero is the primary photo per RETS convention.
-          format: int32
-          example: 1
-        PreferredPhotoYN:
-          type:
-          - boolean
-          - 'null'
-          description: When set to true, the media record in question is the preferred photo. This will typically mean the photo to be shown when only one of the photos is to be displayed.
-          example: true
-        ResourceRecordId:
-          type:
-          - string
-          - 'null'
-          description: The well known identifier of the related record from the source resource.
-          example: RealtorLogo.png
-        ResourceRecordKey:
-          type:
-          - string
-          - 'null'
-          description: The primary key of the related record from the source resource.
-          example: '1234'
-        ResourceName:
-          type:
-          - String
-          - 'null'
-          description: The resource or table of the listing or other record the media relates to. i.e. Property, Member, Office, etc.
-          format: 'Enum: ResourceName'
-          example: Member
-        MediaCategory:
-          type:
-          - String
-          - 'null'
-          description: Category describing the , Photos, Documents, Video, Unbranded Virtual Tour, Branded Virtual Tour, Floor Plan, Logo
-          format: 'Enum: MediaCategory'
-          example: Photo
-      additionalProperties: false
-    ? DDF.Infrastructure.Swagger.ExampleModels.ODataListResponse_1__DDF.Core.Entities.Property__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null
-    : type: object
-      properties:
-        '@odata.context':
-          type:
-          - string
-          - 'null'
-          example: https://localhost:7051/odata/v1/$metadata#DDF.Core.Entities.Property
-        value:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/DDF.Core.Entities.Property'
-        '@odata.nextLink':
-          type:
-          - string
-          - 'null'
-          example: https://localhost:7051/odata/v1/DDF.Core.Entities.Property?skip=1
-      additionalProperties: false
-x-refined-from:
-- realtor-ca-ddf-web-api-docs-openapi.json
-- realtor-ca-ddf-web-api-openapi.json
 x-tagGroups:
 - name: API Endpoints
   tags:

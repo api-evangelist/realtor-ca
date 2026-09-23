@@ -1,14 +1,18 @@
 openapi: 3.2.0
 info:
-  title: Realtor Ca Destination API
-  version: '1.0'
+  title: REALTOR.ca DDF® Web API Documentation Destination API
+  description: 'The REALTOR.ca Data Distribution Facility (DDF®) allows REALTORS® across Canada to access listing content
+
+    on personal websites, franchisor websites, real estate advertising websites and partner sites based on
+
+    permissions set by their brokerage owner.'
   contact:
     name: Realtor Support
     email: support@realtor.ca
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
-  description: 'Operations tagged Destination across 2 of this provider''s published API definitions: realtor-ca-ddf-web-api-docs-openapi.json, realtor-ca-ddf-web-api-openapi.json. Each path carries the servers of the definition it was published in.'
+  version: '1.0'
 servers:
 - url: https://localhost:7051
 tags:
@@ -83,8 +87,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DDF.Core.Models.CustomOdataError'
-    servers:
-    - url: https://localhost:7051
+      operationId: getOdataV1Destination
+      x-operation-id-source: derived
   /odata/v1/Destination/{DestinationKey}:
     get:
       tags:
@@ -97,16 +101,16 @@ paths:
         The function-style follows OData conventions and may be required in certain query contexts (e.g., when the key contains special characters or is not a simple numeric ID).
 
 
-        <b>Path-style access: </b>```/odata/v1/Destination/{DestinationKey}```
+        Path-style access: ```/odata/v1/Destination/{DestinationKey}```
 
 
-        <b>Example: </b>```/odata/v1/Destination/1301```
+        Example: ```/odata/v1/Destination/1301```
 
 
-        <b>Function-style access: </b>```/odata/v1/Destination({DestinationKey})```
+        Function-style access: ```/odata/v1/Destination({DestinationKey})```
 
 
-        <b>Example: </b>```/odata/v1/Destination(1301)```'
+        Example: ```/odata/v1/Destination(1301)```'
       parameters:
       - name: DestinationKey
         in: path
@@ -149,8 +153,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DDF.Core.Models.CustomOdataError'
-    servers:
-    - url: https://localhost:7051
+      operationId: getOdataV1DestinationByDestinationKey
+      x-operation-id-source: derived
 components:
   schemas:
     DDF.Core.Models.Error:
@@ -168,26 +172,6 @@ components:
           type:
           - string
           - 'null'
-      additionalProperties: false
-    ? DDF.Infrastructure.Swagger.ExampleModels.ODataListResponse_1__DDF.Core.Entities.Destination__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null
-    : type: object
-      properties:
-        '@odata.context':
-          type:
-          - string
-          - 'null'
-          example: https://localhost:7051/odata/v1/$metadata#DDF.Core.Entities.Destination
-        value:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/DDF.Core.Entities.Destination'
-        '@odata.nextLink':
-          type:
-          - string
-          - 'null'
-          example: https://localhost:7051/odata/v1/DDF.Core.Entities.Destination?skip=1
       additionalProperties: false
     ? DDF.Infrastructure.Swagger.ExampleModels.ODataSingleResponse_1__DDF.Core.Entities.Destination__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null
     : type: object
@@ -272,12 +256,6 @@ components:
           type: boolean
           description: A flag indicating that if the destination is Full NSP.
       additionalProperties: false
-    DDF.Core.Models.CustomOdataError:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/DDF.Core.Models.Error'
-      additionalProperties: false
     DDF.Core.Entities.Destination:
       type: object
       properties:
@@ -356,9 +334,32 @@ components:
           type: boolean
           description: A flag indicating that if the destination is Full NSP.
       additionalProperties: false
-x-refined-from:
-- realtor-ca-ddf-web-api-docs-openapi.json
-- realtor-ca-ddf-web-api-openapi.json
+    DDF.Core.Models.CustomOdataError:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/DDF.Core.Models.Error'
+      additionalProperties: false
+    ? DDF.Infrastructure.Swagger.ExampleModels.ODataListResponse_1__DDF.Core.Entities.Destination__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null
+    : type: object
+      properties:
+        '@odata.context':
+          type:
+          - string
+          - 'null'
+          example: https://localhost:7051/odata/v1/$metadata#DDF.Core.Entities.Destination
+        value:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DDF.Core.Entities.Destination'
+        '@odata.nextLink':
+          type:
+          - string
+          - 'null'
+          example: https://localhost:7051/odata/v1/DDF.Core.Entities.Destination?skip=1
+      additionalProperties: false
 x-tagGroups:
 - name: API Endpoints
   tags:

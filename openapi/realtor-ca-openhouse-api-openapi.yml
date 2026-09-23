@@ -1,14 +1,18 @@
 openapi: 3.2.0
 info:
-  title: Realtor Ca Open House API
-  version: '1.0'
+  title: REALTOR.ca DDF® Web API Documentation Open House API
+  description: 'The REALTOR.ca Data Distribution Facility (DDF®) allows REALTORS® across Canada to access listing content
+
+    on personal websites, franchisor websites, real estate advertising websites and partner sites based on
+
+    permissions set by their brokerage owner.'
   contact:
     name: Realtor Support
     email: support@realtor.ca
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
-  description: 'Operations tagged OpenHouse across 2 of this provider''s published API definitions: realtor-ca-ddf-web-api-docs-openapi.json, realtor-ca-ddf-web-api-openapi.json. Each path carries the servers of the definition it was published in.'
+  version: '1.0'
 servers:
 - url: https://localhost:7051
 tags:
@@ -81,8 +85,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DDF.Core.Models.CustomOdataError'
-    servers:
-    - url: https://localhost:7051
+      operationId: getOdataV1OpenHouse
+      x-operation-id-source: derived
   /odata/v1/OpenHouse/{OpenHouseKey}:
     get:
       tags:
@@ -95,16 +99,16 @@ paths:
         The function-style follows OData conventions and may be required in certain query contexts (e.g., when the key contains special characters or is not a simple numeric ID).
 
 
-        <b>Path-style access: </b>```/odata/v1/OpenHouse/{OpenHouseKey}```
+        Path-style access: ```/odata/v1/OpenHouse/{OpenHouseKey}```
 
 
-        <b>Example: </b>```/odata/v1/OpenHouse/1000```
+        Example: ```/odata/v1/OpenHouse/1000```
 
 
-        <b>Function-style access: </b>```/odata/v1/OpenHouse(''{OpenHouseKey}'')```
+        Function-style access: ```/odata/v1/OpenHouse(''{OpenHouseKey}'')```
 
 
-        <b>Example: </b>```/odata/v1/OpenHouse(''1000'')```'
+        Example: ```/odata/v1/OpenHouse(''1000'')```'
       parameters:
       - name: OpenHouseKey
         in: path
@@ -148,10 +152,26 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DDF.Core.Models.CustomOdataError'
-    servers:
-    - url: https://localhost:7051
+      operationId: getOdataV1OpenHouseByOpenHouseKey
+      x-operation-id-source: derived
 components:
   schemas:
+    DDF.Core.Models.Error:
+      type: object
+      properties:
+        details:
+          type:
+          - string
+          - 'null'
+        message:
+          type:
+          - string
+          - 'null'
+        code:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
     DDF.Core.Entities.OpenHouse:
       type: object
       properties:
@@ -218,42 +238,6 @@ components:
           - 'null'
           description: A link to an open house livestream event
           example: '"https://www.youtube.com/watch?v=i-09UtAH10A"'
-      additionalProperties: false
-    DDF.Core.Models.Error:
-      type: object
-      properties:
-        details:
-          type:
-          - string
-          - 'null'
-        message:
-          type:
-          - string
-          - 'null'
-        code:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    ? DDF.Infrastructure.Swagger.ExampleModels.ODataListResponse_1__DDF.Core.Entities.OpenHouse__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null
-    : type: object
-      properties:
-        '@odata.context':
-          type:
-          - string
-          - 'null'
-          example: https://localhost:7051/odata/v1/$metadata#DDF.Core.Entities.OpenHouse
-        value:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/DDF.Core.Entities.OpenHouse'
-        '@odata.nextLink':
-          type:
-          - string
-          - 'null'
-          example: https://localhost:7051/odata/v1/DDF.Core.Entities.OpenHouse?skip=1
       additionalProperties: false
     ? DDF.Infrastructure.Swagger.ExampleModels.ODataSingleResponse_1__DDF.Core.Entities.OpenHouse__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null
     : type: object
@@ -327,15 +311,32 @@ components:
           description: A link to an open house livestream event
           example: '"https://www.youtube.com/watch?v=i-09UtAH10A"'
       additionalProperties: false
+    ? DDF.Infrastructure.Swagger.ExampleModels.ODataListResponse_1__DDF.Core.Entities.OpenHouse__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null
+    : type: object
+      properties:
+        '@odata.context':
+          type:
+          - string
+          - 'null'
+          example: https://localhost:7051/odata/v1/$metadata#DDF.Core.Entities.OpenHouse
+        value:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DDF.Core.Entities.OpenHouse'
+        '@odata.nextLink':
+          type:
+          - string
+          - 'null'
+          example: https://localhost:7051/odata/v1/DDF.Core.Entities.OpenHouse?skip=1
+      additionalProperties: false
     DDF.Core.Models.CustomOdataError:
       type: object
       properties:
         error:
           $ref: '#/components/schemas/DDF.Core.Models.Error'
       additionalProperties: false
-x-refined-from:
-- realtor-ca-ddf-web-api-docs-openapi.json
-- realtor-ca-ddf-web-api-openapi.json
 x-tagGroups:
 - name: API Endpoints
   tags:

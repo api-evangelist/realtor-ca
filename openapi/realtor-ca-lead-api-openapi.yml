@@ -1,14 +1,18 @@
 openapi: 3.2.0
 info:
-  title: Realtor Ca Lead API
-  version: '1.0'
+  title: REALTOR.ca DDF® Web API Documentation Lead API
+  description: 'The REALTOR.ca Data Distribution Facility (DDF®) allows REALTORS® across Canada to access listing content
+
+    on personal websites, franchisor websites, real estate advertising websites and partner sites based on
+
+    permissions set by their brokerage owner.'
   contact:
     name: Realtor Support
     email: support@realtor.ca
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
-  description: 'Operations tagged Lead across 2 of this provider''s published API definitions: realtor-ca-ddf-web-api-docs-openapi.json, realtor-ca-ddf-web-api-openapi.json. Each path carries the servers of the definition it was published in.'
+  version: '1.0'
 servers:
 - url: https://localhost:7051
 tags:
@@ -65,8 +69,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DDF.Core.Models.LeadResponse'
-    servers:
-    - url: https://localhost:7051
+      operationId: postV1LeadCreateLead
+      x-operation-id-source: derived
 components:
   schemas:
     DDF.Core.Models.LeadResponse:
@@ -141,9 +145,6 @@ components:
           description: The leads message to the member. This field has a 500 character limit.
           example: Message
       additionalProperties: false
-x-refined-from:
-- realtor-ca-ddf-web-api-docs-openapi.json
-- realtor-ca-ddf-web-api-openapi.json
 x-tagGroups:
 - name: API Endpoints
   tags:

@@ -1,14 +1,18 @@
 openapi: 3.2.0
 info:
-  title: Realtor Ca Office API
-  version: '1.0'
+  title: REALTOR.ca DDF® Web API Documentation Office API
+  description: 'The REALTOR.ca Data Distribution Facility (DDF®) allows REALTORS® across Canada to access listing content
+
+    on personal websites, franchisor websites, real estate advertising websites and partner sites based on
+
+    permissions set by their brokerage owner.'
   contact:
     name: Realtor Support
     email: support@realtor.ca
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
-  description: 'Operations tagged Office across 2 of this provider''s published API definitions: realtor-ca-ddf-web-api-docs-openapi.json, realtor-ca-ddf-web-api-openapi.json. Each path carries the servers of the definition it was published in.'
+  version: '1.0'
 servers:
 - url: https://localhost:7051
 tags:
@@ -83,8 +87,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DDF.Core.Models.CustomOdataError'
-    servers:
-    - url: https://localhost:7051
+      operationId: getOdataV1Office
+      x-operation-id-source: derived
   /odata/v1/Office/{OfficeKey}:
     get:
       tags:
@@ -97,16 +101,16 @@ paths:
         The function-style follows OData conventions and may be required in certain query contexts (e.g., when the key contains special characters or is not a simple numeric ID).
 
 
-        <b>Path-style access: </b>```/odata/v1/Office/{OfficeKey}```
+        Path-style access: ```/odata/v1/Office/{OfficeKey}```
 
 
-        <b>Example: </b>```/odata/v1/Office/49```
+        Example: ```/odata/v1/Office/49```
 
 
-        <b> Function-style access: </b>```/odata/v1/Office(''{OfficeKey}'')```
+        Function-style access: ```/odata/v1/Office(''{OfficeKey}'')```
 
 
-        <b>Example: </b>```/odata/v1/Office(''49'')```'
+        Example: ```/odata/v1/Office(''49'')```'
       parameters:
       - name: OfficeKey
         in: path
@@ -150,8 +154,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DDF.Core.Models.CustomOdataError'
-    servers:
-    - url: https://localhost:7051
+      operationId: getOdataV1OfficeByOfficeKey
+      x-operation-id-source: derived
   /odata/v1/Office/OfficeReplication():
     get:
       tags:
@@ -164,13 +168,10 @@ paths:
         The function-style follows OData conventions.
 
 
-        <b>Path-style access: </b>```/odata/v1/Office/OfficeReplication```
+        Path-style access: ```/odata/v1/Office/OfficeReplication```
 
 
-        <b>Function-style access: </b>```/odata/v1/Office/OfficeReplication()```
-
-
-        '
+        Function-style access: ```/odata/v1/Office/OfficeReplication()```'
       parameters:
       - name: $select
         in: query
@@ -223,8 +224,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DDF.Core.Models.CustomOdataError'
-    servers:
-    - url: https://localhost:7051
+      operationId: getOdataV1OfficeOfficeReplication()
+      x-operation-id-source: derived
   /odata/v1/Office/OfficeReplication(DestinationId={DestinationId}):
     get:
       tags:
@@ -290,27 +291,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DDF.Core.Models.CustomOdataError'
-    servers:
-    - url: https://localhost:7051
 components:
   schemas:
-    DDF.Core.Entities.OfficeIdentifier:
-      type: object
-      properties:
-        OfficeKey:
-          type:
-          - string
-          - 'null'
-          description: A unique identifier for this record from the immediate source. This is the numeric only key and used as an alternative to the OfficeKey fields.
-          example: '12345'
-        ModificationTimestamp:
-          type:
-          - string
-          - 'null'
-          description: Date/time the roster (member or office) record was last modified (in Zulu time (UTC)).
-          format: date-time
-          example: '"2021-01-01T12:00:00.000Z"'
-      additionalProperties: false
     DDF.Core.Entities.SocialMedia:
       type: object
       properties:
@@ -367,7 +349,75 @@ components:
           - string
           - 'null'
       additionalProperties: false
-    ? DDF.Infrastructure.Swagger.ExampleModels.ODataListResponse_1__DDF.Core.Entities.Office__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null
+    DDF.Core.Entities.Media:
+      type: object
+      properties:
+        MediaKey:
+          type:
+          - string
+          - 'null'
+          description: A unique identifier for this record from the immediate source. This may be a number, or string that can include URI or other forms. This is the system you are connecting to and not necessarily the original source of the record.
+          example: MediaKey
+        LongDescription:
+          type:
+          - string
+          - 'null'
+          description: The full description of the object.
+          example: REALTOR.ca Logo
+        MediaURL:
+          type:
+          - string
+          - 'null'
+          description: The URI to the media file referenced by this record.
+          example: https:///ddfcdn.realtor.ca/realtorlogo.png
+        ModificationTimestamp:
+          type:
+          - String
+          - 'null'
+          description: Date/time the record was last modified (in Zulu time (UTC)).
+          format: 'Enum: DateTime'
+          example: '2019-08-24T14:15:22Z'
+        Order:
+          type:
+          - integer
+          - 'null'
+          description: The order in which the media object is displayed.  Zero is the primary photo per RETS convention.
+          format: int32
+          example: 1
+        PreferredPhotoYN:
+          type:
+          - boolean
+          - 'null'
+          description: When set to true, the media record in question is the preferred photo. This will typically mean the photo to be shown when only one of the photos is to be displayed.
+          example: true
+        ResourceRecordId:
+          type:
+          - string
+          - 'null'
+          description: The well known identifier of the related record from the source resource.
+          example: RealtorLogo.png
+        ResourceRecordKey:
+          type:
+          - string
+          - 'null'
+          description: The primary key of the related record from the source resource.
+          example: '1234'
+        ResourceName:
+          type:
+          - String
+          - 'null'
+          description: The resource or table of the listing or other record the media relates to. i.e. Property, Member, Office, etc.
+          format: 'Enum: ResourceName'
+          example: Member
+        MediaCategory:
+          type:
+          - String
+          - 'null'
+          description: Category describing the , Photos, Documents, Video, Unbranded Virtual Tour, Branded Virtual Tour, Floor Plan, Logo
+          format: 'Enum: MediaCategory'
+          example: Photo
+      additionalProperties: false
+    ? DDF.Infrastructure.Swagger.ExampleModels.ODataReplicationListResponse_2__DDF.Core.Entities.OfficeIdentifier__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null___DDF.Core.Entities.Office__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null
     : type: object
       properties:
         '@odata.context':
@@ -380,163 +430,24 @@ components:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/DDF.Core.Entities.Office'
-        '@odata.nextLink':
-          type:
-          - string
-          - 'null'
-          example: https://localhost:7051/odata/v1/DDF.Core.Entities.Office?skip=1
+            $ref: '#/components/schemas/DDF.Core.Entities.OfficeIdentifier'
       additionalProperties: false
-    DDF.Core.Entities.Office:
+    DDF.Core.Entities.OfficeIdentifier:
       type: object
       properties:
         OfficeKey:
           type:
           - string
           - 'null'
-          description: A unique identifier for this record from the immediate source. This is the string only key and used as an alternative to the OfficeKeyNumeric fields.
-          example: OfficeKey
-        OfficeMlsId:
-          type:
-          - string
-          - 'null'
-          description: The local, well-known identifier. This value may not be unique, specifically in the case of aggregation systems, this value should be the identifier from the original system.
-          example: OfficeMlsId
-        OfficeAORKey:
-          type:
-          - string
-          - 'null'
-          description: A system unique identifier. This is the Board ID of the Office's Primary Board or Association of REALTORS.
-          example: OfficeAORKey
-        OfficeNationalAssociationId:
-          type:
-          - string
-          - 'null'
-          description: The national association ID of the office. i.e. In Canada, this is the CREA Organization ID of the Office.
-          example: OfficeNationalAssociationId
-        FranchiseNationalAssociationId:
-          type:
-          - string
-          - 'null'
-          description: The national association ID of the Franchisor. In Canada this would be the CREAID
-          example: '0'
-        OfficeBrokerNationalAssociationId:
-          type:
-          - string
-          - 'null'
-          description: The national association Id of the Brokerage Owner. In Canada this would be the CREAID
-          example: OfficeBrokerNationalAssociationId
-        OfficeAddress1:
-          type:
-          - string
-          - 'null'
-          description: The street number, direction, name and suffix of the office.
-          example: OfficeAddress1
-        OfficeAddress2:
-          type:
-          - string
-          - 'null'
-          description: The unit/suite number of the office.
-          example: OfficeAddress2
-        OfficeCity:
-          type:
-          - string
-          - 'null'
-          description: The city of the office.
-          example: OfficeCity
-        OfficeFax:
-          type:
-          - string
-          - 'null'
-          description: 'North American 10 digit fax numbers should be in the format of ###-###-#### (separated by hyphens). Other conventions should use the common local standard. International numbers should be preceded by a plus symbol.'
-          example: OfficeFax
-        OfficeName:
-          type:
-          - string
-          - 'null'
-          description: The legal name of the brokerage.
-          example: OfficeName
-        OfficePhone:
-          type:
-          - string
-          - 'null'
-          description: 'North American 10 digit phone numbers should be in the format of ###-###-#### (separated by hyphens). Other conventions should use the common local standard. International numbers should be preceded by a plus symbol.'
-          example: OfficePhone
-        OfficePhoneExt:
-          type:
-          - string
-          - 'null'
-          description: The extension of the given phone number (if applicable).
-          example: OfficePhoneExt
-        OfficePostalCode:
-          type:
-          - string
-          - 'null'
-          description: The postal code of the office.
-          example: OfficePostalCode
-        Media:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/DDF.Core.Entities.Media'
-          description: A collection of the types of media fields available for this Office.
-        OfficeSocialMedia:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/DDF.Core.Entities.SocialMedia'
-          description: A collection of the types of social media fields available for this office. The collection includes the type of system and other details pertinent about social media
+          description: A unique identifier for this record from the immediate source. This is the numeric only key and used as an alternative to the OfficeKey fields.
+          example: '12345'
         ModificationTimestamp:
           type:
-          - String
+          - string
           - 'null'
           description: Date/time the roster (member or office) record was last modified (in Zulu time (UTC)).
-          format: 'Enum: DateTime'
+          format: date-time
           example: '"2021-01-01T12:00:00.000Z"'
-        OriginalEntryTimestamp:
-          type:
-          - String
-          - 'null'
-          description: Date/time the office record was originally input into the source system (in Zulu time (UTC)).
-          format: 'Enum: DateTime'
-          example: '"2021-01-01T12:00:00.000Z"'
-        OfficeType:
-          type:
-          - String
-          - 'null'
-          description: The type of business conducted by the office. i.e. Real Estate, Appraiser, etc.
-          format: 'Enum: OfficeType'
-          example: Real Estate
-        OfficeStateOrProvince:
-          type:
-          - String
-          - 'null'
-          description: The state or province in which the office is located.
-          format: 'Enum: StateOrProvince'
-          example: Ontario
-        OfficeAOR:
-          type:
-          - String
-          - 'null'
-          description: The Office's Board or Association of REALTORS.
-          format: 'Enum: AOR'
-          example: Affiliate
-        OfficeStatus:
-          type:
-          - String
-          - 'null'
-          description: Is the office active, inactive or under disciplinary action.
-          format: 'Enum: OfficeStatus'
-          example: Active
-        OfficeCountry:
-          type:
-          - String
-          - 'null'
-          description: The country in a postal address.
-          format: 'Enum: Country'
-          example: Canada
       additionalProperties: false
     ? DDF.Infrastructure.Swagger.ExampleModels.ODataSingleResponse_1__DDF.Core.Entities.Office__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null
     : type: object
@@ -694,73 +605,156 @@ components:
           format: 'Enum: Country'
           example: Canada
       additionalProperties: false
-    DDF.Core.Entities.Media:
+    DDF.Core.Entities.Office:
       type: object
       properties:
-        MediaKey:
+        OfficeKey:
           type:
           - string
           - 'null'
-          description: A unique identifier for this record from the immediate source. This may be a number, or string that can include URI or other forms. This is the system you are connecting to and not necessarily the original source of the record.
-          example: MediaKey
-        LongDescription:
+          description: A unique identifier for this record from the immediate source. This is the string only key and used as an alternative to the OfficeKeyNumeric fields.
+          example: OfficeKey
+        OfficeMlsId:
           type:
           - string
           - 'null'
-          description: The full description of the object.
-          example: REALTOR.ca Logo
-        MediaURL:
+          description: The local, well-known identifier. This value may not be unique, specifically in the case of aggregation systems, this value should be the identifier from the original system.
+          example: OfficeMlsId
+        OfficeAORKey:
           type:
           - string
           - 'null'
-          description: The URI to the media file referenced by this record.
-          example: https:///ddfcdn.realtor.ca/realtorlogo.png
+          description: A system unique identifier. This is the Board ID of the Office's Primary Board or Association of REALTORS.
+          example: OfficeAORKey
+        OfficeNationalAssociationId:
+          type:
+          - string
+          - 'null'
+          description: The national association ID of the office. i.e. In Canada, this is the CREA Organization ID of the Office.
+          example: OfficeNationalAssociationId
+        FranchiseNationalAssociationId:
+          type:
+          - string
+          - 'null'
+          description: The national association ID of the Franchisor. In Canada this would be the CREAID
+          example: '0'
+        OfficeBrokerNationalAssociationId:
+          type:
+          - string
+          - 'null'
+          description: The national association Id of the Brokerage Owner. In Canada this would be the CREAID
+          example: OfficeBrokerNationalAssociationId
+        OfficeAddress1:
+          type:
+          - string
+          - 'null'
+          description: The street number, direction, name and suffix of the office.
+          example: OfficeAddress1
+        OfficeAddress2:
+          type:
+          - string
+          - 'null'
+          description: The unit/suite number of the office.
+          example: OfficeAddress2
+        OfficeCity:
+          type:
+          - string
+          - 'null'
+          description: The city of the office.
+          example: OfficeCity
+        OfficeFax:
+          type:
+          - string
+          - 'null'
+          description: 'North American 10 digit fax numbers should be in the format of ###-###-#### (separated by hyphens). Other conventions should use the common local standard. International numbers should be preceded by a plus symbol.'
+          example: OfficeFax
+        OfficeName:
+          type:
+          - string
+          - 'null'
+          description: The legal name of the brokerage.
+          example: OfficeName
+        OfficePhone:
+          type:
+          - string
+          - 'null'
+          description: 'North American 10 digit phone numbers should be in the format of ###-###-#### (separated by hyphens). Other conventions should use the common local standard. International numbers should be preceded by a plus symbol.'
+          example: OfficePhone
+        OfficePhoneExt:
+          type:
+          - string
+          - 'null'
+          description: The extension of the given phone number (if applicable).
+          example: OfficePhoneExt
+        OfficePostalCode:
+          type:
+          - string
+          - 'null'
+          description: The postal code of the office.
+          example: OfficePostalCode
+        Media:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DDF.Core.Entities.Media'
+          description: A collection of the types of media fields available for this Office.
+        OfficeSocialMedia:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DDF.Core.Entities.SocialMedia'
+          description: A collection of the types of social media fields available for this office. The collection includes the type of system and other details pertinent about social media
         ModificationTimestamp:
           type:
           - String
           - 'null'
-          description: Date/time the record was last modified (in Zulu time (UTC)).
+          description: Date/time the roster (member or office) record was last modified (in Zulu time (UTC)).
           format: 'Enum: DateTime'
-          example: '2019-08-24T14:15:22Z'
-        Order:
-          type:
-          - integer
-          - 'null'
-          description: The order in which the media object is displayed.  Zero is the primary photo per RETS convention.
-          format: int32
-          example: 1
-        PreferredPhotoYN:
-          type:
-          - boolean
-          - 'null'
-          description: When set to true, the media record in question is the preferred photo. This will typically mean the photo to be shown when only one of the photos is to be displayed.
-          example: true
-        ResourceRecordId:
-          type:
-          - string
-          - 'null'
-          description: The well known identifier of the related record from the source resource.
-          example: RealtorLogo.png
-        ResourceRecordKey:
-          type:
-          - string
-          - 'null'
-          description: The primary key of the related record from the source resource.
-          example: '1234'
-        ResourceName:
+          example: '"2021-01-01T12:00:00.000Z"'
+        OriginalEntryTimestamp:
           type:
           - String
           - 'null'
-          description: The resource or table of the listing or other record the media relates to. i.e. Property, Member, Office, etc.
-          format: 'Enum: ResourceName'
-          example: Member
-        MediaCategory:
+          description: Date/time the office record was originally input into the source system (in Zulu time (UTC)).
+          format: 'Enum: DateTime'
+          example: '"2021-01-01T12:00:00.000Z"'
+        OfficeType:
           type:
           - String
           - 'null'
-          description: Category describing the , Photos, Documents, Video, Unbranded Virtual Tour, Branded Virtual Tour, Floor Plan, Logo
-          format: 'Enum: MediaCategory'
-          example: Photo
+          description: The type of business conducted by the office. i.e. Real Estate, Appraiser, etc.
+          format: 'Enum: OfficeType'
+          example: Real Estate
+        OfficeStateOrProvince:
+          type:
+          - String
+          - 'null'
+          description: The state or province in which the office is located.
+          format: 'Enum: StateOrProvince'
+          example: Ontario
+        OfficeAOR:
+          type:
+          - String
+          - 'null'
+          description: The Office's Board or Association of REALTORS.
+          format: 'Enum: AOR'
+          example: Affiliate
+        OfficeStatus:
+          type:
+          - String
+          - 'null'
+          description: Is the office active, inactive or under disciplinary action.
+          format: 'Enum: OfficeStatus'
+          example: Active
+        OfficeCountry:
+          type:
+          - String
+          - 'null'
+          description: The country in a postal address.
+          format: 'Enum: Country'
+          example: Canada
       additionalProperties: false
     DDF.Core.Models.CustomOdataError:
       type: object
@@ -768,7 +762,7 @@ components:
         error:
           $ref: '#/components/schemas/DDF.Core.Models.Error'
       additionalProperties: false
-    ? DDF.Infrastructure.Swagger.ExampleModels.ODataReplicationListResponse_2__DDF.Core.Entities.OfficeIdentifier__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null___DDF.Core.Entities.Office__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null
+    ? DDF.Infrastructure.Swagger.ExampleModels.ODataListResponse_1__DDF.Core.Entities.Office__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null
     : type: object
       properties:
         '@odata.context':
@@ -781,11 +775,13 @@ components:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/DDF.Core.Entities.OfficeIdentifier'
+            $ref: '#/components/schemas/DDF.Core.Entities.Office'
+        '@odata.nextLink':
+          type:
+          - string
+          - 'null'
+          example: https://localhost:7051/odata/v1/DDF.Core.Entities.Office?skip=1
       additionalProperties: false
-x-refined-from:
-- realtor-ca-ddf-web-api-docs-openapi.json
-- realtor-ca-ddf-web-api-openapi.json
 x-tagGroups:
 - name: API Endpoints
   tags:
