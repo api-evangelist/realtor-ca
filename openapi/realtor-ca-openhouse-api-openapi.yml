@@ -156,97 +156,9 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    DDF.Core.Models.Error:
-      type: object
-      properties:
-        details:
-          type:
-          - string
-          - 'null'
-        message:
-          type:
-          - string
-          - 'null'
-        code:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
     DDF.Core.Entities.OpenHouse:
       type: object
       properties:
-        OpenHouseKey:
-          type:
-          - string
-          - 'null'
-          description: A unique identifier for this record from the immediate source.
-          example: '12345'
-        ListingKey:
-          type:
-          - string
-          - 'null'
-          description: A unique identifier for the listing record related to this Open House.
-          example: '12345'
-        ListingId:
-          type:
-          - string
-          - 'null'
-          description: The well known identifier for the listing related to this Open House.
-          example: '1'
-        OpenHouseDate:
-          type:
-          - string
-          - 'null'
-          description: The date on which the open house will occur.
-          format: date-time
-          example: '2021-01-01'
-        OpenHouseStartTime:
-          type:
-          - string
-          - 'null'
-          description: The time the open house begins (in local time).
-          example: '12:00:00.00'
-        OpenHouseEndTime:
-          type:
-          - string
-          - 'null'
-          description: The time the open house ends (in local time).
-          example: '12:00:00.00'
-        OpenHouseRemarks:
-          type:
-          - string
-          - 'null'
-          description: Comments, instructions or information about the open house.
-          example: OpenHouseRemarks
-        OpenHouseType:
-          type:
-          - String
-          - 'null'
-          description: The type of open house. i.e. Public, Broker, Office, Association, Private (invitation or targeted publication).
-          format: 'Enum: OpenHouseType'
-          example: Public
-        OpenHouseStatus:
-          type:
-          - String
-          - 'null'
-          description: Status of the open house, i.e. Active, Cancelled, Ended.
-          format: 'Enum: OpenHouseStatus'
-          example: Active
-        LivestreamOpenHouseURL:
-          type:
-          - String
-          - 'null'
-          description: A link to an open house livestream event
-          example: '"https://www.youtube.com/watch?v=i-09UtAH10A"'
-      additionalProperties: false
-    ? DDF.Infrastructure.Swagger.ExampleModels.ODataSingleResponse_1__DDF.Core.Entities.OpenHouse__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null
-    : type: object
-      properties:
-        '@odata.context':
-          type:
-          - string
-          - 'null'
-          example: https://localhost:7051/odata/v1/$metadata#DDF.Core.Entities.OpenHouse
         OpenHouseKey:
           type:
           - string
@@ -331,11 +243,99 @@ components:
           - 'null'
           example: https://localhost:7051/odata/v1/DDF.Core.Entities.OpenHouse?skip=1
       additionalProperties: false
+    ? DDF.Infrastructure.Swagger.ExampleModels.ODataSingleResponse_1__DDF.Core.Entities.OpenHouse__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null
+    : type: object
+      properties:
+        '@odata.context':
+          type:
+          - string
+          - 'null'
+          example: https://localhost:7051/odata/v1/$metadata#DDF.Core.Entities.OpenHouse
+        OpenHouseKey:
+          type:
+          - string
+          - 'null'
+          description: A unique identifier for this record from the immediate source.
+          example: '12345'
+        ListingKey:
+          type:
+          - string
+          - 'null'
+          description: A unique identifier for the listing record related to this Open House.
+          example: '12345'
+        ListingId:
+          type:
+          - string
+          - 'null'
+          description: The well known identifier for the listing related to this Open House.
+          example: '1'
+        OpenHouseDate:
+          type:
+          - string
+          - 'null'
+          description: The date on which the open house will occur.
+          format: date-time
+          example: '2021-01-01'
+        OpenHouseStartTime:
+          type:
+          - string
+          - 'null'
+          description: The time the open house begins (in local time).
+          example: '12:00:00.00'
+        OpenHouseEndTime:
+          type:
+          - string
+          - 'null'
+          description: The time the open house ends (in local time).
+          example: '12:00:00.00'
+        OpenHouseRemarks:
+          type:
+          - string
+          - 'null'
+          description: Comments, instructions or information about the open house.
+          example: OpenHouseRemarks
+        OpenHouseType:
+          type:
+          - String
+          - 'null'
+          description: The type of open house. i.e. Public, Broker, Office, Association, Private (invitation or targeted publication).
+          format: 'Enum: OpenHouseType'
+          example: Public
+        OpenHouseStatus:
+          type:
+          - String
+          - 'null'
+          description: Status of the open house, i.e. Active, Cancelled, Ended.
+          format: 'Enum: OpenHouseStatus'
+          example: Active
+        LivestreamOpenHouseURL:
+          type:
+          - String
+          - 'null'
+          description: A link to an open house livestream event
+          example: '"https://www.youtube.com/watch?v=i-09UtAH10A"'
+      additionalProperties: false
     DDF.Core.Models.CustomOdataError:
       type: object
       properties:
         error:
           $ref: '#/components/schemas/DDF.Core.Models.Error'
+      additionalProperties: false
+    DDF.Core.Models.Error:
+      type: object
+      properties:
+        details:
+          type:
+          - string
+          - 'null'
+        message:
+          type:
+          - string
+          - 'null'
+        code:
+          type:
+          - string
+          - 'null'
       additionalProperties: false
 x-tagGroups:
 - name: API Endpoints

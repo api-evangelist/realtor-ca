@@ -293,22 +293,6 @@ paths:
                 $ref: '#/components/schemas/DDF.Core.Models.CustomOdataError'
 components:
   schemas:
-    DDF.Core.Models.Error:
-      type: object
-      properties:
-        details:
-          type:
-          - string
-          - 'null'
-        message:
-          type:
-          - string
-          - 'null'
-        code:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
     DDF.Core.Entities.PropertyIdentifier:
       type: object
       properties:
@@ -326,7 +310,81 @@ components:
           format: date-time
           example: '"2021-01-01T12:00:00.000Z"'
       additionalProperties: false
-    ? DDF.Infrastructure.Swagger.ExampleModels.ODataReplicationListResponse_2__DDF.Core.Entities.PropertyIdentifier__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null___DDF.Core.Entities.Property__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null
+    DDF.Core.Entities.PropertyRoom:
+      type: object
+      properties:
+        RoomKey:
+          type:
+          - string
+          - 'null'
+          description: A unique identifier for this record.
+          example: '12345'
+        ListingId:
+          type:
+          - string
+          - 'null'
+          description: This is the foreign ID relating to the Property Resource. The well known identifier for the listing.
+          example: ListingId
+        ListingKey:
+          type:
+          - string
+          - 'null'
+          description: This is the foreign key relating to the property resource. A unique identifier for this record from the immediate source.
+          example: '12345'
+        ModificationTimestamp:
+          type: String
+          description: Date/time this record was last modified (in Zulu time (UTC)).
+          format: date-time
+          example: '"2021-01-01T00:00:00.000Z"'
+        RoomDescription:
+          type:
+          - string
+          - 'null'
+          description: A textual description of the given room.
+          example: RoomDescription
+        RoomDimensions:
+          type:
+          - string
+          - 'null'
+          description: A textual description of the dimensions of the given room.
+          example: RoomDimensions
+        RoomLength:
+          type:
+          - number
+          - 'null'
+          description: A numeric representation of the length of the given room. See the RoomLengthWidthUnits for the unit of measurement used for the length and width.
+          format: double
+          example: 10
+        RoomLevel:
+          type:
+          - String
+          - 'null'
+          description: The level within the dwelling on which the given room is located.
+          format: 'Enum: RoomLevel'
+          example: Second level
+        RoomWidth:
+          type:
+          - number
+          - 'null'
+          description: A numeric representation of the width of the given room.
+          format: double
+          example: 10
+        RoomLengthWidthUnits:
+          type:
+          - String
+          - 'null'
+          description: The unit of measurement used for the value in the RoomLength and the RoomWidth fields. e.g. feet, meters, etc.
+          format: 'Enum: LinearUnits'
+          example: Square feet
+        RoomType:
+          type:
+          - String
+          - 'null'
+          description: The type of room being described by the other fields in the PropertyRooms resource.
+          format: 'Enum: RoomType'
+          example: Living room
+      additionalProperties: false
+    ? DDF.Infrastructure.Swagger.ExampleModels.ODataListResponse_1__DDF.Core.Entities.Property__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null
     : type: object
       properties:
         '@odata.context':
@@ -339,7 +397,86 @@ components:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/DDF.Core.Entities.PropertyIdentifier'
+            $ref: '#/components/schemas/DDF.Core.Entities.Property'
+        '@odata.nextLink':
+          type:
+          - string
+          - 'null'
+          example: https://localhost:7051/odata/v1/DDF.Core.Entities.Property?skip=1
+      additionalProperties: false
+    DDF.Core.Entities.Media:
+      type: object
+      properties:
+        MediaKey:
+          type:
+          - string
+          - 'null'
+          description: A unique identifier for this record from the immediate source. This may be a number, or string that can include URI or other forms. This is the system you are connecting to and not necessarily the original source of the record.
+          example: MediaKey
+        LongDescription:
+          type:
+          - string
+          - 'null'
+          description: The full description of the object.
+          example: REALTOR.ca Logo
+        MediaURL:
+          type:
+          - string
+          - 'null'
+          description: The URI to the media file referenced by this record.
+          example: https:///ddfcdn.realtor.ca/realtorlogo.png
+        ModificationTimestamp:
+          type:
+          - String
+          - 'null'
+          description: Date/time the record was last modified (in Zulu time (UTC)).
+          format: 'Enum: DateTime'
+          example: '2019-08-24T14:15:22Z'
+        Order:
+          type:
+          - integer
+          - 'null'
+          description: The order in which the media object is displayed.  Zero is the primary photo per RETS convention.
+          format: int32
+          example: 1
+        PreferredPhotoYN:
+          type:
+          - boolean
+          - 'null'
+          description: When set to true, the media record in question is the preferred photo. This will typically mean the photo to be shown when only one of the photos is to be displayed.
+          example: true
+        ResourceRecordId:
+          type:
+          - string
+          - 'null'
+          description: The well known identifier of the related record from the source resource.
+          example: RealtorLogo.png
+        ResourceRecordKey:
+          type:
+          - string
+          - 'null'
+          description: The primary key of the related record from the source resource.
+          example: '1234'
+        ResourceName:
+          type:
+          - String
+          - 'null'
+          description: The resource or table of the listing or other record the media relates to. i.e. Property, Member, Office, etc.
+          format: 'Enum: ResourceName'
+          example: Member
+        MediaCategory:
+          type:
+          - String
+          - 'null'
+          description: Category describing the , Photos, Documents, Video, Unbranded Virtual Tour, Branded Virtual Tour, Floor Plan, Logo
+          format: 'Enum: MediaCategory'
+          example: Photo
+      additionalProperties: false
+    DDF.Core.Models.CustomOdataError:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/DDF.Core.Models.Error'
       additionalProperties: false
     ? DDF.Infrastructure.Swagger.ExampleModels.ODataSingleResponse_1__DDF.Core.Entities.Property__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null
     : type: object
@@ -1437,149 +1574,7 @@ components:
             $ref: '#/components/schemas/DDF.Core.Entities.Media'
           description: A collection of the types of media fields available for this Property.
       additionalProperties: false
-    DDF.Core.Entities.Media:
-      type: object
-      properties:
-        MediaKey:
-          type:
-          - string
-          - 'null'
-          description: A unique identifier for this record from the immediate source. This may be a number, or string that can include URI or other forms. This is the system you are connecting to and not necessarily the original source of the record.
-          example: MediaKey
-        LongDescription:
-          type:
-          - string
-          - 'null'
-          description: The full description of the object.
-          example: REALTOR.ca Logo
-        MediaURL:
-          type:
-          - string
-          - 'null'
-          description: The URI to the media file referenced by this record.
-          example: https:///ddfcdn.realtor.ca/realtorlogo.png
-        ModificationTimestamp:
-          type:
-          - String
-          - 'null'
-          description: Date/time the record was last modified (in Zulu time (UTC)).
-          format: 'Enum: DateTime'
-          example: '2019-08-24T14:15:22Z'
-        Order:
-          type:
-          - integer
-          - 'null'
-          description: The order in which the media object is displayed.  Zero is the primary photo per RETS convention.
-          format: int32
-          example: 1
-        PreferredPhotoYN:
-          type:
-          - boolean
-          - 'null'
-          description: When set to true, the media record in question is the preferred photo. This will typically mean the photo to be shown when only one of the photos is to be displayed.
-          example: true
-        ResourceRecordId:
-          type:
-          - string
-          - 'null'
-          description: The well known identifier of the related record from the source resource.
-          example: RealtorLogo.png
-        ResourceRecordKey:
-          type:
-          - string
-          - 'null'
-          description: The primary key of the related record from the source resource.
-          example: '1234'
-        ResourceName:
-          type:
-          - String
-          - 'null'
-          description: The resource or table of the listing or other record the media relates to. i.e. Property, Member, Office, etc.
-          format: 'Enum: ResourceName'
-          example: Member
-        MediaCategory:
-          type:
-          - String
-          - 'null'
-          description: Category describing the , Photos, Documents, Video, Unbranded Virtual Tour, Branded Virtual Tour, Floor Plan, Logo
-          format: 'Enum: MediaCategory'
-          example: Photo
-      additionalProperties: false
-    DDF.Core.Entities.PropertyRoom:
-      type: object
-      properties:
-        RoomKey:
-          type:
-          - string
-          - 'null'
-          description: A unique identifier for this record.
-          example: '12345'
-        ListingId:
-          type:
-          - string
-          - 'null'
-          description: This is the foreign ID relating to the Property Resource. The well known identifier for the listing.
-          example: ListingId
-        ListingKey:
-          type:
-          - string
-          - 'null'
-          description: This is the foreign key relating to the property resource. A unique identifier for this record from the immediate source.
-          example: '12345'
-        ModificationTimestamp:
-          type: String
-          description: Date/time this record was last modified (in Zulu time (UTC)).
-          format: date-time
-          example: '"2021-01-01T00:00:00.000Z"'
-        RoomDescription:
-          type:
-          - string
-          - 'null'
-          description: A textual description of the given room.
-          example: RoomDescription
-        RoomDimensions:
-          type:
-          - string
-          - 'null'
-          description: A textual description of the dimensions of the given room.
-          example: RoomDimensions
-        RoomLength:
-          type:
-          - number
-          - 'null'
-          description: A numeric representation of the length of the given room. See the RoomLengthWidthUnits for the unit of measurement used for the length and width.
-          format: double
-          example: 10
-        RoomLevel:
-          type:
-          - String
-          - 'null'
-          description: The level within the dwelling on which the given room is located.
-          format: 'Enum: RoomLevel'
-          example: Second level
-        RoomWidth:
-          type:
-          - number
-          - 'null'
-          description: A numeric representation of the width of the given room.
-          format: double
-          example: 10
-        RoomLengthWidthUnits:
-          type:
-          - String
-          - 'null'
-          description: The unit of measurement used for the value in the RoomLength and the RoomWidth fields. e.g. feet, meters, etc.
-          format: 'Enum: LinearUnits'
-          example: Square feet
-        RoomType:
-          type:
-          - String
-          - 'null'
-          description: The type of room being described by the other fields in the PropertyRooms resource.
-          format: 'Enum: RoomType'
-          example: Living room
-      additionalProperties: false
-    ? DDF.Infrastructure.Swagger.ExampleModels.ODataListResponse_1__DDF.Core.Entities.Property__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null
+    ? DDF.Infrastructure.Swagger.ExampleModels.ODataReplicationListResponse_2__DDF.Core.Entities.PropertyIdentifier__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null___DDF.Core.Entities.Property__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null
     : type: object
       properties:
         '@odata.context':
@@ -1592,18 +1587,7 @@ components:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/DDF.Core.Entities.Property'
-        '@odata.nextLink':
-          type:
-          - string
-          - 'null'
-          example: https://localhost:7051/odata/v1/DDF.Core.Entities.Property?skip=1
-      additionalProperties: false
-    DDF.Core.Models.CustomOdataError:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/DDF.Core.Models.Error'
+            $ref: '#/components/schemas/DDF.Core.Entities.PropertyIdentifier'
       additionalProperties: false
     DDF.Core.Entities.Property:
       type: object
@@ -2695,6 +2679,22 @@ components:
           items:
             $ref: '#/components/schemas/DDF.Core.Entities.Media'
           description: A collection of the types of media fields available for this Property.
+      additionalProperties: false
+    DDF.Core.Models.Error:
+      type: object
+      properties:
+        details:
+          type:
+          - string
+          - 'null'
+        message:
+          type:
+          - string
+          - 'null'
+        code:
+          type:
+          - string
+          - 'null'
       additionalProperties: false
 x-tagGroups:
 - name: API Endpoints

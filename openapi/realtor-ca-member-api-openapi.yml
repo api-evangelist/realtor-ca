@@ -293,114 +293,6 @@ paths:
                 $ref: '#/components/schemas/DDF.Core.Models.CustomOdataError'
 components:
   schemas:
-    DDF.Core.Entities.SocialMedia:
-      type: object
-      properties:
-        SocialMediaKey:
-          type:
-          - string
-          - 'null'
-          description: The local, well-known identifier. This value may not be unique, specifically in the case of aggregation systems, this value should be the identifier from the original system.
-          example: SocialMediaKey
-        ResourceRecordKey:
-          type:
-          - string
-          - 'null'
-          description: The primary key of the related record from the source resource. For example the ListingKey, MemberKey, OfficeKey, etc. This is a foreign key from the resource selected in the ResourceName field.
-          example: '12345'
-        SocialMediaType:
-          type:
-          - String
-          - 'null'
-          description: The type of sites, blog, social media, the Member URL or ID is referring to. i.e. Website, FaceBook, LinkedIn, Twitter, Instagram, etc.
-          format: 'Enum: SocialMediaType'
-          example: FaceBook
-        ModificationTimestamp:
-          type: String
-          description: The transactional timestamp automatically recorded by the MLS system representing the date/time the media record was last modified (in Zulu time (UTC)).
-          format: date-time
-          example: '"2021-01-01T00:00:00.000Z"'
-        ResourceName:
-          type:
-          - String
-          - 'null'
-          description: The resource or table of the listing or other record the media relates to. i.e. Property, Member, Office, etc.
-          format: 'Enum: ResourceName'
-        SocialMediaUrlOrId:
-          type:
-          - string
-          - 'null'
-          description: The website URL or ID of social media site or account of the member.
-          example: '"SocialMediaUrlOrId"'
-      additionalProperties: false
-    DDF.Core.Models.Error:
-      type: object
-      properties:
-        details:
-          type:
-          - string
-          - 'null'
-        message:
-          type:
-          - string
-          - 'null'
-        code:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    ? DDF.Infrastructure.Swagger.ExampleModels.ODataReplicationListResponse_2__DDF.Core.Entities.MemberIdentifier__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null___DDF.Core.Entities.Member__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null
-    : type: object
-      properties:
-        '@odata.context':
-          type:
-          - string
-          - 'null'
-          example: https://localhost:7051/odata/v1/$metadata#DDF.Core.Entities.Member
-        value:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/DDF.Core.Entities.MemberIdentifier'
-      additionalProperties: false
-    DDF.Core.Entities.MemberIdentifier:
-      type: object
-      properties:
-        MemberKey:
-          type:
-          - string
-          - 'null'
-          description: A unique identifier for this record.
-          example: '12345'
-        ModificationTimestamp:
-          type:
-          - string
-          - 'null'
-          description: Date/time the roster (member or office) record was last modified (in Zulu time (UTC)).
-          format: date-time
-          example: '"2021-01-01T12:00:00.000Z"'
-      additionalProperties: false
-    ? DDF.Infrastructure.Swagger.ExampleModels.ODataListResponse_1__DDF.Core.Entities.Member__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null
-    : type: object
-      properties:
-        '@odata.context':
-          type:
-          - string
-          - 'null'
-          example: https://localhost:7051/odata/v1/$metadata#DDF.Core.Entities.Member
-        value:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/DDF.Core.Entities.Member'
-        '@odata.nextLink':
-          type:
-          - string
-          - 'null'
-          example: https://localhost:7051/odata/v1/DDF.Core.Entities.Member?skip=1
-      additionalProperties: false
     DDF.Core.Entities.Media:
       type: object
       properties:
@@ -693,6 +585,49 @@ components:
           - 'null'
           description: This flag signifies the availability of a REALTOR®’s email address. It is intended for clients who use the Lead API endpoint to communicate with Realtors. If the flag is false, these clients should turn off the email REALTOR® function for the respective REALTOR®. Clients not using Lead API endpoint can disregard this field.
       additionalProperties: false
+    ? DDF.Infrastructure.Swagger.ExampleModels.ODataListResponse_1__DDF.Core.Entities.Member__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null
+    : type: object
+      properties:
+        '@odata.context':
+          type:
+          - string
+          - 'null'
+          example: https://localhost:7051/odata/v1/$metadata#DDF.Core.Entities.Member
+        value:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DDF.Core.Entities.Member'
+        '@odata.nextLink':
+          type:
+          - string
+          - 'null'
+          example: https://localhost:7051/odata/v1/DDF.Core.Entities.Member?skip=1
+      additionalProperties: false
+    DDF.Core.Entities.MemberIdentifier:
+      type: object
+      properties:
+        MemberKey:
+          type:
+          - string
+          - 'null'
+          description: A unique identifier for this record.
+          example: '12345'
+        ModificationTimestamp:
+          type:
+          - string
+          - 'null'
+          description: Date/time the roster (member or office) record was last modified (in Zulu time (UTC)).
+          format: date-time
+          example: '"2021-01-01T12:00:00.000Z"'
+      additionalProperties: false
+    DDF.Core.Models.CustomOdataError:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/DDF.Core.Models.Error'
+      additionalProperties: false
     ? DDF.Infrastructure.Swagger.ExampleModels.ODataSingleResponse_1__DDF.Core.Entities.Member__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null
     : type: object
       properties:
@@ -922,11 +857,76 @@ components:
           - 'null'
           description: This flag signifies the availability of a REALTOR®’s email address. It is intended for clients who use the Lead API endpoint to communicate with Realtors. If the flag is false, these clients should turn off the email REALTOR® function for the respective REALTOR®. Clients not using Lead API endpoint can disregard this field.
       additionalProperties: false
-    DDF.Core.Models.CustomOdataError:
+    DDF.Core.Models.Error:
       type: object
       properties:
-        error:
-          $ref: '#/components/schemas/DDF.Core.Models.Error'
+        details:
+          type:
+          - string
+          - 'null'
+        message:
+          type:
+          - string
+          - 'null'
+        code:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    DDF.Core.Entities.SocialMedia:
+      type: object
+      properties:
+        SocialMediaKey:
+          type:
+          - string
+          - 'null'
+          description: The local, well-known identifier. This value may not be unique, specifically in the case of aggregation systems, this value should be the identifier from the original system.
+          example: SocialMediaKey
+        ResourceRecordKey:
+          type:
+          - string
+          - 'null'
+          description: The primary key of the related record from the source resource. For example the ListingKey, MemberKey, OfficeKey, etc. This is a foreign key from the resource selected in the ResourceName field.
+          example: '12345'
+        SocialMediaType:
+          type:
+          - String
+          - 'null'
+          description: The type of sites, blog, social media, the Member URL or ID is referring to. i.e. Website, FaceBook, LinkedIn, Twitter, Instagram, etc.
+          format: 'Enum: SocialMediaType'
+          example: FaceBook
+        ModificationTimestamp:
+          type: String
+          description: The transactional timestamp automatically recorded by the MLS system representing the date/time the media record was last modified (in Zulu time (UTC)).
+          format: date-time
+          example: '"2021-01-01T00:00:00.000Z"'
+        ResourceName:
+          type:
+          - String
+          - 'null'
+          description: The resource or table of the listing or other record the media relates to. i.e. Property, Member, Office, etc.
+          format: 'Enum: ResourceName'
+        SocialMediaUrlOrId:
+          type:
+          - string
+          - 'null'
+          description: The website URL or ID of social media site or account of the member.
+          example: '"SocialMediaUrlOrId"'
+      additionalProperties: false
+    ? DDF.Infrastructure.Swagger.ExampleModels.ODataReplicationListResponse_2__DDF.Core.Entities.MemberIdentifier__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null___DDF.Core.Entities.Member__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null
+    : type: object
+      properties:
+        '@odata.context':
+          type:
+          - string
+          - 'null'
+          example: https://localhost:7051/odata/v1/$metadata#DDF.Core.Entities.Member
+        value:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DDF.Core.Entities.MemberIdentifier'
       additionalProperties: false
 x-tagGroups:
 - name: API Endpoints
