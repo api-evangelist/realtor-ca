@@ -73,6 +73,24 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    DDF.Core.Models.LeadResponse:
+      type: object
+      properties:
+        details:
+          type:
+          - string
+          - 'null'
+        message:
+          type:
+          - string
+          - 'null'
+        code:
+          type:
+          - string
+          - 'null'
+        success:
+          type: boolean
+      additionalProperties: false
     DDF.Core.Models.LeadModel:
       required:
       - Culture
@@ -126,24 +144,6 @@ components:
           type: string
           description: The leads message to the member. This field has a 500 character limit.
           example: Message
-      additionalProperties: false
-    DDF.Core.Models.LeadResponse:
-      type: object
-      properties:
-        details:
-          type:
-          - string
-          - 'null'
-        message:
-          type:
-          - string
-          - 'null'
-        code:
-          type:
-          - string
-          - 'null'
-        success:
-          type: boolean
       additionalProperties: false
 x-tagGroups:
 - name: API Endpoints

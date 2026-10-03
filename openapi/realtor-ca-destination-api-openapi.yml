@@ -157,6 +157,28 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    DDF.Core.Models.Error:
+      type: object
+      properties:
+        details:
+          type:
+          - string
+          - 'null'
+        message:
+          type:
+          - string
+          - 'null'
+        code:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    DDF.Core.Models.CustomOdataError:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/DDF.Core.Models.Error'
+      additionalProperties: false
     ? DDF.Infrastructure.Swagger.ExampleModels.ODataListResponse_1__DDF.Core.Entities.Destination__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null
     : type: object
       properties:
@@ -176,12 +198,6 @@ components:
           - string
           - 'null'
           example: https://localhost:7051/odata/v1/DDF.Core.Entities.Destination?skip=1
-      additionalProperties: false
-    DDF.Core.Models.CustomOdataError:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/DDF.Core.Models.Error'
       additionalProperties: false
     ? DDF.Infrastructure.Swagger.ExampleModels.ODataSingleResponse_1__DDF.Core.Entities.Destination__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null
     : type: object
@@ -265,22 +281,6 @@ components:
         FullNSP:
           type: boolean
           description: A flag indicating that if the destination is Full NSP.
-      additionalProperties: false
-    DDF.Core.Models.Error:
-      type: object
-      properties:
-        details:
-          type:
-          - string
-          - 'null'
-        message:
-          type:
-          - string
-          - 'null'
-        code:
-          type:
-          - string
-          - 'null'
       additionalProperties: false
     DDF.Core.Entities.Destination:
       type: object
