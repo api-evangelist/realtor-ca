@@ -157,28 +157,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    DDF.Core.Models.Error:
-      type: object
-      properties:
-        details:
-          type:
-          - string
-          - 'null'
-        message:
-          type:
-          - string
-          - 'null'
-        code:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    DDF.Core.Models.CustomOdataError:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/DDF.Core.Models.Error'
-      additionalProperties: false
     ? DDF.Infrastructure.Swagger.ExampleModels.ODataListResponse_1__DDF.Core.Entities.Destination__DDF.Core__Version_1.0.0.0__Culture_neutral__PublicKeyToken_null
     : type: object
       properties:
@@ -282,6 +260,12 @@ components:
           type: boolean
           description: A flag indicating that if the destination is Full NSP.
       additionalProperties: false
+    DDF.Core.Models.CustomOdataError:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/DDF.Core.Models.Error'
+      additionalProperties: false
     DDF.Core.Entities.Destination:
       type: object
       properties:
@@ -359,6 +343,22 @@ components:
         FullNSP:
           type: boolean
           description: A flag indicating that if the destination is Full NSP.
+      additionalProperties: false
+    DDF.Core.Models.Error:
+      type: object
+      properties:
+        details:
+          type:
+          - string
+          - 'null'
+        message:
+          type:
+          - string
+          - 'null'
+        code:
+          type:
+          - string
+          - 'null'
       additionalProperties: false
 x-tagGroups:
 - name: API Endpoints
