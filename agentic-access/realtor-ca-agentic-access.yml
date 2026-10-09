@@ -1,21 +1,24 @@
-generated: '2026-07-26'
+generated: '2026-09-24'
 method: generated
-source: openapi/realtor-ca-ddf-web-api-docs-openapi.json, openapi/realtor-ca-ddf-web-api-openapi.json
+source: openapi/realtor-ca-destination-api-openapi.yml, openapi/realtor-ca-lead-api-openapi.yml,
+  openapi/realtor-ca-member-api-openapi.yml, openapi/realtor-ca-office-api-openapi.yml, openapi/realtor-ca-openhouse-api-openapi.yml,
+  openapi/realtor-ca-property-api-openapi.yml
 description: Recommended x-agentic-access execution contracts, classified heuristically from
   the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
   audience per deployment. See research/curity/agentic-governance/.
 summary:
-  operations: 34
+  operations: 17
   by_action_class:
-    connected: 32
-    acting: 2
+    connected: 16
+    acting: 1
   by_consequence:
-    read: 32
-    write: 2
+    read: 16
+    write: 1
   human_in_the_loop_required: 0
 operations:
 - path: /odata/v1/Destination
   method: get
+  operationId: getOdataV1Destination
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -25,6 +28,7 @@ operations:
     audit: none
 - path: /odata/v1/Destination/{DestinationKey}
   method: get
+  operationId: getOdataV1DestinationByDestinationKey
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -34,6 +38,7 @@ operations:
     audit: none
 - path: /v1/Lead/CreateLead
   method: post
+  operationId: postV1LeadCreateLead
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -49,6 +54,7 @@ operations:
     audit: required
 - path: /odata/v1/Member
   method: get
+  operationId: getOdataV1Member
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -58,6 +64,7 @@ operations:
     audit: none
 - path: /odata/v1/Member/{MemberKey}
   method: get
+  operationId: getOdataV1MemberByMemberKey
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -67,6 +74,7 @@ operations:
     audit: none
 - path: /odata/v1/Member/MemberReplication()
   method: get
+  operationId: getOdataV1MemberMemberReplication()
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -86,6 +94,7 @@ operations:
     audit: none
 - path: /odata/v1/Office
   method: get
+  operationId: getOdataV1Office
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -95,6 +104,7 @@ operations:
     audit: none
 - path: /odata/v1/Office/{OfficeKey}
   method: get
+  operationId: getOdataV1OfficeByOfficeKey
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -104,6 +114,7 @@ operations:
     audit: none
 - path: /odata/v1/Office/OfficeReplication()
   method: get
+  operationId: getOdataV1OfficeOfficeReplication()
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -123,6 +134,7 @@ operations:
     audit: none
 - path: /odata/v1/OpenHouse
   method: get
+  operationId: getOdataV1OpenHouse
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -132,6 +144,7 @@ operations:
     audit: none
 - path: /odata/v1/OpenHouse/{OpenHouseKey}
   method: get
+  operationId: getOdataV1OpenHouseByOpenHouseKey
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -141,6 +154,7 @@ operations:
     audit: none
 - path: /odata/v1/Property
   method: get
+  operationId: getOdataV1Property
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -150,6 +164,7 @@ operations:
     audit: none
 - path: /odata/v1/Property/{PropertyKey}
   method: get
+  operationId: getOdataV1PropertyByPropertyKey
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -159,168 +174,7 @@ operations:
     audit: none
 - path: /odata/v1/Property/PropertyReplication()
   method: get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/v1/Property/PropertyReplication(DestinationId={DestinationId})
-  method: get
-  operationId: odata/v1/Property/PropertyReplication(DestinationId={DestinationId})
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/v1/Destination
-  method: get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/v1/Destination/{DestinationKey}
-  method: get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /v1/Lead/CreateLead
-  method: post
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /odata/v1/Member
-  method: get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/v1/Member/{MemberKey}
-  method: get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/v1/Member/MemberReplication()
-  method: get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/v1/Member/MemberReplication(DestinationId={DestinationId})
-  method: get
-  operationId: odata/v1/Member/MemberReplication(DestinationId={DestinationId})
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/v1/Office
-  method: get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/v1/Office/{OfficeKey}
-  method: get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/v1/Office/OfficeReplication()
-  method: get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/v1/Office/OfficeReplication(DestinationId={DestinationId})
-  method: get
-  operationId: odata/v1/Office/OfficeReplication(DestinationId={DestinationId})
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/v1/OpenHouse
-  method: get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/v1/OpenHouse/{OpenHouseKey}
-  method: get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/v1/Property
-  method: get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/v1/Property/{PropertyKey}
-  method: get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/v1/Property/PropertyReplication()
-  method: get
+  operationId: getOdataV1PropertyPropertyReplication()
   x-agentic-access:
     action-class: connected
     consequence: read
